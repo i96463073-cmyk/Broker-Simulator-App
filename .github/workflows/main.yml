@@ -1,5 +1,4 @@
-
-name: Build Broker Simulator APK
+name: Build ValetaxApp APK
 
 on:
   workflow_dispatch:
@@ -50,6 +49,6 @@ jobs:
       - name: Save APK
         uses: actions/upload-artifact@v4
         with:
-          name: Broker-Simulator-APK
+          name: ValetaxApp-APK
           path: android/app/build/outputs/apk/debug/app-debug.apk
           retention-days: 30
