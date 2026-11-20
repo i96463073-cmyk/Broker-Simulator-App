@@ -37,9 +37,10 @@ jobs:
       - name: Create Android project
         run: npx cap add android
 
-      # THIS IS THE NEW STEP: It generates the V/X icon for Android
-      - name: Generate App Icons
+      # 👇 THIS IS THE MAGIC STEP 👇
+      - name: Generate Android App Icons
         run: npx @capacitor/assets generate --android
+      # 👆 ---------------------- 👆
 
       - name: Copy app into Android project
         run: npx cap sync android
