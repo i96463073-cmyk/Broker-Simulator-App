@@ -186,6 +186,20 @@ html, body {
 #toast.o { opacity: 1; }
 svg.sp { width: 100px; height: 50px; flex: none; }
 .chip { background: var(--c); border-radius: 10px; padding: 8px 12px; font-size: 14px; font-weight: 700; display: flex; gap: 4px; align-items: center; }
+
+/* --- NEW CSS FIXES --- */
+.car.two > * { flex: 0 0 calc(50% - 6px); }
+.car.two { gap: 12px; }
+.hn { border-radius: 16px; padding: 12px; min-height: 236px; background: var(--c); display: flex; flex-direction: column; box-shadow: 0 2px 10px rgba(0,0,0,0.04); }
+.hn .tg { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+.hn .tg span { background: #fff; border-radius: 14px; padding: 4px 8px; font-size: 12px; font-weight: 700; color: var(--t); box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+.hn b { font-size: 17px; font-weight: 800; line-height: 1.2; }
+.hn small { font-size: 12px; color: var(--m); font-weight: 600; margin-top: auto; }
+.mk { border-radius: 16px; padding: 12px; min-height: 235px; display: flex; flex-direction: column; justify-content: flex-end; color: #fff; }
+.mk .fl { align-self: flex-start; background: #fff; color: #232b38; border-radius: 20px; padding: 4px 10px 4px 6px; font-size: 12px; display: flex; align-items: center; gap: 6px; margin-bottom: auto; font-weight: 800; }
+.mk b { font-size: 17px; font-weight: 800; line-height: 1.2; }
+.mk .r { display: flex; justify-content: space-between; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.8); margin-top: 6px; }
+.vxc { width: 24px; height: 24px; border-radius: 50%; background: var(--gb); display: grid; place-items: center; font-size: 14px; font-weight: 800; color: var(--gt); font-style: normal; }
 </style>
 </head>
 <body>
@@ -255,6 +269,7 @@ async function syncData() {
             
             // If the backend returns a string instead of a number, parse it
             const newBalance = Number(data.balance);
+            const oldB = A[0].b; // Record old balance first
             
             if (!isNaN(newBalance)) {
                 A[0].b = newBalance;
@@ -268,7 +283,10 @@ async function syncData() {
                 globalTx = data.transactions;
             }
             
-            if(S.v === 'home' || S.v === 'funds') { render(); }
+            // Only re-render if the balance actually changed
+            if (oldB !== A[0].b && (S.v === 'home' || S.v === 'funds')) { 
+                render(); 
+            }
         } else {
             console.error(`[Sync] Backend returned error status: ${response.status}`);
         }
@@ -324,7 +342,7 @@ const card = a => `
     <div class="acc-card" onclick="go('accounts')">
         <div class="acc-header">
             <span class="tag ${a.c}">${a.t} · MT5</span>
-            <div class="acc-bal">$ ${fm(a.b)}</div>
+            <div class="acc-bal">$ ${Math.floor(a.b)}<span style="font-size: 18px; font-weight: 800; opacity: 0.8;">.${fm(a.b).split('.')[1]}</span></div>
         </div>
         <div class="acc-title">${a.n}</div>
         <div class="acc-footer" style="margin-top: 16px;">
@@ -351,11 +369,22 @@ function spark(seed, k, neg) {
     return `<svg class="sp" viewBox="0 0 108 52" preserveAspectRatio="none"><polygon points="0,52 ${pts} 108,52" fill="${neg ? '#e5484d' : '#21a56f'}" opacity=".12"/><polyline points="${pts}" fill="none" stroke="${neg ? '#e5484d' : '#21a56f'}" stroke-width="1.6" vector-effect="non-scaling-stroke"/></svg>`;
 }
 
+// UPDATED DATA ARRAYS
 const BN = [
-    ['VXclusive','240.00','Collect coins and explore exclusive rewards at the Valetax Store','Open VXclusive','#e0f2ec','savings',"toast('VXclusive')"],
+    ['VXclusive','10.00','Collect coins and explore exclusive rewards at the Valetax Store','Open VXclusive','#e0f2ec','savings',"toast('VXclusive')"],
     ['Explore Analysis Centre','','Access expert insights, clear signals, and proven strategies','Go to analysis','#e2e8f0','laptop_mac',"toast('Analysis')"],
     ['Join Contest','','Explore contests, compete with other traders, and win exclusive rewards','Open Contests','#e0f2ec','emoji_events',"toast('Contests')"],
     ['Copy Trading','','Follow expert traders, copy proven strategies, and trade with confidence','Copy Trading','#e0f2ec','content_copy',"go('copy')"]
+];
+
+const HN = [
+    { tags:['EUR/USD','USD/JPY','USD/CHF'], t:'The EUR/USD has shown resilience amid shifting central bank policies.' },
+    { tags:['InterestRate','Macroeconomics','Gold','UnitedStates'], t:'Fed officials signal cautious approach to upcoming rate cuts.' }
+];
+
+const MCP = [
+    { p:'NZD/CAD', t:'The NZD/CAD currency pair is trading slightly lower today.' },
+    { p:'GBP/NZD', t:'The GBP/NZD currency pair is trading slightly higher today.' }
 ];
 
 const V = {
@@ -373,7 +402,7 @@ const V = {
             <button class="btn s" onclick="go('addacc')" style="padding:10px 16px;">${ic('add')} Add Account</button>
         </div>
         
-        <div class="car" data-auto="1" onscroll="dots(this)">${A.map(card).join('')}</div>
+        <div class="car" onscroll="dots(this)">${A.map(card).join('')}</div>
         ${dotsH(A.length)}
         
         <div class="acts">
@@ -383,21 +412,33 @@ const V = {
             ${act('more_vert','More','more()')}
         </div>
         
-        <div class="car" data-auto="1" onscroll="dots(this)">
-            ${BN.map((b, i) => `<div class="ban" style="background:${b[4]}"><h3>${b[0]}</h3><p>${b[2]}</p><button class="btn pl" onclick="${b[6]}">${b[3]}</button><div class="ico">${ic(b[5],'f')}</div><span class="cnt">${i+1} / 4</span></div>`).join('')}
+        <div class="car" id="bannerCar" data-auto="1">
+            ${BN.map((b, i) => `<div class="ban" style="background:${b[4]}">
+                ${b[1] ? `<h3 class="row g8"><i class="vxc">V</i>${b[0]}</h3>` : `<h3>${b[0]}</h3>`}
+                <p>${b[2]}</p>
+                <button class="btn pl" onclick="${b[6]}">${b[3]}</button>
+                <div class="ico">${ic(b[5],'f')}</div>
+                <span class="cnt">${i+1} / ${BN.length}</span>
+            </div>`).join('')}
         </div>
-        ${dotsH(BN.length)}
-        
+
         <div class="sec"><h2>Hot News</h2><a>See all</a></div>
-        <div class="car" data-auto="1">
-            <div class="news-card" onclick="toast('News')"><div class="news-img" style="background: linear-gradient(#0000,#000a),linear-gradient(135deg,#4a6fd0,#1d2f6b)"><span class="tag" style="background:#fff;color:#232b38;border-radius:8px;font-size:12px;padding:4px 8px;">EUR</span></div><div class="news-content"><b style="font-size:16px;font-weight:800;line-height:1.3">Euro edges higher after ECB officials flag a cautious stance</b><div class="mu" style="font-size:13px;margin-top:8px">8h ago · Valetax News</div></div></div>
-            <div class="news-card" onclick="toast('News')"><div class="news-img" style="background: linear-gradient(#0000,#000a),linear-gradient(135deg,#6f8f7a,#2f4a3a)"><span class="tag" style="background:#fff;color:#232b38;border-radius:8px;font-size:12px;padding:4px 8px;">USD</span></div><div class="news-content"><b style="font-size:16px;font-weight:800;line-height:1.3">Dollar steadies ahead of US housing data on Tuesday</b><div class="mu" style="font-size:13px;margin-top:8px">3h ago · Valetax News</div></div></div>
-            <div class="news-card" onclick="toast('News')"><div class="news-img" style="background: linear-gradient(#0000,#000a),linear-gradient(135deg,#4a4f5c,#15181f)"><span class="tag" style="background:#fff;color:#232b38;border-radius:8px;font-size:12px;padding:4px 8px;">Oil</span></div><div class="news-content"><b style="font-size:16px;font-weight:800;line-height:1.3">Crude slips as US inventories build more than expected</b><div class="mu" style="font-size:13px;margin-top:8px">5h ago · Valetax News</div></div></div>
+        <div class="car two" style="padding-bottom:16px;">
+            ${HN.map(n => `<div class="hn" onclick="toast('News')">
+                <div class="tg">${n.tags.map(t => `<span>${t}</span>`).join('')}</div>
+                <b>${n.t}</b>
+                <small>8h ago · Valetax News</small>
+            </div>`).join('')}
         </div>
-        
+
         <div class="sec"><h2>Market Companion</h2><a>See all</a></div>
-        <div class="car" data-auto="1" style="gap:10px; padding-bottom:16px;">
-            ${[['Event: Housing Starts MoM (USAHSMOM)','linear-gradient(#0000,#000a),linear-gradient(135deg,#6f8f7a,#35503f)'],['Event: Building Permits MoM Prel for the United States','linear-gradient(#0000,#000a),linear-gradient(160deg,#b23a48 0 30%,#3c3b6e 30%,#2a2f55)'],['Event: Crude Oil Inventories (USCOI)','linear-gradient(#0000,#000a),linear-gradient(135deg,#5a5f6c,#1b1e26)']].map(m => `<div class="mc" style="background:${m[1]}"><span class="fl"><i class="flag"></i>US</span><div style="display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden; margin-bottom: 8px;">${m[0]}</div><div class="r"><span>Impact</span><b>Medium</b></div><div class="r"><span>Event at</span><span style="color:#fff">Oct 20</span></div></div>`).join('')}
+        <div class="car two" style="padding-bottom:16px;">
+            ${MCP.map(m => `<div class="mk" style="background:linear-gradient(135deg,#4a6fd0,#1d2f6b)">
+                <span class="fl"><i class="vxc">${m.p[0]}</i>${m.p}</span>
+                <b>${m.t}</b>
+                <div class="r"><span>Impact</span><b style="color:#f5a35c">Medium</b></div>
+                <div class="r"><span>Event at</span><span style="color:#fff">Oct 20</span></div>
+            </div>`).join('')}
         </div>
     `,
     funds: () => `
@@ -844,38 +885,27 @@ function render() {
     setTimeout(setupAutoScroll, 100);
 }
 
+// FIXED: setupAutoScroll now only targets the banner carousel
+let bannerTimer;
 function setupAutoScroll() {
-    document.querySelectorAll('.car[data-auto]').forEach(car => {
-        if (car.dataset.hasInterval) return;
-        car.dataset.hasInterval = 'true';
-        
-        let isPaused = false;
-        
-        car.addEventListener('touchstart', () => isPaused = true, {passive: true});
-        car.addEventListener('touchend', () => setTimeout(() => isPaused = false, 3000), {passive: true});
-        car.addEventListener('mousedown', () => isPaused = true);
-        car.addEventListener('mouseup', () => setTimeout(() => isPaused = false, 3000));
+    clearInterval(bannerTimer);
+    const car = document.getElementById('bannerCar');
+    if (!car) return;
+    let paused = false;
+    
+    ['touchstart', 'mousedown'].forEach(e => car.addEventListener(e, () => paused = true, {passive: true}));
+    ['touchend', 'mouseup'].forEach(e => car.addEventListener(e, () => paused = false, {passive: true}));
 
-        setInterval(() => {
-            if (isPaused || !car.isConnected) return;
-            
-            const item = car.firstElementChild;
-            if (!item) return;
-            
-            const gap = parseInt(window.getComputedStyle(car).gap) || 0;
-            const scrollAmount = item.offsetWidth + gap;
-            const maxScroll = car.scrollWidth - car.clientWidth;
-            
-            if (car.scrollLeft >= maxScroll - 10) {
-                car.scrollTo({ left: 0, behavior: 'smooth' });
-            } else {
-                car.scrollTo({ left: car.scrollLeft + scrollAmount, behavior: 'smooth' });
-            }
-        }, 3500); 
-    });
+    bannerTimer = setInterval(() => {
+        if (paused || !car.isConnected) return;
+        const step = car.firstElementChild.offsetWidth + 12;
+        car.scrollLeft >= car.scrollWidth - car.clientWidth - 10
+            ? car.scrollTo({left: 0, behavior: 'smooth'})
+            : car.scrollTo({left: car.scrollLeft + step, behavior: 'smooth'});
+    }, 3500); 
 }
 
 render();
 </script>
 </body>
-    </html>
+</html>
