@@ -219,18 +219,17 @@ svg.sp { width: 100px; height: 50px; flex: none; }
 // 🔗 CONFIGURATION (YOUR BACKEND URL)
 // ==========================================
 const API_BASE_URL = 'https://mt5-api-backend.i96463073.workers.dev';
+const ACCOUNT_ID = 'isaac_01'; 
+const API_KEY = 'YOUR_DEMO_DEPOSIT_KEY'; // MUST MATCH YOUR CLOUDFLARE SECRET KEY
 
 // Core Data
 const A = [
-    { id: '581022950', n: 'Isaac', t: 'BOOSTER', c: '', b: 0.00 },
-    { id: '501148369', n: 'My Real Account', t: 'STANDARD', c: 'g', b: 0.52 }
+    { id: ACCOUNT_ID, n: 'Isaac', t: 'BOOSTER', c: '', b: 0.00 },
+    { id: '501148369', n: 'My Real Account', t: 'STANDARD', c: 'g', b: 0.00 }
 ];
 const RATE = 131.7, fm = n => Number(n).toFixed(2);
-let totalFunds = 0.52; 
-let globalTx = [
-    { d: '18 October, 2026', a: 9.87, id: '45003435', s: 'x', t: '18.10.2026 08:47', ty: 'D' },
-    { d: '14 October, 2026', a: 9.87, id: '44447591', s: 'ok', t: '14.10.2026 11:50', ty: 'D' }
-];
+let totalFunds = 0.00; 
+let globalTx = [];
 
 const S = { v: 'home', prev: 'home', tab: 0, step: 1, meth: 'Mobile Money', amt: '', from: null, to: 1, tamt: '', st: 1, ai: 1 };
 
@@ -261,76 +260,78 @@ function sheet(h) {
 function cs() { $('#ov').classList.remove('o'); }
 
 // ==========================================
-// 🔗 API INTEGRATION LOGIC (WITH DEBUGGING)
+// 🔗 API INTEGRATION LOGIC (SHARED BACKEND)
 // ==========================================
 
 async function syncData() {
     try {
-        console.log(`[Sync] Fetching balance for account ${A[0].id}...`);
-        const response = await fetch(`${API_BASE_URL}/api/sync?account=${A[0].id}`);
+        const response = await fetch(`${API_BASE_URL}/api/sync?account=${ACCOUNT_ID}`);
         
         if(response.ok) {
             const data = await response.json();
-            console.log(`[Sync] Received data from backend:`, data);
-            
-            // If the backend returns a string instead of a number, parse it
             const newBalance = Number(data.balance);
-            const oldB = A[0].b; // Record old balance first
+            const oldB = A[0].b;
             
             if (!isNaN(newBalance)) {
                 A[0].b = newBalance;
                 totalFunds = A[0].b + A[1].b;
-                console.log(`[Sync] Updated local balance to: $${A[0].b}`);
-            } else {
-                console.warn(`[Sync] Backend did not return a valid balance number.`, data);
             }
             
+            // Map backend transactions to Valetax UI format
             if (data.transactions && data.transactions.length > 0) {
-                globalTx = data.transactions;
+                globalTx = data.transactions.map(tx => {
+                    const date = new Date(tx.created_at || Date.now());
+                    const dateStr = date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+                    const timeStr = date.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }) + ' ' + date.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+                    
+                    return {
+                        d: dateStr,
+                        a: tx.amount,
+                        id: tx.id.substring(0, 8).toUpperCase(),
+                        s: tx.status === 'COMPLETED' ? 'ok' : 'p',
+                        t: timeStr,
+                        ty: tx.type.includes('DEPOSIT') ? 'D' : 'W'
+                    };
+                });
             }
             
-            // Only re-render if the balance actually changed
-            if (oldB !== A[0].b && (S.v === 'home' || S.v === 'funds')) { 
+            // Re-render if on a screen that shows balance
+            if (oldB !== A[0].b && (S.v === 'home' || S.v === 'funds' || S.v === 'accounts')) { 
                 render(); 
             }
-        } else {
-            console.error(`[Sync] Backend returned error status: ${response.status}`);
         }
     } catch(e) { 
-        console.error("[Sync] Network error connecting to backend:", e); 
+        console.error("[Sync] Network error:", e); 
     }
 }
 
 async function sendDepositToMT5(amountUSD) {
     try {
-        toast('Contacting MT5 Server...');
-        console.log(`[Deposit] Sending request to ${API_BASE_URL}/api/deposit...`);
+        toast('Contacting Server...');
         
         const response = await fetch(`${API_BASE_URL}/api/deposit`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ accountId: A[0].id, amount: amountUSD, currency: 'USD' })
+            headers: { 
+                'Content-Type': 'application/json',
+                'X-Demo-Key': API_KEY // IMPORTANT: Secures the deposit
+            },
+            body: JSON.stringify({ accountId: ACCOUNT_ID, amount: amountUSD, currency: 'USD' })
         });
 
         if (response.ok) {
-            const result = await response.json().catch(() => ({}));
-            console.log(`[Deposit] Server responded with success:`, result);
             toast('Deposit successful!');
-            
-            // Wait 1 second for the MT5 bridge to process, then sync
-            setTimeout(syncData, 1000); 
+            setTimeout(syncData, 1000); // Sync new balance
             go('funds');
         } else {
-            const errText = await response.text();
-            console.error(`[Deposit] Server returned error ${response.status}:`, errText);
-            toast('Deposit failed. See console.');
+            const err = await response.json();
+            toast('Deposit failed: ' + (err.error || 'Check key'));
         }
     } catch (e) { 
-        console.error("[Deposit] Network error:", e);
         toast('Network error during deposit'); 
     }
 }
 
+// Initial Sync & Auto-refresh every 15 seconds
 syncData();
 setInterval(syncData, 15000);
 
@@ -565,11 +566,11 @@ const V = {
         ${hdr('Profile','back()')}
         <div style="text-align:center;margin:4px 0 18px">
             <div style="position:relative;display:inline-block">
-                <div style="width:84px;height:84px;border-radius:50%;background:var(--c);display:grid;place-items:center;font-size:28px;font-weight:600">MK</div>
+                <div style="width:84px;height:84px;border-radius:50%;background:var(--c);display:grid;place-items:center;font-size:28px;font-weight:600">IK</div>
                 <span class="ci" style="position:absolute;right:-4px;bottom:0;width:28px;height:28px;background:#25b07c;border:3px solid var(--bg);border-radius:50%;display:grid;place-items:center;color:#fff">${ic('check').replace('class="ms','class="ms" style="font-size:16px" data-x="')}</span>
             </div>
-            <h1 style="font-size:20px;font-weight:800;margin-top:10px;letter-spacing:.2px">MAXWEL KIPRONO YEGON</h1>
-            <div class="mu" style="font-size:16px;margin-top:4px">borrose607@gmail.com</div>
+            <h1 style="font-size:20px;font-weight:800;margin-top:10px;letter-spacing:.2px">ISAAC KIBET</h1>
+            <div class="mu" style="font-size:16px;margin-top:4px">isaac.kibet@example.com</div>
         </div>
         <div class="ban" style="margin:0 16px 14px;background:linear-gradient(120deg,#dff5e9,#cdeedc);min-height:150px; width:auto; border-radius:16px;">
             <h3>Invite and earn</h3>
@@ -616,7 +617,7 @@ const V = {
             </div>
         </div>
         <div class="row sb" style="padding:14px 16px">
-            <div><div style="font-size:22px;font-weight:800">581022950</div><div class="mu" style="font-size:15px">Isaac</div></div>
+            <div><div style="font-size:22px;font-weight:800">${ACCOUNT_ID}</div><div class="mu" style="font-size:15px">Isaac</div></div>
             <button class="btn s" onclick="trade()">${ic('trending_up')} Trade</button>
         </div>
         ${[
@@ -728,6 +729,8 @@ const V = {
 
 function txs(l) {
     let d = '';
+    if(!l || l.length === 0) return '<div style="text-align:center;padding:30px;color:var(--l);font-weight:700">No transactions yet</div>';
+    
     return l.map(t => {
         const h = t.d != d ? `<div class="dh">${t.d}</div>` : '';
         d = t.d;
@@ -909,7 +912,9 @@ function setupAutoScroll() {
     }, 3500); 
 }
 
+// INITIALIZE APP & SYNC
 render();
+syncData();
 </script>
 </body>
 </html>
