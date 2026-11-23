@@ -220,20 +220,29 @@ const API_BASE_URL = 'https://mt5-api-backend.i96463073.workers.dev';
 const ACCOUNT_ID = 'isaac_01'; 
 const API_KEY = 'IsaacSecret2026'; 
 
-const A = [
+// 🔥 PERSISTENT STATE INITIALIZATION
+const defaultA = [
     { id: '581022950', n: 'Isaac', t: 'BOOSTER', c: '', b: 0.00 },
     { id: '501148369', n: 'My Real Account', t: 'STANDARD', c: 'g', b: 0.52 }
 ];
+let A = JSON.parse(localStorage.getItem('valetax_accounts')) || defaultA;
+let totalFunds = Number(localStorage.getItem('valetax_totalFunds')) || 0.52;
+let openPositions = JSON.parse(localStorage.getItem('valetax_positions')) || [];
+let globalTx = [];
+
 const RATE = 132.11; 
 const fm = n => Number(n).toFixed(2);
-let totalFunds = 0.52; 
-let globalTx = [];
-let openPositions = [];
-
 const S = { v: 'home', prev: 'home', tab: 0, step: 1, meth: 'Mobile Money', amt: '', wamt: '', from: null, to: 1, tamt: '', st: 1, ai: 1 };
 
 const $ = s => document.querySelector(s);
 const ic = (n, x = '') => `<span class="ms ${x}">${n}</span>`;
+
+// Save function to keep data across refreshes
+function saveState() {
+    localStorage.setItem('valetax_accounts', JSON.stringify(A));
+    localStorage.setItem('valetax_totalFunds', totalFunds);
+    localStorage.setItem('valetax_positions', JSON.stringify(openPositions));
+}
 
 function toast(m) {
     const t = $('#toast');
@@ -287,6 +296,7 @@ async function syncData() {
             if (!isNaN(newBalance)) {
                 A[0].b = newBalance;
                 totalFunds = A[0].b + A[1].b;
+                saveState(); // 🔥 Save synced balance
             }
             if (data.transactions && data.transactions.length > 0) {
                 globalTx = data.transactions.map(tx => {
@@ -312,6 +322,7 @@ async function sendDepositToMT5(amountUSD) {
         if (response.ok) {
             A[1].b += amountUSD; 
             totalFunds = A[0].b + A[1].b;
+            saveState(); // 🔥 Save state
             toast('Deposit successful!');
             setTimeout(syncData, 800);
             go('funds');
@@ -335,6 +346,7 @@ async function sendWithdrawToMT5(amountUSD) {
             if(data.success) {
                 A[0].b = Math.max(0, A[0].b - amountUSD);
                 totalFunds = A[0].b + A[1].b;
+                saveState(); // 🔥 Save state
                 toast('Withdrawal successful!');
                 setTimeout(syncData, 800);
                 go('home');
@@ -894,6 +906,7 @@ function acctType() {
     `);
 }
 
+// 🔥 TRADE LOGIC UPDATED FOR PERSISTENCE
 function openTradePrompt() {
     const amt = prompt("Enter trade size in USD (Balance will only change when you close the trade):");
     if (!amt || isNaN(amt) || amt <= 0) return;
@@ -902,6 +915,7 @@ function openTradePrompt() {
     const type = Math.random() > 0.5 ? 'BUY' : 'SELL';
     const id = Date.now().toString().slice(-4);
     openPositions.push({ id, amount: +amt, pair: 'EUR/USD', type });
+    saveState(); // 🔥 Save new trade
     toast('Trade Opened! Balance locked until closed.');
     render();
 }
@@ -918,6 +932,7 @@ function closeTrade(id) {
     totalFunds = A[0].b + A[1].b;
     
     openPositions.splice(idx, 1);
+    saveState(); // 🔥 Save closed trade
     
     toast(`Trade Closed! PnL: ${pnl > 0 ? '+' : ''}${fm(pnl)} USD`);
     render();
@@ -954,6 +969,7 @@ function doT() {
     A[S.to].b += +S.tamt;
     totalFunds = A[0].b + A[1].b;
     S.tamt = ''; S.from = null;
+    saveState(); // 🔥 Save transfer
     toast('Transfer complete');
     go('home');
 }
