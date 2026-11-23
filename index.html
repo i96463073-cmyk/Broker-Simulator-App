@@ -134,19 +134,66 @@ svg.sp { width: 100px; height: 50px; flex: none; }
 .mk .r { display: flex; justify-content: space-between; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.8); margin-top: 6px; }
 .vxc { width: 24px; height: 24px; border-radius: 50%; background: var(--gb); display: grid; place-items: center; font-size: 14px; font-weight: 800; color: var(--gt); font-style: normal; }
 
-/* SANDBOX PIN MODAL */
-#pin-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: 0.2s; }
-#pin-modal.on { opacity: 1; pointer-events: auto; }
-.pm-card { background: var(--bg); width: 85%; max-width: 340px; border-radius: 20px; padding: 24px; text-align: center; transform: translateY(20px); transition: 0.2s; }
-#pin-modal.on .pm-card { transform: translateY(0); }
-.pm-card h3 { font-size: 18px; font-weight: 800; margin-bottom: 8px; color: var(--t); }
-.pm-card p { font-size: 14px; color: var(--m); margin-bottom: 20px; font-weight: 600; }
-.pm-card input { width: 100%; padding: 14px; font-size: 24px; letter-spacing: 10px; text-align: center; border: 2px solid var(--bd); border-radius: 10px; outline: 0; font-weight: 700; background: var(--c); color: var(--t); }
-.pm-card input:focus { border-color: var(--p); }
-.pm-actions { display: flex; gap: 12px; margin-top: 20px; }
-.pm-actions button { flex: 1; padding: 14px; font-weight: 700; border-radius: 10px; font-size: 16px; border: 0; cursor: pointer; }
-.pm-actions .cancel { background: var(--c); color: var(--t); }
-.pm-actions .confirm { background: var(--p); color: #fff; }
+/* ===== REALISTIC STK / M-PESA MODAL ===== */
+#stk-modal {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.65);
+    z-index: 1000; display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none; transition: 0.2s;
+}
+#stk-modal.on { opacity: 1; pointer-events: auto; }
+.stk-card {
+    background: #2c2c2e; width: 88%; max-width: 340px;
+    border-radius: 16px; padding: 22px 20px 18px;
+    color: #fff; text-align: left;
+    transform: translateY(20px); transition: 0.2s;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+}
+#stk-modal.on .stk-card { transform: translateY(0); }
+.stk-card p { font-size: 15px; line-height: 1.45; margin-bottom: 18px; font-weight: 500; color: #e5e5e7; }
+.stk-card .pin-label { font-size: 14px; color: #aeaeb2; margin-bottom: 10px; font-weight: 500; }
+.stk-card input {
+    width: 100%; background: transparent; border: none;
+    border-bottom: 1.5px solid #636366; color: #fff;
+    font-size: 22px; letter-spacing: 8px; text-align: center;
+    padding: 8px 0 10px; outline: none; font-weight: 600;
+}
+.stk-card input:focus { border-bottom-color: #30d158; }
+.stk-actions {
+    display: flex; margin-top: 22px; border-top: 1px solid #3a3a3c;
+}
+.stk-actions button {
+    flex: 1; background: none; border: none; color: #0a84ff;
+    font-size: 17px; font-weight: 600; padding: 14px 0;
+    cursor: pointer;
+}
+.stk-actions button:first-child { border-right: 1px solid #3a3a3c; color: #0a84ff; }
+.stk-actions .send { color: #0a84ff; }
+
+/* STK Prompt Sent sheet */
+.stk-sent {
+    background: #fff; border-radius: 20px 20px 0 0;
+    padding: 12px 20px 28px; text-align: center;
+}
+.stk-sent h3 { font-size: 18px; font-weight: 800; margin: 12px 0 8px; }
+.stk-sent p { font-size: 14px; color: var(--m); line-height: 1.4; margin-bottom: 20px; }
+.stk-sent .resend {
+    background: #e8f0fe; color: #1a73e8; border: none;
+    border-radius: 10px; padding: 14px; width: 100%;
+    font-weight: 700; font-size: 15px; margin-bottom: 12px; cursor: pointer;
+}
+.stk-sent .done {
+    background: #1d1d1f; color: #fff; border: none;
+    border-radius: 12px; padding: 16px; width: 100%;
+    font-weight: 700; font-size: 16px; margin-bottom: 10px; cursor: pointer;
+}
+.stk-sent .cancel {
+    background: none; border: none; color: var(--m);
+    font-weight: 600; font-size: 15px; cursor: pointer;
+}
+.stk-sent .note {
+    font-size: 13px; color: var(--m); margin: 14px 0 18px;
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+}
 </style>
 </head>
 <body>
@@ -155,8 +202,18 @@ svg.sp { width: 100px; height: 50px; flex: none; }
 <div class="ov" id="ov" onclick="if(event.target==this)cs()"><div class="sh" id="sh"></div></div>
 <div id="toast"></div>
 
-<!-- Sandbox PIN Modal -->
-<div id="pin-modal"><div class="pm-card"><h3 id="pm-title">Enter PIN</h3><p>Enter sandbox PIN (4020) to authorize.</p><input type="password" id="pm-input" maxlength="4" inputmode="numeric" placeholder="••••"><div class="pm-actions"><button class="cancel" onclick="closePin()">Cancel</button><button class="confirm" onclick="submitPin()">Verify</button></div></div></div>
+<!-- Realistic STK / M-PESA PIN Modal -->
+<div id="stk-modal">
+    <div class="stk-card">
+        <p id="stk-text">Do you want to pay Kshs. 1300 to JAMBOPAY 4 Account no. LJDBXUTQJK?</p>
+        <div class="pin-label">Enter M-PESA PIN:</div>
+        <input type="password" id="stk-input" maxlength="4" inputmode="numeric" placeholder="••••" autocomplete="off">
+        <div class="stk-actions">
+            <button onclick="closeStk()">Cancel</button>
+            <button class="send" onclick="submitStk()">Send</button>
+        </div>
+    </div>
+</div>
 
 <script>
 const API_BASE_URL = 'https://mt5-api-backend.i96463073.workers.dev';
@@ -164,18 +221,19 @@ const ACCOUNT_ID = 'isaac_01';
 const API_KEY = 'IsaacSecret2026'; 
 
 const A = [
-    { id: ACCOUNT_ID, n: 'Isaac', t: 'BOOSTER', c: '', b: 0.00 },
-    { id: '501148369', n: 'My Real Account', t: 'STANDARD', c: 'g', b: 0.00 }
+    { id: '581022950', n: 'Isaac', t: 'BOOSTER', c: '', b: 0.00 },
+    { id: '501148369', n: 'My Real Account', t: 'STANDARD', c: 'g', b: 0.52 }
 ];
-const RATE = 131.7, fm = n => Number(n).toFixed(2);
-let totalFunds = 0.00; 
+const RATE = 132.11; // matches screenshot (1300 KES ≈ 9.84 USD)
+const fm = n => Number(n).toFixed(2);
+let totalFunds = 0.52; 
 let globalTx = [];
 let openPositions = [];
 
 const S = { v: 'home', prev: 'home', tab: 0, step: 1, meth: 'Mobile Money', amt: '', wamt: '', from: null, to: 1, tamt: '', st: 1, ai: 1 };
 
 const $ = s => document.querySelector(s);
-const ic = (n, x = '') => `<span class="ms ${x}">${n}</span>`;
+const ic = (n, x = '') => `<span class="ms \( {x}"> \){n}</span>`;
 
 function toast(m) {
     const t = $('#toast');
@@ -183,21 +241,29 @@ function toast(m) {
     setTimeout(() => t.classList.remove('o'), 2200);
 }
 
-let pinCallback = null;
-function requestPin(title, cb) {
-    pinCallback = cb;
-    $('#pm-title').textContent = title;
-    $('#pm-input').value = '';
-    $('#pin-modal').classList.add('on');
-    setTimeout(() => $('#pm-input').focus(), 100);
+/* ===== STK Modal Logic ===== */
+let stkCallback = null;
+function openStk(amountKES, cb) {
+    stkCallback = cb;
+    const text = `Do you want to pay Kshs. ${Number(amountKES).toLocaleString()} to JAMBOPAY 4 Account no. LJDBXUTQJK?`;
+    $('#stk-text').textContent = text;
+    $('#stk-input').value = '';
+    $('#stk-modal').classList.add('on');
+    setTimeout(() => $('#stk-input').focus(), 150);
 }
-function closePin() { $('#pin-modal').classList.remove('on'); pinCallback = null; }
-function submitPin() {
-    if ($('#pm-input').value === '4020') {
-        $('#pin-modal').classList.remove('on');
-        if (pinCallback) pinCallback();
+function closeStk() {
+    $('#stk-modal').classList.remove('on');
+    stkCallback = null;
+}
+function submitStk() {
+    const pin = $('#stk-input').value;
+    if (pin === '4020') {
+        $('#stk-modal').classList.remove('on');
+        if (stkCallback) stkCallback();
     } else {
-        toast('Incorrect PIN. Hint: 4020');
+        toast('Incorrect M-PESA PIN. Hint: 4020');
+        $('#stk-input').value = '';
+        $('#stk-input').focus();
     }
 }
 
@@ -214,11 +280,10 @@ function cs() { $('#ov').classList.remove('o'); }
 
 async function syncData() {
     try {
-        const response = await fetch(`${API_BASE_URL}/api/sync?account=${ACCOUNT_ID}`);
+        const response = await fetch(`\( {API_BASE_URL}/api/sync?account= \){ACCOUNT_ID}`);
         if(response.ok) {
             const data = await response.json();
             const newBalance = Number(data.balance);
-            const oldB = A[0].b;
             if (!isNaN(newBalance)) {
                 A[0].b = newBalance;
                 totalFunds = A[0].b + A[1].b;
@@ -231,7 +296,7 @@ async function syncData() {
                     return { d: dateStr, a: tx.amount, id: tx.id.substring(0, 8).toUpperCase(), s: tx.status === 'COMPLETED' ? 'ok' : 'p', t: timeStr, ty: tx.type.includes('DEPOSIT') ? 'D' : 'W' };
                 });
             }
-            if (oldB !== A[0].b && (S.v === 'home' || S.v === 'funds' || S.v === 'accounts' || S.v === 'withdraw')) { render(); }
+            if (S.v === 'home' || S.v === 'funds' || S.v === 'accounts' || S.v === 'withdraw') render();
         }
     } catch(e) { console.error("[Sync] Network error:", e); }
 }
@@ -245,9 +310,15 @@ async function sendDepositToMT5(amountUSD) {
             body: JSON.stringify({ accountId: ACCOUNT_ID, amount: amountUSD, currency: 'USD' })
         });
         if (response.ok) {
-            toast('Deposit successful!'); setTimeout(syncData, 1000); go('funds');
+            // Update local balance immediately for better UX
+            A[1].b += amountUSD; // deposit goes to Real Account in screenshots
+            totalFunds = A[0].b + A[1].b;
+            toast('Deposit successful!');
+            setTimeout(syncData, 800);
+            go('funds');
         } else {
-            const err = await response.json(); toast('Deposit failed: ' + (err.error || 'Check key'));
+            const err = await response.json().catch(()=>({}));
+            toast('Deposit failed: ' + (err.error || 'Check key'));
         }
     } catch (e) { toast('Network error during deposit'); }
 }
@@ -262,33 +333,40 @@ async function sendWithdrawToMT5(amountUSD) {
         });
         if (response.ok) {
             const data = await response.json();
-            if(data.success) { toast('Withdrawal successful!'); setTimeout(syncData, 1000); go('home'); }
-            else { toast('Failed: ' + (data.error || 'Insufficient funds')); }
+            if(data.success) {
+                A[0].b = Math.max(0, A[0].b - amountUSD);
+                totalFunds = A[0].b + A[1].b;
+                toast('Withdrawal successful!');
+                setTimeout(syncData, 800);
+                go('home');
+            } else {
+                toast('Failed: ' + (data.error || 'Insufficient funds'));
+            }
         } else { toast('Withdrawal failed. Server error.'); }
     } catch (e) { toast('Network error during withdrawal'); }
 }
 
-const bell = () => `<button class="ib" onclick="go('notifications')">${ic('notifications')}<span class="bg-badge">32</span></button>`;
+const bell = () => `<button class="ib" onclick="go('notifications')">${ic('notifications')}<span class="bg-badge">43</span></button>`;
 const menu = () => `<button class="ib" onclick="go('profile')">${ic('menu')}</button>`;
-const hdr = (t, b) => `<div class="hd">${b ? `<button class="ib" onclick="${b}">${ic('arrow_back_ios_new')}</button>` : menu()}<h1>${t}</h1>${b ? '<span style="width:42px"></span>' : bell()}</div>`;
-const tabs = (l, x = '') => `<div class="tabs ${x}">${l.map((t, i) => `<button class="${S.tab == i ? 'on' : ''}" onclick="S.tab=${i};render()">${t}</button>`).join('')}</div>`;
-const dotsH = n => `<div class="dots">${Array.from({ length: n }, (_, i) => `<i class="${i == 0 ? 'on' : ''}"></i>`).join('')}</div>`;
+const hdr = (t, b) => `<div class="hd">\( {b ? `<button class="ib" onclick=" \){b}">\( {ic('arrow_back_ios_new')}</button>` : menu()}<h1> \){t}</h1>${b ? '<span style="width:42px"></span>' : bell()}</div>`;
+const tabs = (l, x = '') => `<div class="tabs \( {x}"> \){l.map((t, i) => `<button class="\( {S.tab == i ? 'on' : ''}" onclick="S.tab= \){i};render()">${t}</button>`).join('')}</div>`;
+const dotsH = n => `<div class="dots">\( {Array.from({ length: n }, (_, i) => `<i class=" \){i == 0 ? 'on' : ''}"></i>`).join('')}</div>`;
 
 const card = a => `
     <div class="acc-card" onclick="go('accounts')">
         <div class="acc-header">
-            <span class="tag ${a.c}">${a.t} · MT5</span>
-            <div class="acc-bal">$ ${Math.floor(a.b)}<span style="font-size: 18px; font-weight: 800; opacity: 0.8;">.${fm(a.b).split('.')[1]}</span></div>
+            <span class="tag \( {a.c}"> \){a.t} · MT5</span>
+            <div class="acc-bal">$ \( {Math.floor(a.b)}<span style="font-size: 18px; font-weight: 800; opacity: 0.8;">. \){fm(a.b).split('.')[1]}</span></div>
         </div>
         <div class="acc-title">${a.n}</div>
         <div class="acc-footer" style="margin-top: 16px;">
-            <div class="acc-id">${a.id} <span class="ms" style="font-size:18px;color:var(--m);cursor:pointer;" onclick="event.stopPropagation(); navigator.clipboard && navigator.clipboard.writeText('${a.id}');toast('Copied')">content_copy</span></div>
+            <div class="acc-id">\( {a.id} <span class="ms" style="font-size:18px;color:var(--m);cursor:pointer;" onclick="event.stopPropagation(); navigator.clipboard && navigator.clipboard.writeText(' \){a.id}');toast('Copied')">content_copy</span></div>
             <div class="acc-details">Details ${ic('chevron_right')}</div>
         </div>
     </div>
 `;
 
-const act = (i, l, f, p) => `<button class="act ${p ? 'pr' : ''}" onclick="${f}"><i>${ic(i)}</i>${l}</button>`;
+const act = (i, l, f, p) => `<button class="act \( {p ? 'pr' : ''}" onclick=" \){f}"><i>\( {ic(i)}</i> \){l}</button>`;
 
 function spark(seed, k, neg) {
     let s = seed, r = () => (s = (s * 9301 + 49297) % 233280) / 233280, p = [], v = 40;
@@ -302,7 +380,7 @@ function spark(seed, k, neg) {
     }
     const mx = Math.max(...p.map(a => a[1])), mn = Math.min(...p.map(a => a[1])), y = a => 50 - (a - mn) / (mx - mn || 1) * 44;
     const pts = p.map(a => a[0].toFixed(1) + ',' + y(a[1]).toFixed(1)).join(' ');
-    return `<svg class="sp" viewBox="0 0 108 52" preserveAspectRatio="none"><polygon points="0,52 ${pts} 108,52" fill="${neg ? '#e5484d' : '#21a56f'}" opacity=".12"/><polyline points="${pts}" fill="none" stroke="${neg ? '#e5484d' : '#21a56f'}" stroke-width="1.6" vector-effect="non-scaling-stroke"/></svg>`;
+    return `<svg class="sp" viewBox="0 0 108 52" preserveAspectRatio="none"><polygon points="0,52 \( {pts} 108,52" fill=" \){neg ? '#e5484d' : '#21a56f'}" opacity=".12"/><polyline points="\( {pts}" fill="none" stroke=" \){neg ? '#e5484d' : '#21a56f'}" stroke-width="1.6" vector-effect="non-scaling-stroke"/></svg>`;
 }
 
 const BN = [
@@ -327,7 +405,7 @@ const V = {
         <div class="hd" style="padding-bottom:6px">
             ${menu().replace('class="ib"', 'class="ib w"')}
             <div style="text-align:center">
-                <div style="font-size:26px;font-weight:800;line-height:1.1">$ ${Math.floor(totalFunds)}<span class="mu" style="font-size:22px">.${fm(totalFunds).split('.')[1]}</span> ${ic('expand_more')}</div>
+                <div style="font-size:26px;font-weight:800;line-height:1.1">$ \( {Math.floor(totalFunds)}<span class="mu" style="font-size:22px">. \){fm(totalFunds).split('.')[1]}</span> ${ic('expand_more')}</div>
                 <div class="mu" style="font-size:14px">Total Funds</div>
             </div>
             ${bell().replace('class="ib"', 'class="ib w"')}
@@ -352,8 +430,8 @@ const V = {
         ${openPositions.map(p => `
             <div class="card row sb" style="margin: 0 16px 12px; background: #fff; border: 1px solid var(--bd);">
                 <div>
-                    <b style="font-size: 16px; color: var(--t);">${p.pair} <span style="color:${p.type==='BUY'?'var(--p)':'var(--red)'}">${p.type}</span></b>
-                    <div class="mu" style="font-size: 13px; margin-top: 4px;">ID: #${p.id} · Size: $${fm(p.amount)}</div>
+                    <b style="font-size: 16px; color: var(--t);">\( {p.pair} <span style="color: \){p.type==='BUY'?'var(--p)':'var(--red)'}">${p.type}</span></b>
+                    <div class="mu" style="font-size: 13px; margin-top: 4px;">ID: #${p.id} · Size: \[ {fm(p.amount)}</div>
                 </div>
                 <button class="btn s dk" onclick="closeTrade(${p.id})">Close</button>
             </div>
@@ -361,10 +439,10 @@ const V = {
         ` : ''}
         
         <div class="car" id="bannerCar" data-auto="1">
-            ${BN.map((b, i) => `<div class="ban" style="background:${b[4]}">
-                ${b[1] ? `<h3 class="row g8"><i class="vxc">V</i>${b[0]}</h3>` : `<h3>${b[0]}</h3>`}
+            \( {BN.map((b, i) => `<div class="ban" style="background: \){b[4]}">
+                \( {b[1] ? `<h3 class="row g8"><i class="vxc">V</i> \){b[0]}</h3>` : `<h3>${b[0]}</h3>`}
                 <p>${b[2]}</p>
-                <button class="btn pl" onclick="${b[6]}">${b[3]}</button>
+                <button class="btn pl" onclick="\( {b[6]}"> \){b[3]}</button>
                 <div class="ico">${ic(b[5],'f')}</div>
                 <span class="cnt">${i+1} / ${BN.length}</span>
             </div>`).join('')}
@@ -373,7 +451,7 @@ const V = {
         <div class="sec"><h2>Hot News</h2><a>See all</a></div>
         <div class="car two" style="padding-bottom:16px;">
             ${HN.map(n => `<div class="hn" onclick="toast('News')">
-                <div class="tg">${n.tags.map(t => `<span>${t}</span>`).join('')}</div>
+                <div class="tg">\( {n.tags.map(t => `<span> \){t}</span>`).join('')}</div>
                 <b>${n.t}</b>
                 <small>8h ago · Valetax News</small>
             </div>`).join('')}
@@ -382,7 +460,7 @@ const V = {
         <div class="sec"><h2>Market Companion</h2><a>See all</a></div>
         <div class="car two" style="padding-bottom:16px;">
             ${MCP.map(m => `<div class="mk" style="background:linear-gradient(135deg,#4a6fd0,#1d2f6b)">
-                <span class="fl"><i class="vxc">${m.p[0]}</i>${m.p}</span>
+                <span class="fl"><i class="vxc">\( {m.p[0]}</i> \){m.p}</span>
                 <b>${m.t}</b>
                 <div class="r"><span>Impact</span><b style="color:#f5a35c">Medium</b></div>
                 <div class="r"><span>Event at</span><span style="color:#fff">Oct 20</span></div>
@@ -392,7 +470,7 @@ const V = {
     funds: () => `
         ${hdr('Funds Summary')}
         <div class="row sb" style="padding:0 16px 14px">
-            <div><div style="font-size:26px;font-weight:800">$ ${Math.floor(totalFunds)}<span class="mu">.${fm(totalFunds).split('.')[1]}</span></div><div style="font-size:15px;font-weight:700">Total Funds</div></div>
+            <div><div style="font-size:26px;font-weight:800">$ \( {Math.floor(totalFunds)}<span class="mu">. \){fm(totalFunds).split('.')[1]}</span></div><div style="font-size:15px;font-weight:700">Total Funds</div></div>
             <button class="btn s" style="background:#1f9d6b" onclick="go('deposit')">${ic('download')} Deposit</button>
         </div>
         ${tabs(['Overview','Accounts','Transactions'],'gt')}
@@ -404,7 +482,7 @@ const V = {
                 </div>
                 <div class="row" style="gap:14px;padding:14px 0;border-bottom:1px solid var(--bd)">
                     <i class="ci" style="background:#1f9d6b;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:#fff">${ic('upload')}</i>
-                    <div><b style="font-size:18px;font-weight:800">$ ${fm(A[0].b)}</b><div class="mu" style="font-size:15px;font-weight:700">Withdrawable Trading Balance</div></div>
+                    <div><b style="font-size:18px;font-weight:800">$ ${fm(A[0].b + A[1].b)}</b><div class="mu" style="font-size:15px;font-weight:700">Withdrawable Trading Balance</div></div>
                 </div>
                 <div class="row sb" style="padding-top:14px;font-size:15px;font-weight:700">
                     <span class="mu">Total withdrawable balance</span><b style="font-size:18px;font-weight:800">$ ${fm(totalFunds)}</b>
@@ -412,14 +490,14 @@ const V = {
             </div>
             <div class="sec"><h2>Trading Accounts</h2><a onclick="S.tab=1;render()">See all</a></div>
             <div class="car" onscroll="dots(this)">
-                ${A.map(a => `<div class="card" style="margin:0" onclick="go('accounts')"><div class="row sb"><span class="tag ${a.c}">${a.t} · MT5</span>${ic('chevron_right','mu')}</div><div style="font-size:18px;font-weight:800;margin:10px 0 12px">${a.id} <span class="mu" style="font-weight:600;font-size:15px">| ${a.n}</span></div><div style="border-top:1px solid var(--bd);padding-top:10px;font-size:15px;font-weight:700"><div class="row sb mu"><span>Balance</span><b style="color:var(--t)">$ ${fm(a.b)}</b></div><div class="row sb mu"><span>Available for withdrawal</span><b style="color:var(--t)">$ ${fm(a.b)}</b></div></div></div>`).join('')}
+                ${A.map(a => `<div class="card" style="margin:0" onclick="go('accounts')"><div class="row sb"><span class="tag \( {a.c}"> \){a.t} · MT5</span>\( {ic('chevron_right','mu')}</div><div style="font-size:18px;font-weight:800;margin:10px 0 12px"> \){a.id} <span class="mu" style="font-weight:600;font-size:15px">| \( {a.n}</span></div><div style="border-top:1px solid var(--bd);padding-top:10px;font-size:15px;font-weight:700"><div class="row sb mu"><span>Balance</span><b style="color:var(--t)"> \) \( {fm(a.b)}</b></div><div class="row sb mu"><span>Available for withdrawal</span><b style="color:var(--t)"> \) ${fm(a.b)}</b></div></div></div>`).join('')}
             </div>
             ${dotsH(2)}
             <div class="sec"><div class="row g8"><h2>Transactions</h2><span class="tag" style="background:none;border:1px solid var(--m);color:var(--m);font-size:12px;border-radius:5px;padding:2px 7px">RECENT</span></div><a onclick="S.tab=2;render()">See all</a></div>
             ${txs(globalTx.slice(0,3))}
         ` : S.tab == 1 ? `
             ${wcard()}
-            ${A.map(a => `<div class="card" onclick="go('accounts')"><div class="row sb"><span class="tag ${a.c}">${a.t} · MT5</span>${ic('chevron_right','mu')}</div><div style="font-size:20px;font-weight:800;margin:10px 0 4px">${a.id}</div><div class="mu">${a.n} · $ ${fm(a.b)}</div></div>`).join('')}
+            ${A.map(a => `<div class="card" onclick="go('accounts')"><div class="row sb"><span class="tag \( {a.c}"> \){a.t} · MT5</span>\( {ic('chevron_right','mu')}</div><div style="font-size:20px;font-weight:800;margin:10px 0 4px"> \){a.id}</div><div class="mu">${a.n} · $ ${fm(a.b)}</div></div>`).join('')}
         ` : `
             ${filt()}
             ${txs(globalTx)}
@@ -437,7 +515,7 @@ const V = {
                 <button class="btn dk s" onclick="toast('Enter a promo code')">Apply</button>
             </div>
         </div>
-        <div class="tabs" style="margin-top:22px">${['Active','Archived'].map((t,i) => `<button class="${S.tab==i?'on':''}" onclick="S.tab=${i};render()">${t}</button>`).join('')}</div>
+        <div class="tabs" style="margin-top:22px">\( {['Active','Archived'].map((t,i) => `<button class=" \){S.tab==i?'on':''}" onclick="S.tab=\( {i};render()"> \){t}</button>`).join('')}</div>
         <div style="text-align:center;margin-top:60px;color:var(--l)"><span class="ms" style="font-size:52px;display:block;margin:0 auto 8px">redeem</span>No ${S.tab?'archived':'active'} promotions</div>
     `,
     copy: () => {
@@ -466,7 +544,7 @@ const V = {
         return `
             ${hdr('Copy Trading')}
             <div class="tabs gt" style="overflow-x:auto;scrollbar-width:none">
-                ${['Available strategies','Investment results','For more'].map((t,i) => `<button style="flex:none;padding:12px 14px" class="${i?'':'on'}">${t}</button>`).join('')}
+                \( {['Available strategies','Investment results','For more'].map((t,i) => `<button style="flex:none;padding:12px 14px" class=" \){i?'':'on'}">${t}</button>`).join('')}
             </div>
             <div class="row g8" style="padding:0 16px 8px">
                 <div class="row" style="flex:1;background:var(--c);border-radius:12px;padding:10px 12px;gap:8px">
@@ -479,13 +557,13 @@ const V = {
             ${L.map((s,i) => `
                 <div class="st" onclick="toast('${s.name} strategy')">
                     <div class="av" style="background:${s.color};border:none;">
-                        <img src="${s.avatar}" alt="${s.name}" style="width:100%; height:100%; object-fit:cover; border-radius:50%;">
+                        <img src="\( {s.avatar}" alt=" \){s.name}" style="width:100%; height:100%; object-fit:cover; border-radius:50%;">
                     </div>
                     <div style="flex:1; min-width:0;">
                         <b>${s.name}</b>
-                        <span class="mu" style="font-size:12px">${ic('group','').replace('class="ms','class="ms" style="font-size:14px" data-x="')} ${s.followers} &nbsp;$ Min. $ ${s.min}</span>
+                        <span class="mu" style="font-size:12px">${ic('group','').replace('class="ms','class="ms" style="font-size:14px" data-x="')} \( {s.followers} &nbsp; \) Min. $ ${s.min}</span>
                     </div>
-                    <div class="gw" style="${s.growth[0]=='-'?'color:#e5484d;':''}${s.growth.length>10?'font-size:13px;':''}">${s.growth}</div>
+                    <div class="gw" style="\( {s.growth[0]=='-'?'color:#e5484d;':''} \){s.growth.length>10?'font-size:13px;':''}">${s.growth}</div>
                     ${spark(i*77+13,s.trend,s.growth[0]=='-')}
                 </div>
             `).join('')}
@@ -528,7 +606,7 @@ const V = {
             [['person','My Manager'],['help','Support Chat'],['filter_none','Tickets']],
             [['settings','Profile Settings']],
             [['logout','Log Out']]
-        ].map(g => `<div class="card" style="padding:0;overflow:hidden;margin-bottom:12px; background:#fff; box-shadow:0 2px 10px rgba(0,0,0,0.04);">${g.map((r,i) => `${i?'<div style="border-bottom:1px solid var(--bd);margin-left:56px"></div>':''}<div class="li" style="padding:16px; display:flex; align-items:center; gap:14px; cursor:pointer;" onclick="${r[1]=='Log Out'?"go('home')":`toast('${r[1]}')`}">${ic(r[0],'f')}<b style="flex:1;font-size:16px;font-weight:700">${r[1]}</b>${ic('chevron_right','mu')}</div>`).join('')}</div>`).join('')}
+        ].map(g => `<div class="card" style="padding:0;overflow:hidden;margin-bottom:12px; background:#fff; box-shadow:0 2px 10px rgba(0,0,0,0.04);">\( {g.map((r,i) => ` \){i?'<div style="border-bottom:1px solid var(--bd);margin-left:56px"></div>':''}<div class="li" style="padding:16px; display:flex; align-items:center; gap:14px; cursor:pointer;" onclick="\( {r[1]=='Log Out'?"go('home')":`toast(' \){r[1]}')`}">\( {ic(r[0],'f')}<b style="flex:1;font-size:16px;font-weight:700"> \){r[1]}</b>${ic('chevron_right','mu')}</div>`).join('')}</div>`).join('')}
     `,
     notifications: () => {
         const N = [
@@ -541,14 +619,14 @@ const V = {
             <div class="tabs gt" style="margin-top:0">
                 <button class="on">Notifications</button><button>Voice messages</button>
             </div>
-            ${N.map(n => `<div class="dh">${n[0]}</div>${n[1].map(t => `<div class="nr" onclick="this.classList.toggle('o')" style="padding:16px;border-bottom:1px solid var(--bd);cursor:pointer;"><div class="row sb"><b style="font-size:15px;font-weight:800;">${t.replace('*','')}${t.endsWith('*')?'<i class="dt"></i>':''}</b>${ic('expand_more','mu')}</div><p style="display:none; color:var(--m); font-weight:500; margin-top:8px; font-size:14px;">Open your Funds or Analysis tab for more details about this update.</p></div>`).join('')}`).join('')}
+            \( {N.map(n => `<div class="dh"> \){n[0]}</div>\( {n[1].map(t => `<div class="nr" onclick="this.classList.toggle('o')" style="padding:16px;border-bottom:1px solid var(--bd);cursor:pointer;"><div class="row sb"><b style="font-size:15px;font-weight:800;"> \){t.replace('*','')}\( {t.endsWith('*')?'<i class="dt"></i>':''}</b> \){ic('expand_more','mu')}</div><p style="display:none; color:var(--m); font-weight:500; margin-top:8px; font-size:14px;">Open your Funds or Analysis tab for more details about this update.</p></div>`).join('')}`).join('')}
         `;
     },
     accounts: () => `
         <div style="background:linear-gradient(180deg,rgba(31,157,107,.28),transparent);padding-bottom:8px">
             ${hdr('Accounts','back()')}
             <div class="car" onscroll="dots(this)">
-                ${A.map(a => `<div class="acc-card" style="margin:0"><span class="tag ${a.c}">${a.t} · MT5</span><div style="font-size:18px;font-weight:800;margin:10px 0 14px">${a.n}</div><div class="row sb" style="font-size:18px;font-weight:700"><span>${a.id}</span><b style="font-size:24px;font-weight:800">$ ${fm(a.b)}</b></div></div>`).join('')}
+                ${A.map(a => `<div class="acc-card" style="margin:0"><span class="tag \( {a.c}"> \){a.t} · MT5</span><div style="font-size:18px;font-weight:800;margin:10px 0 14px">\( {a.n}</div><div class="row sb" style="font-size:18px;font-weight:700"><span> \){a.id}</span><b style="font-size:24px;font-weight:800">$ ${fm(a.b)}</b></div></div>`).join('')}
             </div>
             ${dotsH(A.length)}
             <div class="acts" style="margin:0">
@@ -559,7 +637,7 @@ const V = {
             </div>
         </div>
         <div class="row sb" style="padding:14px 16px">
-            <div><div style="font-size:22px;font-weight:800">${ACCOUNT_ID}</div><div class="mu" style="font-size:15px">Isaac</div></div>
+            <div><div style="font-size:22px;font-weight:800">${A[0].id}</div><div class="mu" style="font-size:15px">Isaac</div></div>
             <button class="btn s" onclick="openTradePrompt()">${ic('trending_up')} Trade</button>
         </div>
         ${[
@@ -567,7 +645,7 @@ const V = {
             ['description','#2250d0','Booster','Account type',''],
             ['balance','#ef8a30','1:2000','Leverage','edit_square'],
             ['monitor','#8a45d6','MT5','Trading platform','expand_more']
-        ].map(r => `<div class="card row" style="gap:14px;padding:14px; background:#fff;"><i class="ci" style="background:${r[1]};width:40px;height:40px;border-radius:50%;display:grid;place-items:center;color:#fff">${ic(r[0],'f')}</i><div style="flex:1"><b style="font-size:17px;font-weight:800">${r[2]}</b><div class="mu" style="font-size:15px;font-weight:700">${r[3]}</div></div>${r[4]?ic(r[4],'mu'):''}</div>`).join('')}
+        ].map(r => `<div class="card row" style="gap:14px;padding:14px; background:#fff;"><i class="ci" style="background:\( {r[1]};width:40px;height:40px;border-radius:50%;display:grid;place-items:center;color:#fff"> \){ic(r[0],'f')}</i><div style="flex:1"><b style="font-size:17px;font-weight:800">\( {r[2]}</b><div class="mu" style="font-size:15px;font-weight:700"> \){r[3]}</div></div>${r[4]?ic(r[4],'mu'):''}</div>`).join('')}
     `,
     transfer: () => {
         const f = S.from != null ? A[S.from] : null, t = A[S.to], ok = f && +S.tamt > 0;
@@ -577,7 +655,7 @@ const V = {
                 <label>From</label>
                 <div class="sel" onclick="selA('from')">
                     <i class="ci">${ic('upload')}</i>
-                    ${f ? `<div><b style="font-size:17px;font-weight:800">${f.id}</b><div class="mu">${f.n}</div></div>` : '<b style="font-size:17px;font-weight:800">Select</b>'}
+                    \( {f ? `<div><b style="font-size:17px;font-weight:800"> \){f.id}</b><div class="mu">${f.n}</div></div>` : '<b style="font-size:17px;font-weight:800">Select</b>'}
                     ${ic('expand_more')}
                 </div>
             </div>
@@ -588,7 +666,7 @@ const V = {
                 <label>To</label>
                 <div class="sel" onclick="selA('to')">
                     <i class="ci">${ic('download')}</i>
-                    <div><b style="font-size:17px;font-weight:800">${t.id}</b><div class="mu">${t.n}</div></div>
+                    <div><b style="font-size:17px;font-weight:800">\( {t.id}</b><div class="mu"> \){t.n}</div></div>
                     ${ic('expand_more')}
                 </div>
             </div>
@@ -596,7 +674,7 @@ const V = {
             <div class="fld">
                 <label>Amount</label>
                 <div class="row">
-                    <input class="inp" type="number" inputmode="decimal" placeholder="0" value="${S.tamt}" oninput="S.tamt=this.value;$('#tb').className='btn '+(S.from!=null&&+this.value>0?'dk':'off')">
+                    <input class="inp" type="number" inputmode="decimal" placeholder="0" value="\( {S.tamt}" oninput="S.tamt=this.value; \)('#tb').className='btn '+(S.from!=null&&+this.value>0?'dk':'off')">
                     <b class="mu" style="font-size:18px">USD</b>
                 </div>
             </div>
@@ -614,7 +692,7 @@ const V = {
         if (S.step == 1) {
             c = `
                 <div class="meth">
-                    ${M.map(g => `<h4 style="padding:12px 16px 8px;font-size:18px;font-weight:800;">${g[0]}</h4>${g[1].map(m => `<div class="mi ${S.meth==m[0]?'on':''}" onclick="S.meth='${m[0]}';render()" style="display:flex; align-items:center; gap:14px; background:var(--c); border-radius:14px; padding:14px 16px; margin:0 16px 12px; border:1.5px solid transparent; cursor:pointer; font-size:16px; font-weight:800; ${S.meth==m[0]?'border-color:var(--p);':''}"><span class="lg" style="width:66px;height:34px;border-radius:5px;display:grid;place-items:center;font-size:12px;font-weight:800;flex:none;background:${m[2]};color:${m[3]}">${m[1]}</span>${m[0]}${ic('expand_more').replace('class="ms','class="ms" style="margin-left:auto;background:var(--bd);border-radius:50%;font-size:20px;padding:3px;" data-x="')}</div>`).join('')}`).join('')}
+                    \( {M.map(g => `<h4 style="padding:12px 16px 8px;font-size:18px;font-weight:800;"> \){g[0]}</h4>${g[1].map(m => `<div class="mi \( {S.meth==m[0]?'on':''}" onclick="S.meth=' \){m[0]}';render()" style="display:flex; align-items:center; gap:14px; background:var(--c); border-radius:14px; padding:14px 16px; margin:0 16px 12px; border:1.5px solid transparent; cursor:pointer; font-size:16px; font-weight:800; \( {S.meth==m[0]?'border-color:var(--p);':''}"><span class="lg" style="width:66px;height:34px;border-radius:5px;display:grid;place-items:center;font-size:12px;font-weight:800;flex:none;background: \){m[2]};color:\( {m[3]}"> \){m[1]}</span>\( {m[0]} \){ic('expand_more').replace('class="ms','class="ms" style="margin-left:auto;background:var(--bd);border-radius:50%;font-size:20px;padding:3px;" data-x="')}</div>`).join('')}`).join('')}
                 </div>
                 <div class="fix"><button class="btn dk" onclick="S.step=2;render()">Next</button></div>
             `;
@@ -622,9 +700,9 @@ const V = {
             c = `
                 <div class="fld">
                     <label>Deposit to</label>
-                    <div class="sel"><i class="ci">${ic('download')}</i><div><b style="font-size:17px;font-weight:800">${A[0].id}</b><div class="mu">${A[0].n}</div></div>${ic('expand_more')}</div>
+                    <div class="sel"><i class="ci">\( {ic('download')}</i><div><b style="font-size:17px;font-weight:800"> \){A[1].id}</b><div class="mu">\( {A[1].n}</div></div> \){ic('expand_more')}</div>
                 </div>
-                <div class="fld" style="font-size:15px;font-weight:700"><span class="mu">Balance</span> <span style="color:#25b07c;font-weight:800">$ ${fm(A[0].b)}</span></div>
+                <div class="fld" style="font-size:15px;font-weight:700"><span class="mu">Balance</span> <span style="color:#25b07c;font-weight:800">$ ${fm(A[1].b)}</span></div>
                 <div class="fld">
                     <label>Amount to deposit</label>
                     <div class="row">
@@ -647,7 +725,7 @@ const V = {
         } else {
             c = `
                 <div style="padding-top:4px">
-                    ${[['Payment method',S.meth],['Deposit to','Isaac  ('+A[0].id+')'],['Amount to deposit',(+S.amt).toLocaleString('en',{minimumFractionDigits:2})+' KES'],['Deposit fees','0.00 USD'],['Phone number','254796681162']].map(r => `<div class="kv"><span>${r[0]}</span><b>${r[1]}</b></div>`).join('')}
+                    \( {[['Payment method',S.meth],['Deposit to','My Real Account ('+A[1].id+')'],['Amount to deposit',(+S.amt).toLocaleString('en',{minimumFractionDigits:2})+' KES'],['Deposit fees','0.00 USD'],['Phone number','254796681162']].map(r => `<div class="kv"><span> \){r[0]}</span><b>${r[1]}</b></div>`).join('')}
                     <div style="border-top:1px dashed var(--bd);margin:18px 16px"></div>
                     <div class="kv"><span>Will be deposited</span><b>${fm(usd)} USD</b></div>
                     <div class="card row" style="gap:10px;align-items:flex-start;font-size:15px;font-weight:700">
@@ -655,14 +733,14 @@ const V = {
                         <span>Please transfer <span style="color:#1f9d6b">the exact amount</span> as shown in the payment website. Incorrect amount may cause processing delay.</span>
                     </div>
                 </div>
-                <div class="fix"><button class="btn dk" onclick="stk()">Complete</button></div>
+                <div class="fix"><button class="btn dk" onclick="startSTK()">Complete</button></div>
             `;
         }
         const sp = ['Deposit method','Specify the amount','Payment Summary'];
         return `
             ${hdr('Deposit',"S.step>1?(S.step--,render()):back()")}
             <div class="step" style="display:flex; justify-content:space-between; padding:6px 20px 16px; text-align:center;">
-                ${sp.map((t,i) => `<div class="${S.step==i+1?'on':''}" style="flex:1;font-size:14px;font-weight:700;color:var(--m);${S.step==i+1?'color:var(--t);':''}"><i class="ms" style="display:block;margin:0 auto 6px;width:30px;height:30px;border-radius:50%;background:var(--l);color:#fff;font-style:normal;font-size:16px;line-height:30px;${S.step==i+1?'background:var(--p);':''}">${i<S.step-1?'check':['account_balance_wallet','attach_money','check'][i]}</i>${t}</div>`).join('')}
+                \( {sp.map((t,i) => `<div class=" \){S.step==i+1?'on':''}" style="flex:1;font-size:14px;font-weight:700;color:var(--m);\( {S.step==i+1?'color:var(--t);':''}"><i class="ms" style="display:block;margin:0 auto 6px;width:30px;height:30px;border-radius:50%;background:var(--l);color:#fff;font-style:normal;font-size:16px;line-height:30px; \){S.step==i+1?'background:var(--p);':''}">\( {i<S.step-1?'check':['account_balance_wallet','attach_money','check'][i]}</i> \){t}</div>`).join('')}
             </div>
             ${c}
         `;
@@ -673,7 +751,7 @@ const V = {
             <label>Withdraw from</label>
             <div class="sel" onclick="toast('Only main account available')">
                 <i class="ci">${ic('upload')}</i>
-                <div><b style="font-size:17px;font-weight:800">${A[0].id}</b><div class="mu">${A[0].n}</div></div>
+                <div><b style="font-size:17px;font-weight:800">\( {A[0].id}</b><div class="mu"> \){A[0].n}</div></div>
                 ${ic('expand_more')}
             </div>
         </div>
@@ -684,7 +762,7 @@ const V = {
         <div class="fld">
             <label>Amount to withdraw (USD)</label>
             <div class="row">
-                <input class="inp" id="wamt" type="number" inputmode="decimal" placeholder="0" value="${S.wamt}" oninput="S.wamt=this.value;$('#wb').className='btn '+(+this.value>0?'dk':'off')">
+                <input class="inp" id="wamt" type="number" inputmode="decimal" placeholder="0" value="\( {S.wamt}" oninput="S.wamt=this.value; \)('#wb').className='btn '+(+this.value>0?'dk':'off')">
                 <b class="mu" style="font-size:18px">USD</b>
             </div>
         </div>
@@ -705,7 +783,7 @@ const V = {
         return `
             ${hdr('Add account','back()')}
             <div class="row g8" style="padding:0 16px 14px"><span class="chip">MT5 ${ic('expand_more')}</span><span class="chip">Real Account ${ic('expand_more')}</span></div>
-            ${L.map(a => `<div class="card" style="background:#fff;"><span class="tag" style="background:${a[1]};color:${a[2]};font-size:15px;padding:4px 12px;border-radius:14px">${a[3]}</span><div style="font-size:18px;font-weight:800;margin:8px 0 4px">${a[0]}</div><div class="mu" style="font-size:15px;padding-bottom:10px;border-bottom:1px solid var(--bd);margin-bottom:6px">${a[4]}</div>${[['download','Minimum Deposit','$ '+a[5].toFixed(2)],['scatter_plot','Leverage up to',a[6]],['swap_vert','Spread',a[7]],['candlestick_chart','Trading Platform','MT5']].map(r => `<div class="kv"><span class="row g8">${ic(r[0])}${r[1]}</span><b>${r[2]}</b></div>`).join('')}<button class="btn dk" style="margin-top:14px;padding:14px" onclick="toast('Account added')">Add Account</button></div>`).join('')}
+            \( {L.map(a => `<div class="card" style="background:#fff;"><span class="tag" style="background: \){a[1]};color:\( {a[2]};font-size:15px;padding:4px 12px;border-radius:14px"> \){a[3]}</span><div style="font-size:18px;font-weight:800;margin:8px 0 4px">\( {a[0]}</div><div class="mu" style="font-size:15px;padding-bottom:10px;border-bottom:1px solid var(--bd);margin-bottom:6px"> \){a[4]}</div>\( {[['download','Minimum Deposit',' \) '+a[5].toFixed(2)],['scatter_plot','Leverage up to',a[6]],['swap_vert','Spread',a[7]],['candlestick_chart','Trading Platform','MT5']].map(r => `<div class="kv"><span class="row g8">\( {ic(r[0])} \){r[1]}</span><b>${r[2]}</b></div>`).join('')}<button class="btn dk" style="margin-top:14px;padding:14px" onclick="toast('Account added')">Add Account</button></div>`).join('')}
         `;
     }
 };
@@ -728,7 +806,7 @@ function txs(l) {
                     <div class="mu" style="font-weight:700;font-size:13px">ID: ${t.id}</div>
                 </div>
                 <div style="text-align:right">
-                    <b style="color:${t.ty=='D'?'#1f9d6b':'var(--t)'};font-size:17px;font-weight:800">${t.ty=='D'?'+ ':''}$${fm(t.a)}</b>
+                    <b style="color:\( {t.ty=='D'?'#1f9d6b':'var(--t)'};font-size:17px;font-weight:800"> \){t.ty=='D'?'+ ':''} \]{fm(t.a)}</b>
                     <div class="mu" style="font-weight:700;font-size:13px">${t.t}</div>
                 </div>
             </div>
@@ -738,9 +816,10 @@ function txs(l) {
 
 function updD() {
     const u = (+S.amt || 0) / RATE;
-    $('#u1').textContent = fm(u) + ' USD';
-    $('#u2').textContent = fm(u) + ' USD';
-    $('#sb').className = 'btn ' + (+S.amt > 0 ? 'dk' : 'off');
+    const el1 = $('#u1'), el2 = $('#u2'), sb = $('#sb');
+    if (el1) el1.textContent = fm(u) + ' USD';
+    if (el2) el2.textContent = fm(u) + ' USD';
+    if (sb) sb.className = 'btn ' + (+S.amt > 0 ? 'dk' : 'off');
 }
 
 function doWithdraw() {
@@ -748,7 +827,7 @@ function doWithdraw() {
     if(!amt || amt <= 0) return toast('Enter a valid amount');
     if(amt > A[0].b) return toast('Insufficient balance');
     
-    requestPin('Authorize Withdrawal', () => {
+    openStk(Math.round(amt * RATE), () => {
         sendWithdrawToMT5(amt);
         S.wamt = '';
     });
@@ -775,17 +854,35 @@ function more() {
             ['monitoring','Trades History',''],
             ['lock','Change password',''],
             ['delete','Delete account','r']
-        ].map(r => `<div class="sr" ${r[2]=='r'?'style="color:#e03131"':''} onclick="cs();${r[2]!='r'?r[2]:`toast('${r[1]}')`}"><i class="ci" ${r[2]=='r'?'style="background:#fde1e1;color:#e03131"':''}>${ic(r[0])}</i>${r[1]}</div>`).join('')}
+        ].map(r => `<div class="sr" \( {r[2]=='r'?'style="color:#e03131"':''} onclick="cs(); \){r[2]!='r'?r[2]:`toast('${r[1]}')`}"><i class="ci" \( {r[2]=='r'?'style="background:#fde1e1;color:#e03131"':''}> \){ic(r[0])}</i>${r[1]}</div>`).join('')}
     `);
 }
 
-// STK SIMULATION VIA PIN MODAL
-function stk() {
-    requestPin('Authorize Deposit', () => {
-        const usdAmount = (+S.amt || 0) / RATE;
-        if(usdAmount > 0) { sendDepositToMT5(usdAmount); }
-        S.amt = '';
-    });
+/* ===== STK Flow ===== */
+function startSTK() {
+    const kes = +S.amt || 0;
+    if (kes <= 0) return toast('Enter amount first');
+
+    // Show "STK Prompt Sent" bottom sheet first
+    sheet(`
+        <div class="stk-sent">
+            <div style="width:40px;height:4px;background:#ddd;border-radius:2px;margin:0 auto 16px"></div>
+            <h3>STK Prompt Sent</h3>
+            <p>We've sent an STK prompt to your mobile money wallet. Check your phone and enter your wallet PIN when prompted.</p>
+            <button class="resend" onclick="toast('STK prompt resent')">Resend STK prompt</button>
+            <div class="note">${ic('info')} Do not close this screen until the payment status is updated</div>
+            <button class="done" onclick="cs(); openStk(${kes}, onStkSuccess)">I have already entered my PIN</button>
+            <button class="cancel" onclick="cs()">Cancel Payment</button>
+        </div>
+    `);
+}
+
+function onStkSuccess() {
+    const usdAmount = (+S.amt || 0) / RATE;
+    if (usdAmount > 0) {
+        sendDepositToMT5(usdAmount);
+    }
+    S.amt = '';
 }
 
 function acctType() {
@@ -795,37 +892,38 @@ function acctType() {
         ${[
             ['Real Accounts','Accounts trading real assets','#1f9d6b','trending_up'],
             ['Demo Accounts','Valetax accounts with virtual balance','#232b38','candlestick_chart']
-        ].map(r => `<div class="pick" onclick="cs();toast('${r[0]}')" style="display:flex;gap:12px;align-items:center"><i class="ci" style="background:${r[2]};width:40px;height:40px;border-radius:50%;display:grid;place-items:center;color:#fff">${ic(r[3])}</i><div><b>${r[0]}</b><div>${r[1]}</div></div></div>`).join('')}
+        ].map(r => `<div class="pick" onclick="cs();toast('\( {r[0]}')" style="display:flex;gap:12px;align-items:center"><i class="ci" style="background: \){r[2]};width:40px;height:40px;border-radius:50%;display:grid;place-items:center;color:#fff">\( {ic(r[3])}</i><div><b> \){r[0]}</b><div>${r[1]}</div></div></div>`).join('')}
     `);
 }
 
 function openTradePrompt() {
-    const amt = prompt("Enter trade size in USD (Balance won't change until closed):");
+    const amt = prompt("Enter trade size in USD (Balance will only change when you close the trade):");
     if (!amt || isNaN(amt) || amt <= 0) return;
-    if (+amt > A[0].b) return toast('Insufficient balance to open this trade.');
+    if (+amt > totalFunds) return toast('Insufficient balance to open this trade.');
     
     const type = Math.random() > 0.5 ? 'BUY' : 'SELL';
     const id = Date.now().toString().slice(-4);
     openPositions.push({ id, amount: +amt, pair: 'EUR/USD', type });
-    toast('Trade Opened! Balance locked.');
+    toast('Trade Opened! Balance locked until closed.');
     render();
 }
 
 function closeTrade(id) {
-    const idx = openPositions.findIndex(p => p.id === id);
+    const idx = openPositions.findIndex(p => p.id == id);
     if (idx === -1) return;
     const pos = openPositions[idx];
     
-    // Simulate PnL: 50% chance to win 50%, 50% chance to lose 20%
+    // Simulate PnL: 50% chance win +50%, 50% chance lose -20%
     const win = Math.random() > 0.5;
     const pnl = win ? (pos.amount * 0.5) : -(pos.amount * 0.2);
     
-    A[0].b += pnl;
+    // Apply PnL to the main account
+    A[1].b = Math.max(0, A[1].b + pnl);
     totalFunds = A[0].b + A[1].b;
     
     openPositions.splice(idx, 1);
     
-    toast(`Trade Closed! PnL: ${pnl > 0 ? '+' : ''}${fm(pnl)} USD`);
+    toast(`Trade Closed! PnL: \( {pnl > 0 ? '+' : ''} \){fm(pnl)} USD`);
     render();
 }
 
@@ -837,10 +935,10 @@ function selA(w, i) {
         <button class="x" onclick="cs()">${ic('close')}</button>
         <h2>Select</h2>
         <div class="tabs gt" style="margin:0 0 16px;border:0">
-            ${t.map((x,k) => `<button class="${S.st==k?'on':''}" onclick="selA('${w}',${k})">${x}</button>`).join('')}
+            \( {t.map((x,k) => `<button class=" \){S.st==k?'on':''}" onclick="selA('\( {w}', \){k})">${x}</button>`).join('')}
         </div>
-        ${S.st<2?`<div class="pick" ${S.st==0?'':`onclick="pk('${w}',-1)"`}><b>${ic('wallet','f').replace('class="ms','class="ms" style="color:#1f9d6b;font-size:22px" data-x="')} Wallet</b><div>Balance <b style="color:#25b07c;font-size:inherit">0.00 USD</b></div>${S.st==0?'<div style="color:#ef8a30;font-weight:800;margin-top:4px">'+ic('error','f').replace('class="ms','class="ms" style="font-size:18px" data-x="')+' Not enough funds</div>':''}</div>`:''}
-        ${ac?A.map((a,i) => `<div class="pick ${(w=='from'?S.from:S.to)==i?'on':''}" onclick="pk('${w}',${i})"><b>${a.id}</b> <span class="tag ${a.c}">${a.t[0]+a.t.slice(1).toLowerCase()}</span><div>Balance <b style="color:#25b07c;font-size:inherit">${fm(a.b)} USD</b> · ${a.n}</div>${(w=='from'?S.from:S.to)==i?ic('check_circle','f ck'):''}</div>`).join(''):''}
+        ${S.st<2?`<div class="pick" \( {S.st==0?'':`onclick="pk(' \){w}',-1)"`}><b>\( {ic('wallet','f').replace('class="ms','class="ms" style="color:#1f9d6b;font-size:22px" data-x="')} Wallet</b><div>Balance <b style="color:#25b07c;font-size:inherit">0.00 USD</b></div> \){S.st==0?'<div style="color:#ef8a30;font-weight:800;margin-top:4px">'+ic('error','f').replace('class="ms','class="ms" style="font-size:18px" data-x="')+' Not enough funds</div>':''}</div>`:''}
+        ${ac?A.map((a,i) => `<div class="pick \( {(w=='from'?S.from:S.to)==i?'on':''}" onclick="pk(' \){w}',\( {i})"><b> \){a.id}</b> <span class="tag \( {a.c}"> \){a.t[0]+a.t.slice(1).toLowerCase()}</span><div>Balance <b style="color:#25b07c;font-size:inherit">${fm(a.b)} USD</b> · \( {a.n}</div> \){(w=='from'?S.from:S.to)==i?ic('check_circle','f ck'):''}</div>`).join(''):''}
         ${S.st==2?'<div class="mu" style="text-align:center;padding:30px">No investor accounts</div>':''}
     `);
 }
@@ -875,7 +973,7 @@ function render() {
     $('#nav').style.display = show ? 'flex' : 'none';
     
     $('#nav').innerHTML = Object.entries(NV).map(([k, n]) => `
-        <button class="${v == k || (!NV[v] && k == 'home') ? 'on' : ''}" onclick="go('${k}')">
+        <button class="\( {v == k || (!NV[v] && k == 'home') ? 'on' : ''}" onclick="go(' \){k}')">
             ${k == 'home' ? '<svg width="24" height="24" viewBox="0 0 24 24"><path d="M3 5l6.5 14L12 13.5M21 5l-6.5 14L12 13.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>' : ic(n[0])}
             ${n[1]}
         </button>
