@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>ValetaxApp</title>
 <meta name="theme-color" content="#1d1d1f">
+
+<!-- Valetax V/X Icon -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100' height='100' rx='24' fill='%231d1d1f' /%3E%3Cpath d='M 25 30 L 47 75 L 63 45' stroke='%23ffffff' stroke-width='10' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M 75 30 L 40 85' stroke='%231f9d6b' stroke-width='10' fill='none' stroke-linecap='round'/%3E%3Cpath d='M 75 45 L 65 60' stroke='%23ffffff' stroke-width='10' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0..1,0&display=swap" rel="stylesheet">
 <style>
@@ -72,6 +76,23 @@ html, body { width: 100%; height: 100%; overflow-x: hidden; background: var(--bg
 .sec { display: flex; justify-content: space-between; align-items: baseline; padding: 0 16px; margin: 16px 0 12px; }
 .sec h2 { font-size: 18px; font-weight: 800; color: var(--t); }
 .sec a { color: var(--m); font-weight: 700; cursor: pointer; font-size: 14px; }
+.news-card { width: 260px; border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+.news-img { height: 130px; width: 100%; display: flex; align-items: flex-end; padding: 12px; }
+.news-content { padding: 14px; }
+.mc { width: 240px; height: 200px; border-radius: 16px; padding: 14px; color: #fff; display: flex; flex-direction: column; justify-content: flex-end; font-weight: 700; font-size: 15px; line-height: 1.3; }
+.mc .fl { align-self: flex-start; background: #fff; color: #232b38; border-radius: 20px; padding: 4px 10px 4px 6px; font-size: 12px; display: flex; align-items: center; gap: 6px; margin-bottom: auto; font-weight: 800; }
+.mc .r { display: flex; justify-content: space-between; font-size: 13px; margin-top: 6px; font-weight: 600; color: rgba(255,255,255,0.8); }
+.mc .r b { color: #f5a35c; }
+.flag { width: 16px; height: 16px; border-radius: 50%; background: linear-gradient(#b22234 0 14%, #fff 14% 28%, #b22234 28% 42%, #fff 42% 56%, #b22234 56% 70%, #fff 70% 84%, #b22234 84%); position: relative; }
+.flag::after { content: ""; position: absolute; left: 0; top: 0; width: 55%; height: 55%; background: #3c3b6e; border-radius: 10px 0 0 0; }
+.st { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-bottom: 1px solid var(--bd); }
+.av { width: 42px; height: 42px; border-radius: 50%; flex: none; display: grid; place-items: center; font-size: 18px; color: #fff; overflow: hidden; border: 1px solid var(--bd); }
+.av img { width: 100%; height: 100%; object-fit: cover; }
+.st b { display: block; font-size: 16px; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 120px; color: var(--t); }
+.st .gw { flex: 1; text-align: center; font-size: 16px; font-weight: 700; color: #21a56f; }
+.pg { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; }
+.pg button { width: 36px; height: 36px; border-radius: 50%; border: 0; background: var(--c); color: var(--t); font-weight: 800; font-size: 15px; }
+.pg .on { background: var(--bd); }
 .tabs { display: flex; border-bottom: 1px solid var(--bd); margin: 0 16px 14px; overflow-x: auto; scrollbar-width: none; }
 .tabs button { flex: 1; background: none; border: 0; border-bottom: 3px solid transparent; color: var(--m); padding: 12px 4px; font-size: 15px; font-weight: 800; cursor: pointer; white-space: nowrap; }
 .tabs button.on { color: var(--t); border-color: var(--t); }
@@ -98,6 +119,19 @@ html, body { width: 100%; height: 100%; overflow-x: hidden; background: var(--bg
 .pick .ck { position: absolute; right: 14px; top: 50%; margin-top: -12px; color: var(--p); }
 #toast { position: fixed; bottom: 110px; left: 50%; transform: translateX(-50%); background: var(--dk); color: #fff; padding: 12px 22px; border-radius: 30px; z-index: 200; opacity: 0; transition: opacity 0.25s; pointer-events: none; white-space: nowrap; font-size: 14px; font-weight: 500; }
 #toast.o { opacity: 1; }
+svg.sp { width: 100px; height: 50px; flex: none; }
+.chip { background: var(--c); border-radius: 10px; padding: 8px 12px; font-size: 14px; font-weight: 700; display: flex; gap: 4px; align-items: center; }
+.car.two > * { flex: 0 0 calc(50% - 6px); }
+.car.two { gap: 12px; }
+.hn { border-radius: 16px; padding: 12px; min-height: 236px; background: var(--c); display: flex; flex-direction: column; box-shadow: 0 2px 10px rgba(0,0,0,0.04); }
+.hn .tg { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+.hn .tg span { background: #fff; border-radius: 14px; padding: 4px 8px; font-size: 12px; font-weight: 700; color: var(--t); box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+.hn b { font-size: 17px; font-weight: 800; line-height: 1.2; }
+.hn small { font-size: 12px; color: var(--m); font-weight: 600; margin-top: auto; }
+.mk { border-radius: 16px; padding: 12px; min-height: 235px; display: flex; flex-direction: column; justify-content: flex-end; color: #fff; }
+.mk .fl { align-self: flex-start; background: #fff; color: #232b38; border-radius: 20px; padding: 4px 10px 4px 6px; font-size: 12px; display: flex; align-items: center; gap: 6px; margin-bottom: auto; font-weight: 800; }
+.mk b { font-size: 17px; font-weight: 800; line-height: 1.2; }
+.mk .r { display: flex; justify-content: space-between; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.8); margin-top: 6px; }
 .vxc { width: 24px; height: 24px; border-radius: 50%; background: var(--gb); display: grid; place-items: center; font-size: 14px; font-weight: 800; color: var(--gt); font-style: normal; }
 
 /* SANDBOX PIN MODAL */
@@ -137,7 +171,6 @@ const RATE = 131.7, fm = n => Number(n).toFixed(2);
 let totalFunds = 0.00; 
 let globalTx = [];
 let openPositions = [];
-let closedPositions = [];
 
 const S = { v: 'home', prev: 'home', tab: 0, step: 1, meth: 'Mobile Money', amt: '', wamt: '', from: null, to: 1, tamt: '', st: 1, ai: 1 };
 
@@ -257,6 +290,38 @@ const card = a => `
 
 const act = (i, l, f, p) => `<button class="act ${p ? 'pr' : ''}" onclick="${f}"><i>${ic(i)}</i>${l}</button>`;
 
+function spark(seed, k, neg) {
+    let s = seed, r = () => (s = (s * 9301 + 49297) % 233280) / 233280, p = [], v = 40;
+    for (let i = 0; i < 30; i++) {
+        if (k == 'crash') v += i > 28 ? -70 : r() * 0.6;
+        else if (k == 'drop') v += i < 4 ? -16 : (i == 12 ? -4 : r() * 0.2);
+        else if (k == 'step') v += r() > 0.8 ? r() * 14 : r() * 0.8;
+        else if (k == 'spk') v += (r() > 0.93 ? r() * 40 : r() * 0.6) * (r() > 0.7 ? -0.5 : 1);
+        else v += r() * 2.4;
+        p.push([i * 3.6, v]);
+    }
+    const mx = Math.max(...p.map(a => a[1])), mn = Math.min(...p.map(a => a[1])), y = a => 50 - (a - mn) / (mx - mn || 1) * 44;
+    const pts = p.map(a => a[0].toFixed(1) + ',' + y(a[1]).toFixed(1)).join(' ');
+    return `<svg class="sp" viewBox="0 0 108 52" preserveAspectRatio="none"><polygon points="0,52 ${pts} 108,52" fill="${neg ? '#e5484d' : '#21a56f'}" opacity=".12"/><polyline points="${pts}" fill="none" stroke="${neg ? '#e5484d' : '#21a56f'}" stroke-width="1.6" vector-effect="non-scaling-stroke"/></svg>`;
+}
+
+const BN = [
+    ['VXclusive','10.00','Collect coins and explore exclusive rewards at the Valetax Store','Open VXclusive','#e0f2ec','savings',"toast('VXclusive')"],
+    ['Explore Analysis Centre','','Access expert insights, clear signals, and proven strategies','Go to analysis','#e2e8f0','laptop_mac',"toast('Analysis')"],
+    ['Join Contest','','Explore contests, compete with other traders, and win exclusive rewards','Open Contests','#e0f2ec','emoji_events',"toast('Contests')"],
+    ['Copy Trading','','Follow expert traders, copy proven strategies, and trade with confidence','Copy Trading','#e0f2ec','content_copy',"go('copy')"]
+];
+
+const HN = [
+    { tags:['EUR/USD','USD/JPY','USD/CHF'], t:'The EUR/USD has shown resilience amid shifting central bank policies.' },
+    { tags:['InterestRate','Macroeconomics','Gold','UnitedStates'], t:'Fed officials signal cautious approach to upcoming rate cuts.' }
+];
+
+const MCP = [
+    { p:'NZD/CAD', t:'The NZD/CAD currency pair is trading slightly lower today.' },
+    { p:'GBP/NZD', t:'The GBP/NZD currency pair is trading slightly higher today.' }
+];
+
 const V = {
     home: () => `
         <div class="hd" style="padding-bottom:6px">
@@ -296,12 +361,31 @@ const V = {
         ` : ''}
         
         <div class="car" id="bannerCar" data-auto="1">
-            ${[['VXclusive','10.00','Collect coins and explore exclusive rewards','Open VXclusive','#e0f2ec','savings',"toast('VXclusive')"],['Explore Analysis Centre','','Access expert insights, clear signals','Go to analysis','#e2e8f0','laptop_mac',"toast('Analysis')"]].map((b, i) => `<div class="ban" style="background:${b[4]}">
+            ${BN.map((b, i) => `<div class="ban" style="background:${b[4]}">
                 ${b[1] ? `<h3 class="row g8"><i class="vxc">V</i>${b[0]}</h3>` : `<h3>${b[0]}</h3>`}
                 <p>${b[2]}</p>
                 <button class="btn pl" onclick="${b[6]}">${b[3]}</button>
                 <div class="ico">${ic(b[5],'f')}</div>
-                <span class="cnt">${i+1} / 2</span>
+                <span class="cnt">${i+1} / ${BN.length}</span>
+            </div>`).join('')}
+        </div>
+
+        <div class="sec"><h2>Hot News</h2><a>See all</a></div>
+        <div class="car two" style="padding-bottom:16px;">
+            ${HN.map(n => `<div class="hn" onclick="toast('News')">
+                <div class="tg">${n.tags.map(t => `<span>${t}</span>`).join('')}</div>
+                <b>${n.t}</b>
+                <small>8h ago · Valetax News</small>
+            </div>`).join('')}
+        </div>
+
+        <div class="sec"><h2>Market Companion</h2><a>See all</a></div>
+        <div class="car two" style="padding-bottom:16px;">
+            ${MCP.map(m => `<div class="mk" style="background:linear-gradient(135deg,#4a6fd0,#1d2f6b)">
+                <span class="fl"><i class="vxc">${m.p[0]}</i>${m.p}</span>
+                <b>${m.t}</b>
+                <div class="r"><span>Impact</span><b style="color:#f5a35c">Medium</b></div>
+                <div class="r"><span>Event at</span><span style="color:#fff">Oct 20</span></div>
             </div>`).join('')}
         </div>
     `,
@@ -341,46 +425,85 @@ const V = {
             ${txs(globalTx)}
         `}
     `,
-    deposit: () => {
-        const usd = (+S.amt || 0) / RATE;
-        const M = [['Credit/Debit Cards', [['CCJenapay No_Fee','VISA','#fff','#1a3a9c']]], ['Crypto', [['USDT TRC20','T','#fff','#1fa67a'], ['USDT BEP20','₮','#fff','#1fa67a']]], ['E-Wallet', [['Mobile Money MPESA','M-PESA','#fff','#2ba84a']]]];
-        let c = '';
-        if (S.step == 1) {
-            c = `<div class="meth">${M.map(g => `<h4 style="padding:12px 16px 8px;font-size:18px;font-weight:800;">${g[0]}</h4>${g[1].map(m => `<div class="mi ${S.meth==m[0]?'on':''}" onclick="S.meth='${m[0]}';render()" style="display:flex; align-items:center; gap:14px; background:var(--c); border-radius:14px; padding:14px 16px; margin:0 16px 12px; border:1.5px solid transparent; cursor:pointer; font-size:16px; font-weight:800; ${S.meth==m[0]?'border-color:var(--p);':''}"><span class="lg" style="width:66px;height:34px;border-radius:5px;display:grid;place-items:center;font-size:12px;font-weight:800;flex:none;background:${m[2]};color:${m[3]}">${m[1]}</span>${m[0]}${ic('expand_more').replace('class="ms','class="ms" style="margin-left:auto;background:var(--bd);border-radius:50%;font-size:20px;padding:3px;" data-x="')}</div>`).join('')}`).join('')}</div>
-            <div class="fix"><button class="btn dk" onclick="S.step=2;render()">Next</button></div>`;
-        } else if (S.step == 2) {
-            c = `
-                <div class="fld"><label>Deposit to</label><div class="sel"><i class="ci">${ic('download')}</i><div><b style="font-size:17px;font-weight:800">${A[0].id}</b><div class="mu">${A[0].n}</div></div>${ic('expand_more')}</div></div>
-                <div class="fld" style="font-size:15px;font-weight:700"><span class="mu">Balance</span> <span style="color:#25b07c;font-weight:800">$ ${fm(A[0].b)}</span></div>
-                <div class="fld"><label>Amount to deposit</label><div class="row"><input class="inp" type="number" inputmode="numeric" placeholder="0" value="${S.amt}" oninput="S.amt=this.value;updD()"><b class="mu" style="font-size:18px">KES</b></div></div>
-                <div class="fld mu" style="font-size:15px;font-weight:700">In account currency <span style="color:#25b07c" id="u1">${fm(usd)} USD</span></div>
-                <div class="fld"><label style="color:var(--t)">Phone number</label><input class="inp" style="font-size:15px;background:var(--c);border:1px solid var(--bd);border-radius:10px;padding:12px" value="254796681162" readonly></div>
-                <div class="kv"><span>Payment method</span><b>${S.meth}</b></div>
-                <div class="kv"><span>Deposit fees</span><b>0.00 USD</b></div>
-                <div class="kv"><span>Will be deposited</span><b id="u2">${fm(usd)} USD</b></div>
-                <div class="fix"><button id="sb" class="btn ${+S.amt>0?'dk':'off'}" onclick="stk()">Summary</button></div>
-            `;
-        } else {
-            c = `
-                <div style="padding-top:4px">
-                    ${[['Payment method',S.meth],['Deposit to','Isaac  ('+A[0].id+')'],['Amount to deposit',(+S.amt).toLocaleString('en',{minimumFractionDigits:2})+' KES'],['Deposit fees','0.00 USD'],['Phone number','254796681162']].map(r => `<div class="kv"><span>${r[0]}</span><b>${r[1]}</b></div>`).join('')}
-                    <div style="border-top:1px dashed var(--bd);margin:18px 16px"></div>
-                    <div class="kv"><span>Will be deposited</span><b>${fm(usd)} USD</b></div>
-                </div>
-                <div class="fix"><button class="btn dk" onclick="stk()">Complete</button></div>
-            `;
-        }
-        const sp = ['Deposit method','Specify the amount','Payment Summary'];
-        return `${hdr('Deposit',"S.step>1?(S.step--,render()):back()")}<div class="step" style="display:flex; justify-content:space-between; padding:6px 20px 16px; text-align:center;">${sp.map((t,i) => `<div class="${S.step==i+1?'on':''}" style="flex:1;font-size:14px;font-weight:700;color:var(--m);${S.step==i+1?'color:var(--t);':''}"><i class="ms" style="display:block;margin:0 auto 6px;width:30px;height:30px;border-radius:50%;background:var(--l);color:#fff;font-style:normal;font-size:16px;line-height:30px;${S.step==i+1?'background:var(--p);':''}">${i<S.step-1?'check':['account_balance_wallet','attach_money','check'][i]}</i>${t}</div>`).join('')}</div>${c}`;
-    },
-    withdraw: () => `
-        ${hdr('Withdraw', 'back()')}
-        <div class="fld"><label>Withdraw from</label><div class="sel" onclick="toast('Only main account available')"><i class="ci">${ic('upload')}</i><div><b style="font-size:17px;font-weight:800">${A[0].id}</b><div class="mu">${A[0].n}</div></div>${ic('expand_more')}</div></div>
-        <div class="fld" style="font-size:15px;font-weight:700"><span class="mu">Available Balance</span> <span style="color:#25b07c;font-weight:800">$ ${fm(A[0].b)}</span></div>
-        <div class="fld"><label>Amount to withdraw (USD)</label><div class="row"><input class="inp" id="wamt" type="number" inputmode="decimal" placeholder="0" value="${S.wamt}" oninput="S.wamt=this.value;$('#wb').className='btn '+(+this.value>0?'dk':'off')"><b class="mu" style="font-size:18px">USD</b></div></div>
-        <div class="fld" style="margin-top:24px"><label>Destination</label><div class="sel"><i class="ci">${ic('phone_android')}</i><div><b style="font-size:17px;font-weight:800">M-PESA (Mobile Money)</b><div class="mu">254796681162</div></div></div></div>
-        <div class="fix"><button id="wb" class="btn ${+S.wamt > 0 ? 'dk' : 'off'}" onclick="doWithdraw()">Withdraw</button></div>
+    promos: () => `
+        ${hdr('Promotions')}
+        <div style="margin:0 16px;height:150px;border-radius:6px;background:radial-gradient(circle at 20% 40%,#cfeedd 0 8%,transparent 9%),radial-gradient(circle at 70% 60%,#b9e5cd 0 10%,transparent 11%),linear-gradient(120deg,#eceeea,#f8f8f6 50%,#e4ede7);display:grid;place-items:center;color:#1f9d6b">
+            <span class="ms f" style="font-size:72px;opacity:.85">redeem</span>
+        </div>
+        <div class="card" style="margin:16px;border:1px solid var(--bd);background:var(--bg)">
+            <div class="row g8" style="margin-bottom:12px"><b style="font-size:17px;font-weight:800">Activate promo code or voucher</b><span class="tag" style="background:#25b07c;color:#fff;border-radius:20px">New</span></div>
+            <div class="row" style="border:1px solid var(--bd);border-radius:10px;padding:5px">
+                <input class="inp" style="border:0;font-size:16px;padding:8px;flex:1;min-width:0" placeholder="Your promocode">
+                <button class="btn dk s" onclick="toast('Enter a promo code')">Apply</button>
+            </div>
+        </div>
+        <div class="tabs" style="margin-top:22px">${['Active','Archived'].map((t,i) => `<button class="${S.tab==i?'on':''}" onclick="S.tab=${i};render()">${t}</button>`).join('')}</div>
+        <div style="text-align:center;margin-top:60px;color:var(--l)"><span class="ms" style="font-size:52px;display:block;margin:0 auto 8px">redeem</span>No ${S.tab?'archived':'active'} promotions</div>
     `,
+    copy: () => {
+        const L = [
+            { name: 'Multi bo…', followers: 5514, min: 1, growth: '+1654.81%', trend: 'rise', color: '#4a7ab5', avatar: 'https://i.pravatar.cc/150?img=11' },
+            { name: 'Kucing M…', followers: 3736, min: 5, growth: '+186.13%', trend: 'step', color: '#6a5a86', avatar: 'https://i.pravatar.cc/150?img=12' },
+            { name: 'Go to mo…', followers: 3650, min: 1, growth: '+192.32%', trend: 'step', color: '#222', avatar: 'https://i.pravatar.cc/150?img=13' },
+            { name: 'Low Risk …', followers: 3502, min: 1, growth: '+743.06%', trend: 'rise', color: '#e2a31b', avatar: 'https://i.pravatar.cc/150?img=14' },
+            { name: 'Trade 00X', followers: 3147, min: 1, growth: '+360.21%', trend: 'rise', color: '#111', avatar: 'https://i.pravatar.cc/150?img=15' },
+            { name: 'Apex Glo…', followers: 3047, min: 25, growth: '+418.3%', trend: 'rise', color: '#7b8a96', avatar: 'https://i.pravatar.cc/150?img=16' },
+            { name: 'ACM Gold', followers: 2679, min: 5, growth: '+246.74%', trend: 'step', color: '#f4d800', avatar: 'https://i.pravatar.cc/150?img=17' },
+            { name: 'SAFE MO…', followers: 2056, min: 25, growth: '+667.98%', trend: 'step', color: '#1f6b3a', avatar: 'https://i.pravatar.cc/150?img=18' },
+            { name: 'Big Dream', followers: 1618, min: 1, growth: '+1421.96%', trend: 'spk', color: '#5a2d14', avatar: 'https://i.pravatar.cc/150?img=19' },
+            { name: 'Gold$1', followers: 1454, min: 1, growth: '+1627.13%', trend: 'spk', color: '#6d8fb0', avatar: 'https://i.pravatar.cc/150?img=20' },
+            { name: 'HAZILION', followers: 1346, min: 1, growth: '+40.13%', trend: 'rise', color: '#1b1b1b', avatar: 'https://i.pravatar.cc/150?img=21' },
+            { name: 'My Forex', followers: 1132, min: 1, growth: '+137.46%', trend: 'rise', color: '#2b2bd6', avatar: 'https://i.pravatar.cc/150?img=22' },
+            { name: 'ANGEL T…', followers: 1127, min: 1, growth: '+1.21%', trend: 'step', color: '#a02a8f', avatar: 'https://i.pravatar.cc/150?img=23' },
+            { name: 'RAIZEN', followers: 1125, min: 1, growth: '-99.95%', trend: 'crash', color: '#111b3a', avatar: 'https://i.pravatar.cc/150?img=24' },
+            { name: 'STAR PR…', followers: 1091, min: 1, growth: '+104.24%', trend: 'rise', color: '#3fcf3a', avatar: 'https://i.pravatar.cc/150?img=25' },
+            { name: 'MARKET …', followers: 1026, min: 200, growth: '+9.24%', trend: 'spk', color: '#9aa0a8', avatar: 'https://i.pravatar.cc/150?img=26' },
+            { name: 'FOREX EV…', followers: 1013, min: 1, growth: '+20.84%', trend: 'step', color: '#111', avatar: 'https://i.pravatar.cc/150?img=27' },
+            { name: 'MAYA MU…', followers: 880, min: 1, growth: '+26.82%', trend: 'step', color: '#d89bb0', avatar: 'https://i.pravatar.cc/150?img=28' },
+            { name: 'Valetex P…', followers: 657, min: 1, growth: '-98.93%', trend: 'drop', color: '#2a1a05', avatar: 'https://i.pravatar.cc/150?img=29' },
+            { name: 'Kucing M…', followers: 619, min: 5, growth: '+1389709.54%', trend: 'step', color: '#7a6a90', avatar: 'https://i.pravatar.cc/150?img=30' }
+        ];
+        return `
+            ${hdr('Copy Trading')}
+            <div class="tabs gt" style="overflow-x:auto;scrollbar-width:none">
+                ${['Available strategies','Investment results','For more'].map((t,i) => `<button style="flex:none;padding:12px 14px" class="${i?'':'on'}">${t}</button>`).join('')}
+            </div>
+            <div class="row g8" style="padding:0 16px 8px">
+                <div class="row" style="flex:1;background:var(--c);border-radius:12px;padding:10px 12px;gap:8px">
+                    ${ic('search','mu')}<input placeholder="Search" style="border:0;background:transparent;flex:1;font-size:16px;outline:0;color:var(--t);min-width:0">
+                </div>
+                ${ic('tune','gn')}
+            </div>
+            <div class="row sb mu" style="padding:6px 16px;font-size:14px"><span>Strategy</span><span>Growth</span><span style="margin-right:20px">Chart</span></div>
+            
+            ${L.map((s,i) => `
+                <div class="st" onclick="toast('${s.name} strategy')">
+                    <div class="av" style="background:${s.color};border:none;">
+                        <img src="${s.avatar}" alt="${s.name}" style="width:100%; height:100%; object-fit:cover; border-radius:50%;">
+                    </div>
+                    <div style="flex:1; min-width:0;">
+                        <b>${s.name}</b>
+                        <span class="mu" style="font-size:12px">${ic('group','').replace('class="ms','class="ms" style="font-size:14px" data-x="')} ${s.followers} &nbsp;$ Min. $ ${s.min}</span>
+                    </div>
+                    <div class="gw" style="${s.growth[0]=='-'?'color:#e5484d;':''}${s.growth.length>10?'font-size:13px;':''}">${s.growth}</div>
+                    ${spark(i*77+13,s.trend,s.growth[0]=='-')}
+                </div>
+            `).join('')}
+            
+            <div class="pg">
+                <b>20 ${ic('expand_more')}</b>
+                <div class="row g8">
+                    <button style="background:none;">‹</button>
+                    <button class="on">1</button>
+                    <button>2</button>
+                    <button>3</button>
+                    <button style="background:none">…</button>
+                    <button style="width:auto;padding:0 12px">238</button>
+                    <button>›</button>
+                </div>
+            </div>
+        `;
+    },
     profile: () => `
         ${hdr('Profile','back()')}
         <div style="text-align:center;margin:4px 0 18px">
@@ -389,24 +512,229 @@ const V = {
                 <span class="ci" style="position:absolute;right:-4px;bottom:0;width:28px;height:28px;background:#25b07c;border:3px solid var(--bg);border-radius:50%;display:grid;place-items:center;color:#fff">${ic('check').replace('class="ms','class="ms" style="font-size:16px" data-x="')}</span>
             </div>
             <h1 style="font-size:20px;font-weight:800;margin-top:10px;letter-spacing:.2px">ISAAC KIBET</h1>
+            <div class="mu" style="font-size:16px;margin-top:4px">isaac.kibet@example.com</div>
         </div>
-        ${[[['groups','Partnership Section']],[['monitoring','Analysis']],[['confirmation_number','VXclusive']],[['emoji_events','Contests']],[['person','My Manager'],['help','Support Chat'],['filter_none','Tickets']],[['settings','Profile Settings']],[['logout','Log Out']]].map(g => `<div class="card" style="padding:0;overflow:hidden;margin-bottom:12px; background:#fff; box-shadow:0 2px 10px rgba(0,0,0,0.04);">${g.map((r,i) => `${i?'<div style="border-bottom:1px solid var(--bd);margin-left:56px"></div>':''}<div class="li" style="padding:16px; display:flex; align-items:center; gap:14px; cursor:pointer;" onclick="${r[1]=='Log Out'?"go('home')":`toast('${r[1]}')`}">${ic(r[0],'f')}<b style="flex:1;font-size:16px;font-weight:700">${r[1]}</b>${ic('chevron_right','mu')}</div>`).join('')}</div>`).join('')}
+        <div class="ban" style="margin:0 16px 14px;background:linear-gradient(120deg,#dff5e9,#cdeedc);min-height:150px; width:auto; border-radius:16px;">
+            <h3>Invite and earn</h3>
+            <p style="max-width:62%; font-size:14px;">Share Valetax with friends and get rewarded for every referral</p>
+            <button class="btn pl" onclick="toast('Invite link copied')">Invite now</button>
+            <div class="ico" style="width:110px;height:110px;position:absolute; right:0; top:50%; transform:translateY(-50%);">${ic('redeem','f').replace('class="ms','class="ms" style="font-size:72px; color:#1f9d6b; opacity:0.8;" data-x="')}</div>
+        </div>
+        ${[
+            [['groups','Partnership Section']],
+            [['monitoring','Analysis']],
+            [['confirmation_number','VXclusive']],
+            [['emoji_events','Contests']],
+            [['person','My Manager'],['help','Support Chat'],['filter_none','Tickets']],
+            [['settings','Profile Settings']],
+            [['logout','Log Out']]
+        ].map(g => `<div class="card" style="padding:0;overflow:hidden;margin-bottom:12px; background:#fff; box-shadow:0 2px 10px rgba(0,0,0,0.04);">${g.map((r,i) => `${i?'<div style="border-bottom:1px solid var(--bd);margin-left:56px"></div>':''}<div class="li" style="padding:16px; display:flex; align-items:center; gap:14px; cursor:pointer;" onclick="${r[1]=='Log Out'?"go('home')":`toast('${r[1]}')`}">${ic(r[0],'f')}<b style="flex:1;font-size:16px;font-weight:700">${r[1]}</b>${ic('chevron_right','mu')}</div>`).join('')}</div>`).join('')}
     `,
     notifications: () => {
-        const N = [['16 October 2026',['Join the 5 Day Wondervault Sprint…']], ['15 October 2026',['Webinar: Master Moving Averages','Coins have been Credited']]];
-        return `${hdr('Notifications','back()')}<div class="tabs gt" style="margin-top:0"><button class="on">Notifications</button><button>Voice messages</button></div>${N.map(n => `<div class="dh">${n[0]}</div>${n[1].map(t => `<div class="nr" style="padding:16px;border-bottom:1px solid var(--bd);"><div class="row sb"><b style="font-size:15px;font-weight:800;">${t}</b>${ic('expand_more','mu')}</div></div>`).join('')}`).join('')}`;
+        const N = [
+            ['16 October 2026',['Join the 5 Day Wondervault Sprint…']],
+            ['15 October 2026',['Webinar: Master Moving Averages','Coins have been Credited']],
+            ['14 October 2026',['Coins have been Credited','Trading Account Created','Deposit will be Credited*']]
+        ];
+        return `
+            ${hdr('Notifications','back()')}
+            <div class="tabs gt" style="margin-top:0">
+                <button class="on">Notifications</button><button>Voice messages</button>
+            </div>
+            ${N.map(n => `<div class="dh">${n[0]}</div>${n[1].map(t => `<div class="nr" onclick="this.classList.toggle('o')" style="padding:16px;border-bottom:1px solid var(--bd);cursor:pointer;"><div class="row sb"><b style="font-size:15px;font-weight:800;">${t.replace('*','')}${t.endsWith('*')?'<i class="dt"></i>':''}</b>${ic('expand_more','mu')}</div><p style="display:none; color:var(--m); font-weight:500; margin-top:8px; font-size:14px;">Open your Funds or Analysis tab for more details about this update.</p></div>`).join('')}`).join('')}
+        `;
     },
     accounts: () => `
         <div style="background:linear-gradient(180deg,rgba(31,157,107,.28),transparent);padding-bottom:8px">
             ${hdr('Accounts','back()')}
-            <div class="car" onscroll="dots(this)">${A.map(a => `<div class="acc-card" style="margin:0"><span class="tag ${a.c}">${a.t} · MT5</span><div style="font-size:18px;font-weight:800;margin:10px 0 14px">${a.n}</div><div class="row sb" style="font-size:18px;font-weight:700"><span>${a.id}</span><b style="font-size:24px;font-weight:800">$ ${fm(a.b)}</b></div></div>`).join('')}</div>
+            <div class="car" onscroll="dots(this)">
+                ${A.map(a => `<div class="acc-card" style="margin:0"><span class="tag ${a.c}">${a.t} · MT5</span><div style="font-size:18px;font-weight:800;margin:10px 0 14px">${a.n}</div><div class="row sb" style="font-size:18px;font-weight:700"><span>${a.id}</span><b style="font-size:24px;font-weight:800">$ ${fm(a.b)}</b></div></div>`).join('')}
+            </div>
             ${dotsH(A.length)}
-            <div class="acts" style="margin:0">${act('download','Deposit',"go('deposit')",1)}${act('upload','Withdrawal',"go('withdraw')")}${act('sync_alt','Transfer',"go('transfer')")}${act('more_vert','More','more()')}</div>
+            <div class="acts" style="margin:0">
+                ${act('download','Deposit',"go('deposit')",1)}
+                ${act('upload','Withdrawal',"go('withdraw')")}
+                ${act('sync_alt','Transfer',"go('transfer')")}
+                ${act('more_vert','More','more()')}
+            </div>
         </div>
-        <div class="row sb" style="padding:14px 16px"><div><div style="font-size:22px;font-weight:800">${ACCOUNT_ID}</div><div class="mu" style="font-size:15px">Isaac</div></div><button class="btn s" onclick="openTradePrompt()">${ic('trending_up')} Trade</button></div>
-        ${[['database','#1f9d6b','$ '+fm(A[0].b),'Balance','expand_more'],['description','#2250d0','Booster','Account type',''],['balance','#ef8a30','1:2000','Leverage','edit_square'],['monitor','#8a45d6','MT5','Trading platform','expand_more']].map(r => `<div class="card row" style="gap:14px;padding:14px; background:#fff;"><i class="ci" style="background:${r[1]};width:40px;height:40px;border-radius:50%;display:grid;place-items:center;color:#fff">${ic(r[0],'f')}</i><div style="flex:1"><b style="font-size:17px;font-weight:800">${r[2]}</b><div class="mu" style="font-size:15px;font-weight:700">${r[3]}</div></div>${r[4]?ic(r[4],'mu'):''}</div>`).join('')}
-    `
+        <div class="row sb" style="padding:14px 16px">
+            <div><div style="font-size:22px;font-weight:800">${ACCOUNT_ID}</div><div class="mu" style="font-size:15px">Isaac</div></div>
+            <button class="btn s" onclick="openTradePrompt()">${ic('trending_up')} Trade</button>
+        </div>
+        ${[
+            ['database','#1f9d6b','$ '+fm(A[0].b),'Balance','expand_more'],
+            ['description','#2250d0','Booster','Account type',''],
+            ['balance','#ef8a30','1:2000','Leverage','edit_square'],
+            ['monitor','#8a45d6','MT5','Trading platform','expand_more']
+        ].map(r => `<div class="card row" style="gap:14px;padding:14px; background:#fff;"><i class="ci" style="background:${r[1]};width:40px;height:40px;border-radius:50%;display:grid;place-items:center;color:#fff">${ic(r[0],'f')}</i><div style="flex:1"><b style="font-size:17px;font-weight:800">${r[2]}</b><div class="mu" style="font-size:15px;font-weight:700">${r[3]}</div></div>${r[4]?ic(r[4],'mu'):''}</div>`).join('')}
+    `,
+    transfer: () => {
+        const f = S.from != null ? A[S.from] : null, t = A[S.to], ok = f && +S.tamt > 0;
+        return `
+            ${hdr('Internal Transfer','back()')}
+            <div class="fld">
+                <label>From</label>
+                <div class="sel" onclick="selA('from')">
+                    <i class="ci">${ic('upload')}</i>
+                    ${f ? `<div><b style="font-size:17px;font-weight:800">${f.id}</b><div class="mu">${f.n}</div></div>` : '<b style="font-size:17px;font-weight:800">Select</b>'}
+                    ${ic('expand_more')}
+                </div>
+            </div>
+            <div style="text-align:center;margin:-4px 0 12px">
+                <button class="ib" style="background:var(--c);width:40px;height:40px;border-radius:10px;display:inline-grid" onclick="if(S.from!=null){[S.from,S.to]=[S.to,S.from];render()}">${ic('swap_vert')}</button>
+            </div>
+            <div class="fld" style="margin-bottom:8px">
+                <label>To</label>
+                <div class="sel" onclick="selA('to')">
+                    <i class="ci">${ic('download')}</i>
+                    <div><b style="font-size:17px;font-weight:800">${t.id}</b><div class="mu">${t.n}</div></div>
+                    ${ic('expand_more')}
+                </div>
+            </div>
+            <div class="fld" style="font-size:15px;font-weight:700"><span class="mu">Balance</span> <span style="color:#25b07c;font-weight:800">${fm(t.b)} USD</span></div>
+            <div class="fld">
+                <label>Amount</label>
+                <div class="row">
+                    <input class="inp" type="number" inputmode="decimal" placeholder="0" value="${S.tamt}" oninput="S.tamt=this.value;$('#tb').className='btn '+(S.from!=null&&+this.value>0?'dk':'off')">
+                    <b class="mu" style="font-size:18px">USD</b>
+                </div>
+            </div>
+            <div class="fix"><button id="tb" class="btn ${ok?'dk':'off'}" onclick="doT()">Transfer</button></div>
+        `;
+    },
+    deposit: () => {
+        const usd = (+S.amt || 0) / RATE;
+        const M = [
+            ['Credit/Debit Cards', [['CCJenapay No_Fee','VISA','#fff','#1a3a9c']]],
+            ['Crypto', [['USDT TRC20','T','#fff','#1fa67a'], ['USDT BEP20','₮','#fff','#1fa67a'], ['Binance Pay','BINANCE','#f5c518','#232b38']]],
+            ['E-Wallet', [['Mobile Money MPESA and more','M-PESA','#fff','#2ba84a'], ['Mobile Money','M-PESA','#fff','#2ba84a'], ['Skrill EUR','Skrill','#fff','#8a1a6b']]]
+        ];
+        let c = '';
+        if (S.step == 1) {
+            c = `
+                <div class="meth">
+                    ${M.map(g => `<h4 style="padding:12px 16px 8px;font-size:18px;font-weight:800;">${g[0]}</h4>${g[1].map(m => `<div class="mi ${S.meth==m[0]?'on':''}" onclick="S.meth='${m[0]}';render()" style="display:flex; align-items:center; gap:14px; background:var(--c); border-radius:14px; padding:14px 16px; margin:0 16px 12px; border:1.5px solid transparent; cursor:pointer; font-size:16px; font-weight:800; ${S.meth==m[0]?'border-color:var(--p);':''}"><span class="lg" style="width:66px;height:34px;border-radius:5px;display:grid;place-items:center;font-size:12px;font-weight:800;flex:none;background:${m[2]};color:${m[3]}">${m[1]}</span>${m[0]}${ic('expand_more').replace('class="ms','class="ms" style="margin-left:auto;background:var(--bd);border-radius:50%;font-size:20px;padding:3px;" data-x="')}</div>`).join('')}`).join('')}
+                </div>
+                <div class="fix"><button class="btn dk" onclick="S.step=2;render()">Next</button></div>
+            `;
+        } else if (S.step == 2) {
+            c = `
+                <div class="fld">
+                    <label>Deposit to</label>
+                    <div class="sel"><i class="ci">${ic('download')}</i><div><b style="font-size:17px;font-weight:800">${A[0].id}</b><div class="mu">${A[0].n}</div></div>${ic('expand_more')}</div>
+                </div>
+                <div class="fld" style="font-size:15px;font-weight:700"><span class="mu">Balance</span> <span style="color:#25b07c;font-weight:800">$ ${fm(A[0].b)}</span></div>
+                <div class="fld">
+                    <label>Amount to deposit</label>
+                    <div class="row">
+                        <input class="inp" type="number" inputmode="numeric" placeholder="0" value="${S.amt}" oninput="S.amt=this.value;updD()">
+                        <b class="mu" style="font-size:18px">KES</b>
+                    </div>
+                </div>
+                <div class="fld mu" style="font-size:15px;font-weight:700">In account currency <span style="color:#25b07c" id="u1">${fm(usd)} USD</span></div>
+                <div class="fld">
+                    <label style="color:var(--t)">Phone number</label>
+                    <input class="inp" style="font-size:15px;background:var(--c);border:1px solid var(--bd);border-radius:10px;padding:12px" value="254796681162" readonly>
+                    <div style="font-size:12px;font-weight:700;margin-top:6px">Default phone number. To change it, contact support.</div>
+                </div>
+                <div class="kv"><span>Payment method</span><b>${S.meth}</b></div>
+                <div class="kv"><span>Deposit fees</span><b>0.00 USD</b></div>
+                <div class="kv"><span>Will be deposited</span><b id="u2">${fm(usd)} USD</b></div>
+                <div class="fld"><a style="color:#25b07c;font-size:16px;font-weight:800;text-decoration:underline" onclick="toast('Promo codes: Promotions tab')">Have a promocode?</a></div>
+                <div class="fix"><button id="sb" class="btn ${+S.amt>0?'dk':'off'}" onclick="S.step=3;render()">Summary</button></div>
+            `;
+        } else {
+            c = `
+                <div style="padding-top:4px">
+                    ${[['Payment method',S.meth],['Deposit to','Isaac  ('+A[0].id+')'],['Amount to deposit',(+S.amt).toLocaleString('en',{minimumFractionDigits:2})+' KES'],['Deposit fees','0.00 USD'],['Phone number','254796681162']].map(r => `<div class="kv"><span>${r[0]}</span><b>${r[1]}</b></div>`).join('')}
+                    <div style="border-top:1px dashed var(--bd);margin:18px 16px"></div>
+                    <div class="kv"><span>Will be deposited</span><b>${fm(usd)} USD</b></div>
+                    <div class="card row" style="gap:10px;align-items:flex-start;font-size:15px;font-weight:700">
+                        <i class="ci" style="width:22px;height:22px;background:#1f9d6b;margin-top:3px">${ic('arrow_downward').replace('class="ms','class="ms" style="font-size:14px" data-x="')}</i>
+                        <span>Please transfer <span style="color:#1f9d6b">the exact amount</span> as shown in the payment website. Incorrect amount may cause processing delay.</span>
+                    </div>
+                </div>
+                <div class="fix"><button class="btn dk" onclick="stk()">Complete</button></div>
+            `;
+        }
+        const sp = ['Deposit method','Specify the amount','Payment Summary'];
+        return `
+            ${hdr('Deposit',"S.step>1?(S.step--,render()):back()")}
+            <div class="step" style="display:flex; justify-content:space-between; padding:6px 20px 16px; text-align:center;">
+                ${sp.map((t,i) => `<div class="${S.step==i+1?'on':''}" style="flex:1;font-size:14px;font-weight:700;color:var(--m);${S.step==i+1?'color:var(--t);':''}"><i class="ms" style="display:block;margin:0 auto 6px;width:30px;height:30px;border-radius:50%;background:var(--l);color:#fff;font-style:normal;font-size:16px;line-height:30px;${S.step==i+1?'background:var(--p);':''}">${i<S.step-1?'check':['account_balance_wallet','attach_money','check'][i]}</i>${t}</div>`).join('')}
+            </div>
+            ${c}
+        `;
+    },
+    withdraw: () => `
+        ${hdr('Withdraw', 'back()')}
+        <div class="fld">
+            <label>Withdraw from</label>
+            <div class="sel" onclick="toast('Only main account available')">
+                <i class="ci">${ic('upload')}</i>
+                <div><b style="font-size:17px;font-weight:800">${A[0].id}</b><div class="mu">${A[0].n}</div></div>
+                ${ic('expand_more')}
+            </div>
+        </div>
+        <div class="fld" style="font-size:15px;font-weight:700">
+            <span class="mu">Available Balance</span> 
+            <span style="color:#25b07c;font-weight:800">$ ${fm(A[0].b)}</span>
+        </div>
+        <div class="fld">
+            <label>Amount to withdraw (USD)</label>
+            <div class="row">
+                <input class="inp" id="wamt" type="number" inputmode="decimal" placeholder="0" value="${S.wamt}" oninput="S.wamt=this.value;$('#wb').className='btn '+(+this.value>0?'dk':'off')">
+                <b class="mu" style="font-size:18px">USD</b>
+            </div>
+        </div>
+        <div class="fld" style="margin-top:24px">
+            <label>Destination</label>
+            <div class="sel">
+                <i class="ci">${ic('phone_android')}</i>
+                <div><b style="font-size:17px;font-weight:800">M-PESA (Mobile Money)</b><div class="mu">254796681162</div></div>
+            </div>
+        </div>
+        <div class="fix"><button id="wb" class="btn ${+S.wamt > 0 ? 'dk' : 'off'}" onclick="doWithdraw()">Withdraw</button></div>
+    `,
+    addacc: () => {
+        const L = [
+            ['Standard','#1f9d6b','#fff','Best Choice','Trade on the most popular account type',8,'1:2000','From 1.2 pips'],
+            ['ECN','#e59a0a','#fff','Lowest Spreads','Take advantage of trading with 0 spread',50,'1:2000','From 0 pips']
+        ];
+        return `
+            ${hdr('Add account','back()')}
+            <div class="row g8" style="padding:0 16px 14px"><span class="chip">MT5 ${ic('expand_more')}</span><span class="chip">Real Account ${ic('expand_more')}</span></div>
+            ${L.map(a => `<div class="card" style="background:#fff;"><span class="tag" style="background:${a[1]};color:${a[2]};font-size:15px;padding:4px 12px;border-radius:14px">${a[3]}</span><div style="font-size:18px;font-weight:800;margin:8px 0 4px">${a[0]}</div><div class="mu" style="font-size:15px;padding-bottom:10px;border-bottom:1px solid var(--bd);margin-bottom:6px">${a[4]}</div>${[['download','Minimum Deposit','$ '+a[5].toFixed(2)],['scatter_plot','Leverage up to',a[6]],['swap_vert','Spread',a[7]],['candlestick_chart','Trading Platform','MT5']].map(r => `<div class="kv"><span class="row g8">${ic(r[0])}${r[1]}</span><b>${r[2]}</b></div>`).join('')}<button class="btn dk" style="margin-top:14px;padding:14px" onclick="toast('Account added')">Add Account</button></div>`).join('')}
+        `;
+    }
 };
+
+function txs(l) {
+    let d = '';
+    if(!l || l.length === 0) return '<div style="text-align:center;padding:30px;color:var(--l);font-weight:700">No transactions yet</div>';
+    
+    return l.map(t => {
+        const h = t.d != d ? `<div class="dh">${t.d}</div>` : '';
+        d = t.d;
+        return h + `
+            <div class="tx" style="margin: 0 16px 10px; background: var(--c); border-radius: 16px; padding: 14px 16px; display: flex; align-items: center; gap: 12px;">
+                <i class="ci" style="width: 40px; height: 40px; border-radius: 50%; background: var(--bg); color: var(--m); display: grid; place-items: center;">${ic(t.ty=='D'?'download':t.ty=='W'?'upload':'sync_alt')}</i>
+                <div class="d" style="flex:1;">
+                    <div class="row g8">
+                        <b style="font-size:17px;font-weight:800;">${t.ty=='D'?'Deposit':t.ty=='W'?'Withdrawal':'Transfer'}</b>
+                        ${t.s=='x'?ic('cancel','f').replace('class="ms','class="ms" style="color:#e03131;font-size:18px" data-x="'):t.s=='p'?ic('schedule','f').replace('class="ms','class="ms" style="color:#ef8a30;font-size:18px" data-x="'):ic('check_circle','f').replace('class="ms','class="ms" style="color:#1f9d6b;font-size:18px" data-x="')}
+                    </div>
+                    <div class="mu" style="font-weight:700;font-size:13px">ID: ${t.id}</div>
+                </div>
+                <div style="text-align:right">
+                    <b style="color:${t.ty=='D'?'#1f9d6b':'var(--t)'};font-size:17px;font-weight:800">${t.ty=='D'?'+ ':''}$${fm(t.a)}</b>
+                    <div class="mu" style="font-weight:700;font-size:13px">${t.t}</div>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
 
 function updD() {
     const u = (+S.amt || 0) / RATE;
@@ -419,6 +747,7 @@ function doWithdraw() {
     const amt = parseFloat(S.wamt);
     if(!amt || amt <= 0) return toast('Enter a valid amount');
     if(amt > A[0].b) return toast('Insufficient balance');
+    
     requestPin('Authorize Withdrawal', () => {
         sendWithdrawToMT5(amt);
         S.wamt = '';
@@ -435,7 +764,20 @@ function dots(el) {
     [...el.nextElementSibling.children].forEach((d, k) => d.classList.toggle('on', k == i));
 }
 
-function more() { sheet(`<h2>Your Account</h2><button class="x" onclick="cs()">${ic('close')}</button>${[['edit_square','Edit',''],['upload','Withdraw',"go('withdraw')"],['history','Payment History',''],['lock','Change password',''],['delete','Delete account','r']].map(r => `<div class="sr" ${r[2]=='r'?'style="color:#e03131"':''} onclick="cs();${r[2]!='r'?r[2]:`toast('${r[1]}')`}"><i class="ci" ${r[2]=='r'?'style="background:#fde1e1;color:#e03131"':''}>${ic(r[0])}</i>${r[1]}</div>`).join('')}`); }
+function more() {
+    sheet(`
+        <h2>Your Account</h2>
+        <button class="x" onclick="cs()">${ic('close')}</button>
+        ${[
+            ['edit_square','Edit',''],
+            ['upload','Withdraw',"go('withdraw')"],
+            ['history','Payment History',''],
+            ['monitoring','Trades History',''],
+            ['lock','Change password',''],
+            ['delete','Delete account','r']
+        ].map(r => `<div class="sr" ${r[2]=='r'?'style="color:#e03131"':''} onclick="cs();${r[2]!='r'?r[2]:`toast('${r[1]}')`}"><i class="ci" ${r[2]=='r'?'style="background:#fde1e1;color:#e03131"':''}>${ic(r[0])}</i>${r[1]}</div>`).join('')}
+    `);
+}
 
 // STK SIMULATION VIA PIN MODAL
 function stk() {
@@ -446,7 +788,16 @@ function stk() {
     });
 }
 
-function acctType() { sheet(`<button class="x" onclick="cs()">${ic('close')}</button><h2>Account Type</h2>${[['Real Accounts','Accounts trading real assets','#1f9d6b','trending_up'],['Demo Accounts','Valetax accounts with virtual balance','#232b38','candlestick_chart']].map(r => `<div class="pick" onclick="cs();toast('${r[0]}')" style="display:flex;gap:12px;align-items:center"><i class="ci" style="background:${r[2]};width:40px;height:40px;border-radius:50%;display:grid;place-items:center;color:#fff">${ic(r[3])}</i><div><b>${r[0]}</b><div>${r[1]}</div></div></div>`).join('')}`); }
+function acctType() {
+    sheet(`
+        <button class="x" onclick="cs()">${ic('close')}</button>
+        <h2>Account Type</h2>
+        ${[
+            ['Real Accounts','Accounts trading real assets','#1f9d6b','trending_up'],
+            ['Demo Accounts','Valetax accounts with virtual balance','#232b38','candlestick_chart']
+        ].map(r => `<div class="pick" onclick="cs();toast('${r[0]}')" style="display:flex;gap:12px;align-items:center"><i class="ci" style="background:${r[2]};width:40px;height:40px;border-radius:50%;display:grid;place-items:center;color:#fff">${ic(r[3])}</i><div><b>${r[0]}</b><div>${r[1]}</div></div></div>`).join('')}
+    `);
+}
 
 function openTradePrompt() {
     const amt = prompt("Enter trade size in USD (Balance won't change until closed):");
@@ -472,7 +823,6 @@ function closeTrade(id) {
     A[0].b += pnl;
     totalFunds = A[0].b + A[1].b;
     
-    closedPositions.push({ ...pos, pnl });
     openPositions.splice(idx, 1);
     
     toast(`Trade Closed! PnL: ${pnl > 0 ? '+' : ''}${fm(pnl)} USD`);
@@ -480,9 +830,19 @@ function closeTrade(id) {
 }
 
 function selA(w, i) {
-    S.sel = w; if (i != null) S.st = i;
+    S.sel = w;
+    if (i != null) S.st = i;
     const ac = S.st == 1, t = ['MT4','MT5','Investor'];
-    sheet(`<button class="x" onclick="cs()">${ic('close')}</button><h2>Select</h2><div class="tabs gt" style="margin:0 0 16px;border:0">${t.map((x,k) => `<button class="${S.st==k?'on':''}" onclick="selA('${w}',${k})">${x}</button>`).join('')}</div>${S.st<2?`<div class="pick" ${S.st==0?'':`onclick="pk('${w}',-1)"`}><b>${ic('wallet','f').replace('class="ms','class="ms" style="color:#1f9d6b;font-size:22px" data-x="')} Wallet</b><div>Balance <b style="color:#25b07c;font-size:inherit">0.00 USD</b></div>${S.st==0?'<div style="color:#ef8a30;font-weight:800;margin-top:4px">'+ic('error','f').replace('class="ms','class="ms" style="font-size:18px" data-x="')+' Not enough funds</div>':''}</div>`:''}${ac?A.map((a,i) => `<div class="pick ${(w=='from'?S.from:S.to)==i?'on':''}" onclick="pk('${w}',${i})"><b>${a.id}</b> <span class="tag ${a.c}">${a.t[0]+a.t.slice(1).toLowerCase()}</span><div>Balance <b style="color:#25b07c;font-size:inherit">${fm(a.b)} USD</b> · ${a.n}</div>${(w=='from'?S.from:S.to)==i?ic('check_circle','f ck'):''}</div>`).join(''):''}`);
+    sheet(`
+        <button class="x" onclick="cs()">${ic('close')}</button>
+        <h2>Select</h2>
+        <div class="tabs gt" style="margin:0 0 16px;border:0">
+            ${t.map((x,k) => `<button class="${S.st==k?'on':''}" onclick="selA('${w}',${k})">${x}</button>`).join('')}
+        </div>
+        ${S.st<2?`<div class="pick" ${S.st==0?'':`onclick="pk('${w}',-1)"`}><b>${ic('wallet','f').replace('class="ms','class="ms" style="color:#1f9d6b;font-size:22px" data-x="')} Wallet</b><div>Balance <b style="color:#25b07c;font-size:inherit">0.00 USD</b></div>${S.st==0?'<div style="color:#ef8a30;font-weight:800;margin-top:4px">'+ic('error','f').replace('class="ms','class="ms" style="font-size:18px" data-x="')+' Not enough funds</div>':''}</div>`:''}
+        ${ac?A.map((a,i) => `<div class="pick ${(w=='from'?S.from:S.to)==i?'on':''}" onclick="pk('${w}',${i})"><b>${a.id}</b> <span class="tag ${a.c}">${a.t[0]+a.t.slice(1).toLowerCase()}</span><div>Balance <b style="color:#25b07c;font-size:inherit">${fm(a.b)} USD</b> · ${a.n}</div>${(w=='from'?S.from:S.to)==i?ic('check_circle','f ck'):''}</div>`).join(''):''}
+        ${S.st==2?'<div class="mu" style="text-align:center;padding:30px">No investor accounts</div>':''}
+    `);
 }
 
 function pk(w, i) {
