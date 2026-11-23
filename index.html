@@ -220,7 +220,7 @@ svg.sp { width: 100px; height: 50px; flex: none; }
 // ==========================================
 const API_BASE_URL = 'https://mt5-api-backend.i96463073.workers.dev';
 const ACCOUNT_ID = 'isaac_01'; 
-const API_KEY = 'YOUR_DEMO_DEPOSIT_KEY'; // MUST MATCH YOUR CLOUDFLARE SECRET KEY
+const API_KEY = 'IsaacSecret2026'; // Ensure this matches your Cloudflare Secret
 
 // Core Data
 const A = [
@@ -231,7 +231,7 @@ const RATE = 131.7, fm = n => Number(n).toFixed(2);
 let totalFunds = 0.00; 
 let globalTx = [];
 
-const S = { v: 'home', prev: 'home', tab: 0, step: 1, meth: 'Mobile Money', amt: '', from: null, to: 1, tamt: '', st: 1, ai: 1 };
+const S = { v: 'home', prev: 'home', tab: 0, step: 1, meth: 'Mobile Money', amt: '', wamt: '', from: null, to: 1, tamt: '', st: 1, ai: 1 };
 
 const $ = s => document.querySelector(s);
 const ic = (n, x = '') => `<span class="ms ${x}">${n}</span>`;
@@ -247,6 +247,7 @@ function go(v) {
     if (v == 'accounts' && S.v != 'accounts' && !S.keep) S.ai = 1;
     S.keep = 0; S.prev = S.v; S.v = v; S.tab = 0;
     if (v == 'deposit') S.step = 1;
+    if (v == 'withdraw') S.wamt = '';
     render();
     window.scrollTo(0, 0);
 }
@@ -277,7 +278,6 @@ async function syncData() {
                 totalFunds = A[0].b + A[1].b;
             }
             
-            // Map backend transactions to Valetax UI format
             if (data.transactions && data.transactions.length > 0) {
                 globalTx = data.transactions.map(tx => {
                     const date = new Date(tx.created_at || Date.now());
@@ -295,8 +295,7 @@ async function syncData() {
                 });
             }
             
-            // Re-render if on a screen that shows balance
-            if (oldB !== A[0].b && (S.v === 'home' || S.v === 'funds' || S.v === 'accounts')) { 
+            if (oldB !== A[0].b && (S.v === 'home' || S.v === 'funds' || S.v === 'accounts' || S.v === 'withdraw')) { 
                 render(); 
             }
         }
@@ -308,19 +307,15 @@ async function syncData() {
 async function sendDepositToMT5(amountUSD) {
     try {
         toast('Contacting Server...');
-        
         const response = await fetch(`${API_BASE_URL}/api/deposit`, {
             method: 'POST',
-            headers: { 
-                'Content-Type': 'application/json',
-                'X-Demo-Key': API_KEY // IMPORTANT: Secures the deposit
-            },
+            headers: { 'Content-Type': 'application/json', 'X-Demo-Key': API_KEY },
             body: JSON.stringify({ accountId: ACCOUNT_ID, amount: amountUSD, currency: 'USD' })
         });
 
         if (response.ok) {
             toast('Deposit successful!');
-            setTimeout(syncData, 1000); // Sync new balance
+            setTimeout(syncData, 1000);
             go('funds');
         } else {
             const err = await response.json();
@@ -331,7 +326,33 @@ async function sendDepositToMT5(amountUSD) {
     }
 }
 
-// Initial Sync & Auto-refresh every 15 seconds
+async function sendWithdrawToMT5(amountUSD) {
+    try {
+        toast('Processing withdrawal...');
+        const response = await fetch(`${API_BASE_URL}/api/withdraw`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ accountId: ACCOUNT_ID, amount: amountUSD, currency: 'USD' })
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            if(data.success) {
+                toast('Withdrawal successful!');
+                setTimeout(syncData, 1000);
+                go('home');
+            } else {
+                toast('Failed: ' + (data.error || 'Insufficient funds'));
+            }
+        } else {
+            toast('Withdrawal failed. Server error.');
+        }
+    } catch (e) { 
+        toast('Network error during withdrawal'); 
+    }
+}
+
+// Initial Sync & Auto-refresh
 syncData();
 setInterval(syncData, 15000);
 
@@ -611,7 +632,7 @@ const V = {
             ${dotsH(A.length)}
             <div class="acts" style="margin:0">
                 ${act('download','Deposit',"go('deposit')",1)}
-                ${act('upload','Withdrawal',"toast('Withdrawal')")}
+                ${act('upload','Withdrawal',"go('withdraw')")}
                 ${act('sync_alt','Transfer',"go('transfer')")}
                 ${act('more_vert','More','more()')}
             </div>
@@ -724,7 +745,37 @@ const V = {
             </div>
             ${c}
         `;
-    }
+    },
+    withdraw: () => `
+        ${hdr('Withdraw', 'back()')}
+        <div class="fld">
+            <label>Withdraw from</label>
+            <div class="sel" onclick="toast('Only main account available')">
+                <i class="ci">${ic('upload')}</i>
+                <div><b style="font-size:17px;font-weight:800">${A[0].id}</b><div class="mu">${A[0].n}</div></div>
+                ${ic('expand_more')}
+            </div>
+        </div>
+        <div class="fld" style="font-size:15px;font-weight:700">
+            <span class="mu">Available Balance</span> 
+            <span style="color:#25b07c;font-weight:800">$ ${fm(A[0].b)}</span>
+        </div>
+        <div class="fld">
+            <label>Amount to withdraw (USD)</label>
+            <div class="row">
+                <input class="inp" id="wamt" type="number" inputmode="decimal" placeholder="0" value="${S.wamt}" oninput="S.wamt=this.value;$('#wb').className='btn '+(+this.value>0?'dk':'off')">
+                <b class="mu" style="font-size:18px">USD</b>
+            </div>
+        </div>
+        <div class="fld" style="margin-top:24px">
+            <label>Destination</label>
+            <div class="sel">
+                <i class="ci">${ic('phone_android')}</i>
+                <div><b style="font-size:17px;font-weight:800">M-PESA (Mobile Money)</b><div class="mu">254796681162</div></div>
+            </div>
+        </div>
+        <div class="fix"><button id="wb" class="btn ${+S.wamt > 0 ? 'dk' : 'off'}" onclick="doWithdraw()">Withdraw</button></div>
+    `
 };
 
 function txs(l) {
@@ -760,6 +811,15 @@ function updD() {
     $('#sb').className = 'btn ' + (+S.amt > 0 ? 'dk' : 'off');
 }
 
+function doWithdraw() {
+    const amt = parseFloat(S.wamt);
+    if(!amt || amt <= 0) return toast('Enter a valid amount');
+    if(amt > A[0].b) return toast('Insufficient balance');
+    
+    sendWithdrawToMT5(amt);
+    S.wamt = '';
+}
+
 const filt = () => `<div class="row g8" style="padding:0 16px 4px"><span class="chip">All Peri… ${ic('expand_more').replace('class="ms','class="ms" style="font-size:16px" data-x="')}</span><span class="chip">All ${ic('expand_more').replace('class="ms','class="ms" style="font-size:16px" data-x="')}</span></div>`;
 const wcard = () => `<div class="card" onclick="S.ai=0;S.keep=1;go('accounts')"><span class="tag g">VALETAX WALLET</span><div style="font-size:20px;font-weight:800;margin:10px 0 4px">Wallet</div><div class="mu">$ 0.00</div></div>`;
 
@@ -776,12 +836,12 @@ function more() {
         <button class="x" onclick="cs()">${ic('close')}</button>
         ${[
             ['edit_square','Edit',''],
-            ['upload','Withdraw',''],
+            ['upload','Withdraw',"go('withdraw')"],
             ['history','Payment History',''],
             ['monitoring','Trades History',''],
             ['lock','Change password',''],
             ['delete','Delete account','r']
-        ].map(r => `<div class="sr" ${r[2]?'style="color:#e03131"':''} onclick="cs();toast('${r[1]}')"><i class="ci" ${r[2]?'style="background:#fde1e1;color:#e03131"':''}>${ic(r[0])}</i>${r[1]}</div>`).join('')}
+        ].map(r => `<div class="sr" ${r[2]=='r'?'style="color:#e03131"':''} onclick="cs();${r[2]!='r'?r[2]:`toast('${r[1]}')`}"><i class="ci" ${r[2]=='r'?'style="background:#fde1e1;color:#e03131"':''}>${ic(r[0])}</i>${r[1]}</div>`).join('')}
     `);
 }
 
