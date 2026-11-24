@@ -5,195 +5,125 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>ValetaxApp</title>
 <meta name="theme-color" content="#1d1d1f">
-
-<!-- Valetax V/X Icon -->
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100' height='100' rx='24' fill='%231d1d1f' /%3E%3Cpath d='M 25 30 L 47 75 L 63 45' stroke='%23ffffff' stroke-width='10' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M 75 30 L 40 85' stroke='%231f9d6b' stroke-width='10' fill='none' stroke-linecap='round'/%3E%3Cpath d='M 75 45 L 65 60' stroke='%23ffffff' stroke-width='10' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
-
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0..1,0&display=swap" rel="stylesheet">
 <style>
-:root {
-    --bg: #ffffff; --c: #f0f3f8; --t: #232b38; --m: #6b7482; --l: #b7bdc6;
-    --p: #1f9d6b; --bd: #e4e7ec; --pb: #dfe4ff; --pt: #2447b5; --gb: #c9f0dd;
-    --gt: #0d6b45; --red: #e03131; --or: #ef8a30; --nav: #ebecee; --dk: #262d3a;
-    color-scheme: light;
-}
-* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; font-family: 'Inter', system-ui, sans-serif; }
-html, body { width: 100%; height: 100%; overflow-x: hidden; background: var(--bg); color: var(--t); font-size: 15px; font-weight: 600; }
-#app { width: 100%; min-height: 100dvh; background: var(--bg); position: relative; padding-bottom: calc(100px + env(safe-area-inset-bottom, 0px)); padding-top: env(safe-area-inset-top, 0px); }
-@media (min-width: 600px) { body { background: #e9edf3; display: flex; justify-content: center; } #app { max-width: 480px; box-shadow: 0 0 40px rgba(0,0,0,0.08); } }
-#app.gr { background: linear-gradient(180deg, rgba(31,157,107,0.15), var(--bg) 350px); }
-.ms { font-family: 'Material Symbols Rounded'; font-weight: 400; font-size: 24px; line-height: 1; display: inline-block; vertical-align: middle; font-variation-settings: 'FILL' 0; }
-.f { font-variation-settings: 'FILL' 1; }
-.row { display: flex; align-items: center; }
-.sb { justify-content: space-between; }
-.g8 { gap: 8px; }
-.mu { color: var(--m); }
-.gn { color: var(--p); }
-.hd { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; position: sticky; top: 0; z-index: 5; background: var(--bg); }
-#app.gr .hd { position: static; background: transparent; }
-.hd h1 { font-size: 18px; font-weight: 800; flex: 1; text-align: center; }
-.ib { width: 42px; height: 42px; border-radius: 50%; border: 0; background: transparent; color: var(--t); display: grid; place-items: center; cursor: pointer; position: relative; }
-.ib.w { background: rgba(255,255,255,0.7); color: #232b38; }
-.bg-badge { position: absolute; top: -2px; right: -4px; background: var(--red); color: #fff; font-size: 12px; font-weight: 800; padding: 1px 7px; border-radius: 12px; }
-.card { background: var(--c); border-radius: 16px; padding: 16px; margin: 0 16px 12px; }
-.wc { background: #fff; color: #232b38; box-shadow: 0 2px 10px rgba(0,0,0,0.04); }
-.tag { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 13px; font-weight: 800; background: var(--pb); color: var(--pt); letter-spacing: 0.5px; }
-.tag.g { background: var(--gb); color: var(--gt); }
-.btn { background: var(--p); color: #fff; border: 0; border-radius: 12px; padding: 12px 16px; font-size: 15px; font-weight: 700; width: 100%; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; }
-.btn.s { width: auto; padding: 9px 14px; font-size: 14px; border-radius: 10px; }
-.btn.dk { background: var(--dk); }
-.btn.off { background: #cbd0da; pointer-events: none; }
-.btn.pl { background: #fff; color: #232b38; width: auto; padding: 10px 16px; font-size: 14px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
-.fix { position: fixed; left: 0; right: 0; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); padding: 0 16px; max-width: 480px; margin: auto; z-index: 10; }
-.nav { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(14px + env(safe-area-inset-bottom, 0px)); width: calc(100% - 32px); max-width: 448px; background: var(--nav); border-radius: 30px; display: flex; justify-content: space-around; padding: 10px 0 8px; box-shadow: 0 6px 24px rgba(0,0,0,0.18); z-index: 50; }
-.nav button { background: none; border: 0; color: var(--m); font-size: 12px; font-weight: 600; display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; min-width: 70px; }
-.nav button.on { color: var(--p); }
-.nav button.on .ms { font-variation-settings: 'FILL' 1; }
-.acts { display: flex; justify-content: space-between; padding: 6px 16px 0; margin-bottom: 24px; }
-.act { background: none; border: 0; color: var(--t); font-size: 14px; font-weight: 700; display: flex; flex-direction: column; align-items: center; gap: 6px; cursor: pointer; width: 25%; }
-.act i { width: 56px; height: 56px; border-radius: 50%; background: rgba(255,255,255,0.85); color: #232b38; display: grid; place-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
-.act.pr i { background: var(--p); color: #fff; }
-.car { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 12px; padding: 0 16px; scrollbar-width: none; }
-.car::-webkit-scrollbar { display: none; }
-.car > * { flex: 0 0 100%; scroll-snap-align: center; }
-.dots { display: flex; justify-content: center; gap: 6px; margin: 10px 0 20px; }
-.dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--bd); transition: 0.3s; }
-.dots i.on { background: var(--m); width: 18px; border-radius: 10px; }
-.acc-card { background: #fff; border-radius: 16px; padding: 18px; box-shadow: 0 2px 10px rgba(0,0,0,0.04); }
-.acc-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
-.acc-title { font-size: 18px; font-weight: 800; color: var(--t); }
-.acc-bal { font-size: 26px; font-weight: 800; color: var(--t); }
-.acc-footer { display: flex; justify-content: space-between; align-items: flex-end; }
-.acc-id { font-size: 18px; font-weight: 800; color: var(--t); display: flex; align-items: center; gap: 6px; }
-.acc-details { font-size: 14px; font-weight: 600; color: var(--m); display: flex; align-items: center; gap: 4px; }
-.ban { border-radius: 16px; padding: 20px; min-height: 170px; position: relative; color: #232b38; overflow: hidden; background: #e0f2ec; }
-.ban h3 { font-size: 18px; font-weight: 800; margin-bottom: 6px; }
-.ban p { font-size: 14px; color: #4a5568; max-width: 65%; margin-bottom: 16px; font-weight: 500; line-height: 1.3; }
-.ban .ico { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); width: 100px; height: 100px; display: grid; place-items: center; }
-.ban .ico .ms { font-size: 80px; color: #1f9d6b; opacity: 0.8; }
-.ban .cnt { position: absolute; right: 16px; bottom: 16px; background: rgba(255,255,255,0.9); border-radius: 20px; padding: 4px 12px; font-weight: 700; font-size: 13px; box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
-.sec { display: flex; justify-content: space-between; align-items: baseline; padding: 0 16px; margin: 16px 0 12px; }
-.sec h2 { font-size: 18px; font-weight: 800; color: var(--t); }
-.sec a { color: var(--m); font-weight: 700; cursor: pointer; font-size: 14px; }
-.news-card { width: 260px; border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-.news-img { height: 130px; width: 100%; display: flex; align-items: flex-end; padding: 12px; }
-.news-content { padding: 14px; }
-.mc { width: 240px; height: 200px; border-radius: 16px; padding: 14px; color: #fff; display: flex; flex-direction: column; justify-content: flex-end; font-weight: 700; font-size: 15px; line-height: 1.3; }
-.mc .fl { align-self: flex-start; background: #fff; color: #232b38; border-radius: 20px; padding: 4px 10px 4px 6px; font-size: 12px; display: flex; align-items: center; gap: 6px; margin-bottom: auto; font-weight: 800; }
-.mc .r { display: flex; justify-content: space-between; font-size: 13px; margin-top: 6px; font-weight: 600; color: rgba(255,255,255,0.8); }
-.mc .r b { color: #f5a35c; }
-.flag { width: 16px; height: 16px; border-radius: 50%; background: linear-gradient(#b22234 0 14%, #fff 14% 28%, #b22234 28% 42%, #fff 42% 56%, #b22234 56% 70%, #fff 70% 84%, #b22234 84%); position: relative; }
-.flag::after { content: ""; position: absolute; left: 0; top: 0; width: 55%; height: 55%; background: #3c3b6e; border-radius: 10px 0 0 0; }
-.st { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-bottom: 1px solid var(--bd); }
-.av { width: 42px; height: 42px; border-radius: 50%; flex: none; display: grid; place-items: center; font-size: 18px; color: #fff; overflow: hidden; border: 1px solid var(--bd); }
-.av img { width: 100%; height: 100%; object-fit: cover; }
-.st b { display: block; font-size: 16px; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 120px; color: var(--t); }
-.st .gw { flex: 1; text-align: center; font-size: 16px; font-weight: 700; color: #21a56f; }
-.pg { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; }
-.pg button { width: 36px; height: 36px; border-radius: 50%; border: 0; background: var(--c); color: var(--t); font-weight: 800; font-size: 15px; }
-.pg .on { background: var(--bd); }
-.tabs { display: flex; border-bottom: 1px solid var(--bd); margin: 0 16px 14px; overflow-x: auto; scrollbar-width: none; }
-.tabs button { flex: 1; background: none; border: 0; border-bottom: 3px solid transparent; color: var(--m); padding: 12px 4px; font-size: 15px; font-weight: 800; cursor: pointer; white-space: nowrap; }
-.tabs button.on { color: var(--t); border-color: var(--t); }
-.tabs.gt button.on { border-color: var(--p); }
-.fld { margin: 0 16px 14px; }
-.fld label { display: block; color: var(--m); font-size: 15px; margin-bottom: 8px; font-weight: 700; }
-.inp { width: 100%; background: transparent; border: 0; border-bottom: 1px solid var(--bd); font-size: 24px; font-weight: 600; color: var(--t); outline: 0; padding: 4px 0; }
-.sel { background: var(--c); border-radius: 14px; padding: 14px; display: flex; align-items: center; gap: 12px; cursor: pointer; }
-.sel .ci { background: var(--bg); color: var(--m); width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; }
-.sel .ms:last-child { margin-left: auto; background: var(--bd); border-radius: 50%; font-size: 20px; padding: 3px; }
-.kv { display: flex; justify-content: space-between; margin: 0 16px 12px; font-size: 16px; font-weight: 700; color: var(--m); }
-.kv b { color: var(--t); font-weight: 700; }
-.ov { position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 100; display: flex; align-items: flex-end; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.25s; }
-.ov.o { opacity: 1; pointer-events: auto; }
-.sh { background: var(--bg); width: 100%; max-width: 480px; border-radius: 24px 24px 0 0; padding: 12px 16px calc(24px + env(safe-area-inset-bottom, 0px)); transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.1, 0.8, 0.2, 1); }
-.ov.o .sh { transform: none; }
-.sh .hl { width: 44px; height: 4px; border-radius: 2px; background: var(--l); margin: 0 auto 14px; }
-.sh h2 { text-align: center; font-size: 18px; font-weight: 800; margin-bottom: 16px; }
-.sh .x { position: absolute; right: 20px; margin-top: -6px; width: 40px; height: 40px; border-radius: 50%; background: var(--c); border: 0; color: var(--t); cursor: pointer; display: grid; place-items: center; }
-.sr { display: flex; align-items: center; gap: 16px; padding: 12px 6px; font-size: 17px; font-weight: 700; cursor: pointer; }
-.sr .ci { width: 40px; height: 40px; background: var(--c); color: var(--t); border-radius: 50%; display: grid; place-items: center; }
-.pick { background: var(--c); border-radius: 14px; padding: 14px; margin-bottom: 12px; cursor: pointer; font-weight: 700; color: var(--m); position: relative; }
-.pick b { font-size: 17px; font-weight: 800; color: var(--t); }
-.pick .ck { position: absolute; right: 14px; top: 50%; margin-top: -12px; color: var(--p); }
-#toast { position: fixed; bottom: 110px; left: 50%; transform: translateX(-50%); background: var(--dk); color: #fff; padding: 12px 22px; border-radius: 30px; z-index: 200; opacity: 0; transition: opacity 0.25s; pointer-events: none; white-space: nowrap; font-size: 14px; font-weight: 500; }
-#toast.o { opacity: 1; }
-svg.sp { width: 100px; height: 50px; flex: none; }
-.chip { background: var(--c); border-radius: 10px; padding: 8px 12px; font-size: 14px; font-weight: 700; display: flex; gap: 4px; align-items: center; }
-.car.two > * { flex: 0 0 calc(50% - 6px); }
-.car.two { gap: 12px; }
-.hn { border-radius: 16px; padding: 12px; min-height: 236px; background: var(--c); display: flex; flex-direction: column; box-shadow: 0 2px 10px rgba(0,0,0,0.04); }
-.hn .tg { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
-.hn .tg span { background: #fff; border-radius: 14px; padding: 4px 8px; font-size: 12px; font-weight: 700; color: var(--t); box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
-.hn b { font-size: 17px; font-weight: 800; line-height: 1.2; }
-.hn small { font-size: 12px; color: var(--m); font-weight: 600; margin-top: auto; }
-.mk { border-radius: 16px; padding: 12px; min-height: 235px; display: flex; flex-direction: column; justify-content: flex-end; color: #fff; }
-.mk .fl { align-self: flex-start; background: #fff; color: #232b38; border-radius: 20px; padding: 4px 10px 4px 6px; font-size: 12px; display: flex; align-items: center; gap: 6px; margin-bottom: auto; font-weight: 800; }
-.mk b { font-size: 17px; font-weight: 800; line-height: 1.2; }
-.mk .r { display: flex; justify-content: space-between; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.8); margin-top: 6px; }
-.vxc { width: 24px; height: 24px; border-radius: 50%; background: var(--gb); display: grid; place-items: center; font-size: 14px; font-weight: 800; color: var(--gt); font-style: normal; }
+:root{--bg:#fff;--c:#f0f3f8;--t:#232b38;--m:#6b7482;--l:#b7bdc6;--p:#1f9d6b;--bd:#e4e7ec;--pb:#dfe4ff;--pt:#2447b5;--gb:#c9f0dd;--gt:#0d6b45;--red:#e03131;--or:#ef8a30;--nav:#ebecee;--dk:#262d3a;color-scheme:light}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;font-family:'Inter',system-ui,sans-serif}
+html,body{width:100%;height:100%;overflow-x:hidden;background:var(--bg);color:var(--t);font-size:15px;font-weight:600}
+#app{width:100%;min-height:100dvh;background:var(--bg);position:relative;padding-bottom:calc(100px + env(safe-area-inset-bottom,0px));padding-top:env(safe-area-inset-top,0px)}
+@media(min-width:600px){body{background:#e9edf3;display:flex;justify-content:center}#app{max-width:480px;box-shadow:0 0 40px rgba(0,0,0,.08)}}
+#app.gr{background:linear-gradient(180deg,rgba(31,157,107,.15),var(--bg) 350px)}
+.ms{font-family:'Material Symbols Rounded';font-weight:400;font-size:24px;line-height:1;display:inline-block;vertical-align:middle;font-variation-settings:'FILL' 0}
+.f{font-variation-settings:'FILL' 1}
+.row{display:flex;align-items:center}.sb{justify-content:space-between}.g8{gap:8px}.mu{color:var(--m)}.gn{color:var(--p)}
+.hd{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;position:sticky;top:0;z-index:5;background:var(--bg)}
+#app.gr .hd{position:static;background:transparent}
+.hd h1{font-size:18px;font-weight:800;flex:1;text-align:center}
+.ib{width:42px;height:42px;border-radius:50%;border:0;background:transparent;color:var(--t);display:grid;place-items:center;cursor:pointer;position:relative}
+.ib.w{background:rgba(255,255,255,.7);color:#232b38}
+.bg-badge{position:absolute;top:-2px;right:-4px;background:var(--red);color:#fff;font-size:12px;font-weight:800;padding:1px 7px;border-radius:12px}
+.card{background:var(--c);border-radius:16px;padding:16px;margin:0 16px 12px}
+.wc{background:#fff;color:#232b38;box-shadow:0 2px 10px rgba(0,0,0,.04)}
+.tag{display:inline-block;padding:4px 10px;border-radius:20px;font-size:13px;font-weight:800;background:var(--pb);color:var(--pt);letter-spacing:.5px}
+.tag.g{background:var(--gb);color:var(--gt)}
+.btn{background:var(--p);color:#fff;border:0;border-radius:12px;padding:12px 16px;font-size:15px;font-weight:700;width:100%;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px}
+.btn.s{width:auto;padding:9px 14px;font-size:14px;border-radius:10px}
+.btn.dk{background:var(--dk)}.btn.off{background:#cbd0da;pointer-events:none}
+.btn.pl{background:#fff;color:#232b38;width:auto;padding:12px 16px;font-size:15px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.fix{position:fixed;left:0;right:0;bottom:calc(16px + env(safe-area-inset-bottom,0px));padding:0 16px;max-width:480px;margin:auto;z-index:10}
+.nav{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(14px + env(safe-area-inset-bottom,0px));width:calc(100% - 32px);max-width:448px;background:var(--nav);border-radius:30px;display:flex;justify-content:space-around;padding:10px 0 8px;box-shadow:0 6px 24px rgba(0,0,0,.18);z-index:50}
+.nav button{background:none;border:0;color:var(--m);font-size:12px;font-weight:600;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;min-width:70px}
+.nav button.on{color:var(--p)}.nav button.on .ms{font-variation-settings:'FILL' 1}
+.acts{display:flex;justify-content:space-between;padding:6px 16px 0;margin-bottom:24px}
+.act{background:none;border:0;color:var(--t);font-size:14px;font-weight:700;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;width:25%}
+.act i{width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,.85);color:#232b38;display:grid;place-items:center;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.act.pr i{background:var(--p);color:#fff}
+.car{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;padding:0 16px;scrollbar-width:none}
+.car::-webkit-scrollbar{display:none}
+.car>*{flex:0 0 100%;scroll-snap-align:center}
+.dots{display:flex;justify-content:center;gap:6px;margin:10px 0 20px}
+.dots i{width:6px;height:6px;border-radius:50%;background:var(--bd);transition:.3s}
+.dots i.on{background:var(--m);width:18px;border-radius:10px}
+.acc-card{background:#fff;border-radius:16px;padding:18px;box-shadow:0 2px 10px rgba(0,0,0,.04)}
+.acc-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
+.acc-title{font-size:18px;font-weight:800;color:var(--t)}
+.acc-bal{font-size:26px;font-weight:800;color:var(--t)}
+.acc-footer{display:flex;justify-content:space-between;align-items:flex-end}
+.acc-id{font-size:18px;font-weight:800;color:var(--t);display:flex;align-items:center;gap:6px}
+.acc-details{font-size:14px;font-weight:600;color:var(--m);display:flex;align-items:center;gap:4px}
+.ban{border-radius:16px;padding:20px;min-height:185px;position:relative;color:#232b38;overflow:hidden;background:#e0f2ec}
+.ban h3{font-size:20px;font-weight:800;margin-bottom:6px}
+.ban p{font-size:14px;color:#4a5568;max-width:68%;margin-bottom:16px;font-weight:500;line-height:1.3}
+.ban .ico{position:absolute;right:16px;top:50%;transform:translateY(-50%);width:100px;height:100px;display:grid;place-items:center}
+.ban .ico .ms{font-size:80px;color:#1f9d6b;opacity:.8}
+.ban .cnt{position:absolute;right:16px;bottom:16px;background:rgba(255,255,255,.9);border-radius:20px;padding:4px 12px;font-weight:700;font-size:13px;box-shadow:0 2px 6px rgba(0,0,0,.05)}
+.sec{display:flex;justify-content:space-between;align-items:baseline;padding:0 16px;margin:16px 0 12px}
+.sec h2{font-size:18px;font-weight:800;color:var(--t)}.sec a{color:var(--m);font-weight:700;cursor:pointer;font-size:14px}
+.st{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--bd)}
+.av{width:42px;height:42px;border-radius:50%;flex:none;display:grid;place-items:center;font-size:18px;color:#fff;overflow:hidden;border:1px solid var(--bd)}
+.av img{width:100%;height:100%;object-fit:cover}
+.st b{display:block;font-size:16px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:120px;color:var(--t)}
+.st .gw{flex:1;text-align:center;font-size:16px;font-weight:700;color:#21a56f}
+.pg{display:flex;justify-content:space-between;align-items:center;padding:14px 16px}
+.pg button{width:36px;height:36px;border-radius:50%;border:0;background:var(--c);color:var(--t);font-weight:800;font-size:15px}.pg .on{background:var(--bd)}
+.tabs{display:flex;border-bottom:1px solid var(--bd);margin:0 16px 14px;overflow-x:auto;scrollbar-width:none}
+.tabs button{flex:1;background:none;border:0;border-bottom:3px solid transparent;color:var(--m);padding:12px 4px;font-size:15px;font-weight:800;cursor:pointer;white-space:nowrap}
+.tabs button.on{color:var(--t);border-color:var(--t)}.tabs.gt button.on{border-color:var(--p)}
+.fld{margin:0 16px 14px}.fld label{display:block;color:var(--m);font-size:15px;margin-bottom:8px;font-weight:700}
+.inp{width:100%;background:transparent;border:0;border-bottom:1px solid var(--bd);font-size:24px;font-weight:600;color:var(--t);outline:0;padding:4px 0}
+.sel{background:var(--c);border-radius:14px;padding:14px;display:flex;align-items:center;gap:12px;cursor:pointer}
+.sel .ci{background:var(--bg);color:var(--m);width:40px;height:40px;border-radius:50%;display:grid;place-items:center}
+.sel .ms:last-child{margin-left:auto;background:var(--bd);border-radius:50%;font-size:20px;padding:3px}
+.kv{display:flex;justify-content:space-between;margin:0 16px 12px;font-size:16px;font-weight:700;color:var(--m)}.kv b{color:var(--t);font-weight:700}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:100;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s}
+.ov.o{opacity:1;pointer-events:auto}
+.sh{background:var(--bg);width:100%;max-width:480px;border-radius:24px 24px 0 0;padding:12px 16px calc(24px + env(safe-area-inset-bottom,0px));transform:translateY(100%);transition:transform .3s cubic-bezier(.1,.8,.2,1)}
+.ov.o .sh{transform:none}
+.sh .hl{width:44px;height:4px;border-radius:2px;background:var(--l);margin:0 auto 14px}
+.sh h2{text-align:center;font-size:18px;font-weight:800;margin-bottom:16px}
+.sh .x{position:absolute;right:20px;margin-top:-6px;width:40px;height:40px;border-radius:50%;background:var(--c);border:0;color:var(--t);cursor:pointer;display:grid;place-items:center}
+.sr{display:flex;align-items:center;gap:16px;padding:12px 6px;font-size:17px;font-weight:700;cursor:pointer}
+.sr .ci{width:40px;height:40px;background:var(--c);color:var(--t);border-radius:50%;display:grid;place-items:center}
+.pick{background:var(--c);border-radius:14px;padding:14px;margin-bottom:12px;cursor:pointer;font-weight:700;color:var(--m);position:relative}
+.pick b{font-size:17px;font-weight:800;color:var(--t)}.pick .ck{position:absolute;right:14px;top:50%;margin-top:-12px;color:var(--p)}
+#toast{position:fixed;bottom:110px;left:50%;transform:translateX(-50%);background:var(--dk);color:#fff;padding:12px 22px;border-radius:30px;z-index:2000;opacity:0;transition:opacity .25s;pointer-events:none;white-space:nowrap;font-size:14px;font-weight:500}
+#toast.o{opacity:1}
+svg.sp{width:100px;height:50px;flex:none}
+.chip{background:var(--c);border-radius:10px;padding:8px 12px;font-size:14px;font-weight:700;display:flex;gap:4px;align-items:center}
+.car.two>*{flex:0 0 calc(50% - 6px)}.car.two{gap:12px}
+.hn{border-radius:16px;padding:12px;min-height:236px;display:flex;flex-direction:column;color:#1b2130;box-shadow:0 2px 10px rgba(0,0,0,.04)}
+.hn .tg{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.hn .tg span{background:#fff;border-radius:14px;padding:4px 8px;font-size:12px;font-weight:700;color:var(--t);box-shadow:0 1px 3px rgba(0,0,0,.05);display:flex;align-items:center;gap:4px}
+.hn b{font-size:18px;font-weight:800;line-height:1.25;margin-top:auto;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.hn small{font-size:13px;color:#3f4756;font-weight:600;margin-top:6px}
+.mk{border-radius:16px;padding:12px;min-height:235px;display:flex;flex-direction:column;justify-content:flex-end;color:#1b2130}
+.mk .fl{align-self:flex-start;background:#fff;color:#232b38;border-radius:20px;padding:4px 10px 4px 6px;font-size:12px;display:flex;align-items:center;gap:6px;margin-bottom:auto;font-weight:800}
+.mk b{font-size:18px;font-weight:800;line-height:1.25;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.mk .r{display:flex;justify-content:space-between;font-size:16px;font-weight:700;margin-top:8px}
+.mk .r span+span{color:#1f9d6b;font-weight:800}
+.fc2{width:16px;height:16px;border-radius:50%;display:inline-block;border:1px solid rgba(0,0,0,.08);flex:none}
+.vxc{width:24px;height:24px;border-radius:50%;background:var(--gb);display:grid;place-items:center;font-size:14px;font-weight:800;color:var(--gt);font-style:normal}
 
-/* ===== REALISTIC STK / M-PESA MODAL ===== */
-#stk-modal {
-    position: fixed; inset: 0; background: rgba(0,0,0,0.65);
-    z-index: 1000; display: flex; align-items: center; justify-content: center;
-    opacity: 0; pointer-events: none; transition: 0.2s;
-}
-#stk-modal.on { opacity: 1; pointer-events: auto; }
-.stk-card {
-    background: #2c2c2e; width: 88%; max-width: 340px;
-    border-radius: 16px; padding: 22px 20px 18px;
-    color: #fff; text-align: left;
-    transform: translateY(20px); transition: 0.2s;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-}
-#stk-modal.on .stk-card { transform: translateY(0); }
-.stk-card p { font-size: 15px; line-height: 1.45; margin-bottom: 18px; font-weight: 500; color: #e5e5e7; }
-.stk-card .pin-label { font-size: 14px; color: #aeaeb2; margin-bottom: 10px; font-weight: 500; }
-.stk-card input {
-    width: 100%; background: transparent; border: none;
-    border-bottom: 1.5px solid #636366; color: #fff;
-    font-size: 22px; letter-spacing: 8px; text-align: center;
-    padding: 8px 0 10px; outline: none; font-weight: 600;
-}
-.stk-card input:focus { border-bottom-color: #30d158; }
-.stk-actions {
-    display: flex; margin-top: 22px; border-top: 1px solid #3a3a3c;
-}
-.stk-actions button {
-    flex: 1; background: none; border: none; color: #0a84ff;
-    font-size: 17px; font-weight: 600; padding: 14px 0;
-    cursor: pointer;
-}
-.stk-actions button:first-child { border-right: 1px solid #3a3a3c; color: #0a84ff; }
-.stk-actions .send { color: #0a84ff; }
+/* ===== STK / M-PESA PIN PROMPT ===== */
+#stk-modal{position:fixed;inset:0;background:rgba(0,0,0,.62);z-index:1000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:.15s}
+#stk-modal.on{opacity:1;pointer-events:auto}
+.stk-card{background:#2b2b2d;width:66%;min-width:262px;max-width:340px;border-radius:26px;padding:22px 20px 6px;color:#fff;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+.stk-card p{font-size:16px;line-height:1.3;font-weight:700;margin:0 0 16px;color:#fff}
+.stk-card .pin-label{font-size:16px;font-weight:700;margin-bottom:26px;color:#fff}
+.stk-card input{width:100%;background:transparent;border:0;border-bottom:2px solid #fff;border-radius:0;color:#fff;font-size:20px;letter-spacing:4px;padding:4px 0;outline:0;font-weight:600}
+.stk-actions{display:flex;margin-top:20px;position:relative}
+.stk-actions button{flex:1;background:none;border:0;color:#fff;font-size:17px;font-weight:700;padding:14px 0;cursor:pointer}
+.stk-actions:after{content:"";position:absolute;left:50%;top:50%;height:20px;margin-top:-10px;width:1px;background:#4a4a4d}
 
-/* STK Prompt Sent sheet */
-.stk-sent {
-    background: #fff; border-radius: 20px 20px 0 0;
-    padding: 12px 20px 28px; text-align: center;
-}
-.stk-sent h3 { font-size: 18px; font-weight: 800; margin: 12px 0 8px; }
-.stk-sent p { font-size: 14px; color: var(--m); line-height: 1.4; margin-bottom: 20px; }
-.stk-sent .resend {
-    background: #e8f0fe; color: #1a73e8; border: none;
-    border-radius: 10px; padding: 14px; width: 100%;
-    font-weight: 700; font-size: 15px; margin-bottom: 12px; cursor: pointer;
-}
-.stk-sent .done {
-    background: #1d1d1f; color: #fff; border: none;
-    border-radius: 12px; padding: 16px; width: 100%;
-    font-weight: 700; font-size: 16px; margin-bottom: 10px; cursor: pointer;
-}
-.stk-sent .cancel {
-    background: none; border: none; color: var(--m);
-    font-weight: 600; font-size: 15px; cursor: pointer;
-}
-.stk-sent .note {
-    font-size: 13px; color: var(--m); margin: 14px 0 18px;
-    display: flex; align-items: center; justify-content: center; gap: 6px;
-}
+.stk-sent{background:#fff;border-radius:20px 20px 0 0;padding:12px 20px 28px;text-align:center}
+.stk-sent h3{font-size:18px;font-weight:800;margin:12px 0 8px}
+.stk-sent p{font-size:14px;color:var(--m);line-height:1.4;margin-bottom:20px}
+.stk-sent .resend{background:#e8f0fe;color:#1a73e8;border:none;border-radius:10px;padding:14px;width:100%;font-weight:700;font-size:15px;margin-bottom:12px;cursor:pointer}
+.stk-sent .done{background:#1d1d1f;color:#fff;border:none;border-radius:12px;padding:16px;width:100%;font-weight:700;font-size:16px;margin-bottom:10px;cursor:pointer}
+.stk-sent .cancel{background:none;border:none;color:var(--m);font-weight:600;font-size:15px;cursor:pointer}
+.stk-sent .note{font-size:13px;color:var(--m);margin:14px 0 18px;display:flex;align-items:center;justify-content:center;gap:6px}
 </style>
 </head>
 <body>
@@ -202,813 +132,608 @@ svg.sp { width: 100px; height: 50px; flex: none; }
 <div class="ov" id="ov" onclick="if(event.target==this)cs()"><div class="sh" id="sh"></div></div>
 <div id="toast"></div>
 
-<!-- Realistic STK / M-PESA PIN Modal -->
+<!-- STK / M-PESA PIN prompt -->
 <div id="stk-modal">
-    <div class="stk-card">
-        <p id="stk-text">Do you want to pay Kshs. 1300 to JAMBOPAY 4 Account no. LJDBXUTQJK?</p>
-        <div class="pin-label">Enter M-PESA PIN:</div>
-        <input type="password" id="stk-input" maxlength="4" inputmode="numeric" placeholder="••••" autocomplete="off">
-        <div class="stk-actions">
-            <button onclick="closeStk()">Cancel</button>
-            <button class="send" onclick="submitStk()">Send</button>
-        </div>
+  <div class="stk-card">
+    <p id="stk-text"></p>
+    <div class="pin-label">Enter M-PESA PIN:</div>
+    <input type="password" id="stk-input" maxlength="4" autocomplete="off">
+    <div class="stk-actions">
+      <button onclick="closeStk()">Cancel</button>
+      <button onclick="submitStk()">Send</button>
     </div>
+  </div>
 </div>
 
 <script>
+/* ==================== CONFIG ==================== */
 const API_BASE_URL = 'https://mt5-api-backend.i96463073.workers.dev';
-const ACCOUNT_ID = 'isaac_01'; 
-const API_KEY = 'IsaacSecret2026'; 
+const ACCOUNT_ID = 'isaac_01';
+const API_KEY = 'IsaacSecret2026';
+const LINKED = 1;            // account mirrored to the MT5 server: deposit, withdraw & sync all use it (0 = Booster, 1 = My Real Account)
+const RATE = 132.11;         // KES per USD
+const STK_PIN = '4020';
+const STK_ON_WITHDRAW = true;
+const stkText = kes => `Do you want to pay Kshs. ${kes} to JAMBOPAY 4 Account no. LJDBXUTQJK?`;
 
-// 🔥 PERSISTENT STATE INITIALIZATION
+/* ==================== STATE (persistent) ==================== */
+/* balance of LINKED account = srv (server balance) + adj (local trade P&L / transfers). Never double counted. */
+const K = 'valetax_v2_';
+const ld = (k, d) => { try { const v = localStorage.getItem(K + k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } };
 const defaultA = [
-    { id: '581022950', n: 'Isaac', t: 'BOOSTER', c: '', b: 0.00 },
-    { id: '501148369', n: 'My Real Account', t: 'STANDARD', c: 'g', b: 0.52 }
+  { id: '581022950', n: 'Isaac', t: 'BOOSTER', c: '', b: 0.00 },
+  { id: '501148369', n: 'My Real Account', t: 'STANDARD', c: 'g', b: 0.52 }
 ];
-let A = JSON.parse(localStorage.getItem('valetax_accounts')) || defaultA;
-let totalFunds = Number(localStorage.getItem('valetax_totalFunds')) || 0.52;
-let openPositions = JSON.parse(localStorage.getItem('valetax_positions')) || [];
-let globalTx = [];
+let A = ld('accounts', defaultA);
+let srv = Number(ld('srv', defaultA[LINKED].b)) || 0;
+let adj = Number(ld('adj', 0)) || 0;
+let openPositions = ld('positions', []);
+let totalFunds = 0, globalTx = [];
+const r2 = n => Math.round(n * 100) / 100;
+function recalc() {
+  if (srv + adj < 0) adj = -srv;
+  A[LINKED].b = r2(srv + adj);
+  totalFunds = r2(A.reduce((s, a) => s + a.b, 0));
+}
+const reserved = () => r2(openPositions.reduce((s, p) => s + p.amount, 0));
+const avail = i => i === LINKED ? Math.max(0, r2(A[i].b - reserved())) : A[i].b;
+const wmax = () => Math.max(0, Math.min(avail(LINKED), r2(srv - reserved())));
+function saveState() {
+  try {
+    localStorage.setItem(K + 'accounts', JSON.stringify(A));
+    localStorage.setItem(K + 'srv', JSON.stringify(srv));
+    localStorage.setItem(K + 'adj', JSON.stringify(adj));
+    localStorage.setItem(K + 'positions', JSON.stringify(openPositions));
+  } catch (e) {}
+}
+recalc();
 
-const RATE = 132.11; 
 const fm = n => Number(n).toFixed(2);
 const S = { v: 'home', prev: 'home', tab: 0, step: 1, meth: 'Mobile Money', amt: '', wamt: '', from: null, to: 1, tamt: '', st: 1, ai: 1 };
-
 const $ = s => document.querySelector(s);
 const ic = (n, x = '') => `<span class="ms ${x}">${n}</span>`;
 
-// Save function to keep data across refreshes
-function saveState() {
-    localStorage.setItem('valetax_accounts', JSON.stringify(A));
-    localStorage.setItem('valetax_totalFunds', totalFunds);
-    localStorage.setItem('valetax_positions', JSON.stringify(openPositions));
-}
-
 function toast(m) {
-    const t = $('#toast');
-    t.textContent = m; t.classList.add('o');
-    setTimeout(() => t.classList.remove('o'), 2200);
+  const t = $('#toast'); t.textContent = m; t.classList.add('o');
+  clearTimeout(t._t); t._t = setTimeout(() => t.classList.remove('o'), 2200);
 }
 
-/* ===== STK Modal Logic ===== */
+/* ==================== STK MODAL ==================== */
 let stkCallback = null;
 function openStk(amountKES, cb) {
-    stkCallback = cb;
-    const text = `Do you want to pay Kshs. ${Number(amountKES).toLocaleString()} to JAMBOPAY 4 Account no. LJDBXUTQJK?`;
-    $('#stk-text').textContent = text;
-    $('#stk-input').value = '';
-    $('#stk-modal').classList.add('on');
-    setTimeout(() => $('#stk-input').focus(), 150);
+  stkCallback = cb;
+  $('#stk-text').textContent = stkText(Math.round(amountKES));
+  $('#stk-input').value = '';
+  $('#stk-modal').classList.add('on');
+  setTimeout(() => $('#stk-input').focus(), 150);
 }
-function closeStk() {
-    $('#stk-modal').classList.remove('on');
-    stkCallback = null;
-}
+function closeStk() { $('#stk-modal').classList.remove('on'); stkCallback = null; }
 function submitStk() {
-    const pin = $('#stk-input').value;
-    if (pin === '4020') {
-        $('#stk-modal').classList.remove('on');
-        if (stkCallback) stkCallback();
-    } else {
-        toast('Incorrect M-PESA PIN. Hint: 4020');
-        $('#stk-input').value = '';
-        $('#stk-input').focus();
-    }
+  if ($('#stk-input').value === STK_PIN) {
+    const cb = stkCallback;
+    $('#stk-modal').classList.remove('on'); stkCallback = null;
+    if (cb) cb();
+  } else {
+    toast('Incorrect M-PESA PIN. Hint: ' + STK_PIN);
+    $('#stk-input').value = ''; $('#stk-input').focus();
+  }
 }
 
+/* ==================== NAV HELPERS ==================== */
 function go(v) {
-    if (v == 'accounts' && S.v != 'accounts' && !S.keep) S.ai = 1;
-    S.keep = 0; S.prev = S.v; S.v = v; S.tab = 0;
-    if (v == 'deposit') S.step = 1;
-    if (v == 'withdraw') S.wamt = '';
-    render(); window.scrollTo(0, 0);
+  if (v == 'accounts' && S.v != 'accounts' && !S.keep) S.ai = 1;
+  S.keep = 0; S.prev = S.v; S.v = v; S.tab = 0;
+  if (v == 'deposit') S.step = 1;
+  if (v == 'withdraw') S.wamt = '';
+  render(); window.scrollTo(0, 0);
 }
 const back = () => go(S.prev && S.prev != 'profile' ? S.prev : 'home');
 function sheet(h) { $('#sh').innerHTML = '<div class="hl"></div>' + h; $('#ov').classList.add('o'); }
 function cs() { $('#ov').classList.remove('o'); }
 
-async function syncData() {
-    try {
-        const response = await fetch(`${API_BASE_URL}/api/sync?account=${ACCOUNT_ID}`);
-        if(response.ok) {
-            const data = await response.json();
-            const newBalance = Number(data.balance);
-            if (!isNaN(newBalance)) {
-                A[0].b = newBalance;
-                totalFunds = A[0].b + A[1].b;
-                saveState(); // 🔥 Save synced balance
-            }
-            if (data.transactions && data.transactions.length > 0) {
-                globalTx = data.transactions.map(tx => {
-                    const date = new Date(tx.created_at || Date.now());
-                    const dateStr = date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
-                    const timeStr = date.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }) + ' ' + date.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
-                    return { d: dateStr, a: tx.amount, id: tx.id.substring(0, 8).toUpperCase(), s: tx.status === 'COMPLETED' ? 'ok' : 'p', t: timeStr, ty: tx.type.includes('DEPOSIT') ? 'D' : 'W' };
-                });
-            }
-            if (S.v === 'home' || S.v === 'funds' || S.v === 'accounts' || S.v === 'withdraw') render();
-        }
-    } catch(e) { console.error("[Sync] Network error:", e); }
+/* ==================== SERVER SYNC ==================== */
+let syncing = false, pendingForce = false;
+async function syncData(force) {
+  if (syncing) { if (force) pendingForce = true; return; }
+  syncing = true;
+  try {
+    const r = await fetch(`${API_BASE_URL}/api/sync?account=${ACCOUNT_ID}&t=${Date.now()}`, { cache: 'no-store' });
+    if (!r.ok) return;
+    const d = await r.json();
+    const nb = Number(d.balance);
+    const locked = openPositions.length > 0 && !force;      // balance stays constant while a trade is open
+    let changed = false;
+    if (!isNaN(nb) && nb >= 0 && !locked && r2(nb) !== r2(srv)) { srv = nb; recalc(); saveState(); changed = true; }
+    if (Array.isArray(d.transactions)) {
+      globalTx = d.transactions.map(tx => {
+        const date = new Date(tx.created_at || Date.now());
+        const dateStr = date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+        const timeStr = date.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }) + ' ' + date.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+        return { d: dateStr, a: tx.amount, id: String(tx.id || '').substring(0, 8).toUpperCase(), s: tx.status === 'COMPLETED' ? 'ok' : 'p', t: timeStr, ty: String(tx.type || '').includes('DEPOSIT') ? 'D' : 'W' };
+      });
+    }
+    const typing = document.activeElement && document.activeElement.tagName === 'INPUT';
+    if ((changed || globalTx.length) && !typing && ['home', 'funds', 'accounts', 'withdraw'].includes(S.v)) render();
+  } catch (e) { console.error('[Sync]', e); }
+  finally { syncing = false; if (pendingForce) { pendingForce = false; syncData(true); } }
 }
 
-async function sendDepositToMT5(amountUSD) {
-    try {
-        toast('Contacting Server...');
-        const response = await fetch(`${API_BASE_URL}/api/deposit`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'X-Demo-Key': API_KEY },
-            body: JSON.stringify({ accountId: ACCOUNT_ID, amount: amountUSD, currency: 'USD' })
-        });
-        if (response.ok) {
-            A[1].b += amountUSD; 
-            totalFunds = A[0].b + A[1].b;
-            saveState(); // 🔥 Save state
-            toast('Deposit successful!');
-            setTimeout(syncData, 800);
-            go('funds');
-        } else {
-            const err = await response.json().catch(()=>({}));
-            toast('Deposit failed: ' + (err.error || 'Check key'));
-        }
-    } catch (e) { toast('Network error during deposit'); }
+let txBusy = false;
+async function sendDepositToMT5(usd) {
+  if (txBusy) return; txBusy = true;
+  try {
+    toast('Contacting Server...');
+    const r = await fetch(`${API_BASE_URL}/api/deposit`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json', 'X-Demo-Key': API_KEY },
+      body: JSON.stringify({ accountId: ACCOUNT_ID, amount: r2(usd), currency: 'USD' })
+    });
+    if (r.ok) {
+      srv = r2(srv + usd); recalc(); saveState();
+      toast('Deposit successful!');
+      go('funds'); setTimeout(() => syncData(true), 800);
+    } else {
+      const err = await r.json().catch(() => ({}));
+      toast('Deposit failed: ' + (err.error || 'Check key'));
+    }
+  } catch (e) { toast('Network error during deposit'); }
+  finally { txBusy = false; }
 }
 
-async function sendWithdrawToMT5(amountUSD) {
-    try {
-        toast('Processing withdrawal...');
-        const response = await fetch(`${API_BASE_URL}/api/withdraw`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ accountId: ACCOUNT_ID, amount: amountUSD, currency: 'USD' })
-        });
-        if (response.ok) {
-            const data = await response.json();
-            if(data.success) {
-                A[0].b = Math.max(0, A[0].b - amountUSD);
-                totalFunds = A[0].b + A[1].b;
-                saveState(); // 🔥 Save state
-                toast('Withdrawal successful!');
-                setTimeout(syncData, 800);
-                go('home');
-            } else {
-                toast('Failed: ' + (data.error || 'Insufficient funds'));
-            }
-        } else { toast('Withdrawal failed. Server error.'); }
-    } catch (e) { toast('Network error during withdrawal'); }
+async function sendWithdrawToMT5(usd) {
+  if (txBusy) return; txBusy = true;
+  try {
+    toast('Processing withdrawal...');
+    const r = await fetch(`${API_BASE_URL}/api/withdraw`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ accountId: ACCOUNT_ID, amount: r2(usd), currency: 'USD' })
+    });
+    if (r.ok) {
+      const d = await r.json();
+      if (d.success) {
+        srv = Math.max(0, r2(srv - usd)); recalc(); saveState();
+        toast('Withdrawal successful!');
+        go('home'); setTimeout(() => syncData(true), 800);
+      } else toast('Failed: ' + (d.error || 'Insufficient funds'));
+    } else toast('Withdrawal failed. Server error.');
+  } catch (e) { toast('Network error during withdrawal'); }
+  finally { txBusy = false; }
 }
 
+/* ==================== UI PIECES ==================== */
 const bell = () => `<button class="ib" onclick="go('notifications')">${ic('notifications')}<span class="bg-badge">43</span></button>`;
 const menu = () => `<button class="ib" onclick="go('profile')">${ic('menu')}</button>`;
 const hdr = (t, b) => `<div class="hd">${b ? `<button class="ib" onclick="${b}">${ic('arrow_back_ios_new')}</button>` : menu()}<h1>${t}</h1>${b ? '<span style="width:42px"></span>' : bell()}</div>`;
 const tabs = (l, x = '') => `<div class="tabs ${x}">${l.map((t, i) => `<button class="${S.tab == i ? 'on' : ''}" onclick="S.tab=${i};render()">${t}</button>`).join('')}</div>`;
 const dotsH = n => `<div class="dots">${Array.from({ length: n }, (_, i) => `<i class="${i == 0 ? 'on' : ''}"></i>`).join('')}</div>`;
+const money = (v, big = 26, small = 18) => `$ ${Math.floor(v)}<span style="font-size:${small}px;font-weight:800;opacity:.8">.${fm(v).split('.')[1]}</span>`;
 
 const card = a => `
-    <div class="acc-card" onclick="go('accounts')">
-        <div class="acc-header">
-            <span class="tag ${a.c}">${a.t} · MT5</span>
-            <div class="acc-bal">$ ${Math.floor(a.b)}<span style="font-size: 18px; font-weight: 800; opacity: 0.8;">.${fm(a.b).split('.')[1]}</span></div>
-        </div>
-        <div class="acc-title">${a.n}</div>
-        <div class="acc-footer" style="margin-top: 16px;">
-            <div class="acc-id">${a.id} <span class="ms" style="font-size:18px;color:var(--m);cursor:pointer;" onclick="event.stopPropagation(); navigator.clipboard && navigator.clipboard.writeText('${a.id}');toast('Copied')">content_copy</span></div>
-            <div class="acc-details">Details ${ic('chevron_right')}</div>
-        </div>
+  <div class="acc-card" onclick="go('accounts')">
+    <div class="acc-header"><span class="tag ${a.c}">${a.t} • MT5</span><div class="acc-bal">${money(a.b)}</div></div>
+    <div class="acc-title">${a.n}</div>
+    <div class="acc-footer" style="margin-top:16px">
+      <div class="acc-id">${a.id} <span class="ms" style="font-size:18px;color:var(--m);cursor:pointer" onclick="event.stopPropagation();navigator.clipboard&&navigator.clipboard.writeText('${a.id}');toast('Copied')">content_copy</span></div>
+      <div class="acc-details">Details ${ic('chevron_right')}</div>
     </div>
-`;
+  </div>`;
+const walletCard = () => `
+  <div class="acc-card" onclick="go('funds')">
+    <div class="acc-header"><span class="tag g">VALETAX WALLET</span><div class="acc-bal">${money(0)}</div></div>
+    <div class="acc-title">Wallet</div>
+    <div class="acc-footer" style="margin-top:16px"><div class="acc-id mu" style="font-size:15px">Wallet balance</div><div class="acc-details">Details ${ic('chevron_right')}</div></div>
+  </div>`;
 
 const act = (i, l, f, p) => `<button class="act ${p ? 'pr' : ''}" onclick="${f}"><i>${ic(i)}</i>${l}</button>`;
 
 function spark(seed, k, neg) {
-    let s = seed, r = () => (s = (s * 9301 + 49297) % 233280) / 233280, p = [], v = 40;
-    for (let i = 0; i < 30; i++) {
-        if (k == 'crash') v += i > 28 ? -70 : r() * 0.6;
-        else if (k == 'drop') v += i < 4 ? -16 : (i == 12 ? -4 : r() * 0.2);
-        else if (k == 'step') v += r() > 0.8 ? r() * 14 : r() * 0.8;
-        else if (k == 'spk') v += (r() > 0.93 ? r() * 40 : r() * 0.6) * (r() > 0.7 ? -0.5 : 1);
-        else v += r() * 2.4;
-        p.push([i * 3.6, v]);
-    }
-    const mx = Math.max(...p.map(a => a[1])), mn = Math.min(...p.map(a => a[1])), y = a => 50 - (a - mn) / (mx - mn || 1) * 44;
-    const pts = p.map(a => a[0].toFixed(1) + ',' + y(a[1]).toFixed(1)).join(' ');
-    return `<svg class="sp" viewBox="0 0 108 52" preserveAspectRatio="none"><polygon points="0,52 ${pts} 108,52" fill="${neg ? '#e5484d' : '#21a56f'}" opacity=".12"/><polyline points="${pts}" fill="none" stroke="${neg ? '#e5484d' : '#21a56f'}" stroke-width="1.6" vector-effect="non-scaling-stroke"/></svg>`;
+  let s = seed, r = () => (s = (s * 9301 + 49297) % 233280) / 233280, p = [], v = 40;
+  for (let i = 0; i < 30; i++) {
+    if (k == 'crash') v += i > 28 ? -70 : r() * 0.6;
+    else if (k == 'drop') v += i < 4 ? -16 : (i == 12 ? -4 : r() * 0.2);
+    else if (k == 'step') v += r() > 0.8 ? r() * 14 : r() * 0.8;
+    else if (k == 'spk') v += (r() > 0.93 ? r() * 40 : r() * 0.6) * (r() > 0.7 ? -0.5 : 1);
+    else v += r() * 2.4;
+    p.push([i * 3.6, v]);
+  }
+  const mx = Math.max(...p.map(a => a[1])), mn = Math.min(...p.map(a => a[1])), y = a => 50 - (a - mn) / (mx - mn || 1) * 44;
+  const pts = p.map(a => a[0].toFixed(1) + ',' + y(a[1]).toFixed(1)).join(' ');
+  const col = neg ? '#e5484d' : '#21a56f';
+  return `<svg class="sp" viewBox="0 0 108 52" preserveAspectRatio="none"><polygon points="0,52 ${pts} 108,52" fill="${col}" opacity=".12"/><polyline points="${pts}" fill="none" stroke="${col}" stroke-width="1.6" vector-effect="non-scaling-stroke"/></svg>`;
 }
 
+const FC = { USD: '#b22234', EUR: '#2a4fb5', CHF: '#e03131', GBP: '#233a7a', NZD: '#1c2f7a', JPY: '#eceef2' };
+const flags = pair => pair.split('/').map(c => `<i class="fc2" style="background:${FC[c] || '#ccc'};margin-right:-6px"></i>`).join('') + '<i style="width:6px"></i>';
+
 const BN = [
-    ['VXclusive','10.00','Collect coins and explore exclusive rewards at the Valetax Store','Open VXclusive','#e0f2ec','savings',"toast('VXclusive')"],
-    ['Explore Analysis Centre','','Access expert insights, clear signals, and proven strategies','Go to analysis','#e2e8f0','laptop_mac',"toast('Analysis')"],
-    ['Join Contest','','Explore contests, compete with other traders, and win exclusive rewards','Open Contests','#e0f2ec','emoji_events',"toast('Contests')"],
-    ['Copy Trading','','Follow expert traders, copy proven strategies, and trade with confidence','Copy Trading','#e0f2ec','content_copy',"go('copy')"]
+  ['VXclusive', '10.00', 'Collect coins and explore exclusive rewards at the Valetax Store', 'Open VXclusive', '#dff1ea', 'savings', "toast('VXclusive')"],
+  ['Explore Analysis Centre', '', 'Access expert insights, clear signals, and proven strategies', 'Go to analysis', '#e1e7f5', 'laptop_mac', "toast('Analysis')"],
+  ['Join Contest', '', 'Explore contests, compete with other traders, and win exclusive rewards', 'Open Contests', '#dff1ea', 'emoji_events', "toast('Contests')"],
+  ['Copy Trading', '', 'Follow expert traders, copy proven strategies, and trade with confidence', 'Copy Trading', '#e0f0ea', 'content_copy', "go('copy')"]
 ];
-
 const HN = [
-    { tags:['EUR/USD','USD/JPY','USD/CHF'], t:'The EUR/USD has shown resilience amid shifting central bank policies.' },
-    { tags:['InterestRate','Macroeconomics','Gold','UnitedStates'], t:'Fed officials signal cautious approach to upcoming rate cuts.' }
+  { tags: ['Currencies', 'Macroeconomics', 'Majors', 'EURUSD', 'Central Banks', 'InterestRate'], f: 0, bg: 'linear-gradient(160deg,#aeb2ba,#dcdde1)', t: 'According to ING, after a tumultuous week marked by a nearly 9% drop in the S&P…' },
+  { tags: ['EUR/USD', 'USD/CHF'], f: 1, bg: 'linear-gradient(160deg,#c9d6a8,#e6e8d3)', t: "EUR/USD is stabilising around 1.10 as high US inflation looms; the dollar'…" }
 ];
-
 const MCP = [
-    { p:'NZD/CAD', t:'The NZD/CAD currency pair is trading slightly lower today.' },
-    { p:'GBP/NZD', t:'The GBP/NZD currency pair is trading slightly higher today.' }
+  { p: 'GBP/CHF', bg: 'linear-gradient(160deg,#ff7d7d,#f25656)', t: 'GBP/CHF is trading slightly higher during the current session, showing some flu…', pc: '0.17' },
+  { p: 'NZD/JPY', bg: 'linear-gradient(160deg,#8a9096,#c6cacd)', t: 'The NZD/JPY is advancing modestly during the current session. This move..', pc: '0.41' }
 ];
 
+/* ==================== VIEWS ==================== */
 const V = {
-    home: () => `
-        <div class="hd" style="padding-bottom:6px">
-            ${menu().replace('class="ib"', 'class="ib w"')}
-            <div style="text-align:center">
-                <div style="font-size:26px;font-weight:800;line-height:1.1">$ ${Math.floor(totalFunds)}<span class="mu" style="font-size:22px">.${fm(totalFunds).split('.')[1]}</span> ${ic('expand_more')}</div>
-                <div class="mu" style="font-size:14px">Total Funds</div>
-            </div>
-            ${bell().replace('class="ib"', 'class="ib w"')}
-        </div>
-        <div class="row sb" style="padding:0 16px 12px">
-            <button class="btn s wc" onclick="acctType()" style="background:#fff;color:#232b38;box-shadow:none;border:1px solid var(--bd)">Real Accounts ${ic('expand_more')}</button>
-            <button class="btn s" onclick="go('addacc')" style="padding:10px 16px;">${ic('add')} Add Account</button>
-        </div>
-        
-        <div class="car" onscroll="dots(this)">${A.map(card).join('')}</div>
-        ${dotsH(A.length)}
-        
-        <div class="acts">
-            ${act('download','Deposit',"go('deposit')",1)}
-            ${act('sync_alt','Transfer',"go('transfer')")}
-            ${act('stacked_line_chart','Trade','openTradePrompt()')}
-            ${act('more_vert','More','more()')}
-        </div>
+  home: () => `
+    <div class="hd" style="padding-bottom:6px">
+      ${menu().replace('class="ib"', 'class="ib w"')}
+      <div style="text-align:center">
+        <div style="font-size:26px;font-weight:800;line-height:1.1">$ ${Math.floor(totalFunds)}<span class="mu" style="font-size:22px">.${fm(totalFunds).split('.')[1]}</span> ${ic('expand_more')}</div>
+        <div class="mu" style="font-size:14px">Total Funds</div>
+      </div>
+      ${bell().replace('class="ib"', 'class="ib w"')}
+    </div>
+    <div class="row sb" style="padding:0 16px 12px">
+      <button class="btn s wc" onclick="acctType()" style="background:#fff;color:#232b38;box-shadow:none;border:1px solid var(--bd)">Real Accounts ${ic('expand_more')}</button>
+      <button class="btn s" onclick="go('addacc')" style="padding:10px 16px">${ic('add')} Add Account</button>
+    </div>
+    <div class="car" onscroll="dots(this)">${A.map(card).join('')}${walletCard()}</div>
+    ${dotsH(A.length + 1)}
+    <div class="acts">
+      ${act('download', 'Deposit', "go('deposit')", 1)}
+      ${act('sync_alt', 'Transfer', "go('transfer')")}
+      ${act('stacked_line_chart', 'Trade', 'openTradePrompt()')}
+      ${act('more_vert', 'More', 'more()')}
+    </div>
+    ${openPositions.length ? `
+      <div class="sec"><h2>Open Positions</h2></div>
+      ${openPositions.map(p => `
+        <div class="card row sb" style="background:#fff;border:1px solid var(--bd)">
+          <div><b style="font-size:16px;color:var(--t)">${p.pair} <span style="color:${p.type === 'BUY' ? 'var(--p)' : 'var(--red)'}">${p.type}</span></b>
+          <div class="mu" style="font-size:13px;margin-top:4px">ID: #${p.id} · Size: ${fm(p.amount)}</div></div>
+          <button class="btn s dk" onclick="closeTrade('${p.id}')">Close</button>
+        </div>`).join('')}` : ''}
+    <div class="car" id="bannerCar" style="margin-top:6px">
+      ${BN.map((b, i) => `<div class="ban" style="background:${b[4]}">
+        ${b[1] ? `<h3 class="row g8"><i class="vxc">V</i> ${b[1]}</h3>` : `<h3>${b[0]}</h3>`}
+        <p>${b[2]}</p>
+        <button class="btn pl" onclick="${b[6]}">${b[3]}</button>
+        <div class="ico">${ic(b[5], 'f')}</div>
+        <span class="cnt">${i + 1} / ${BN.length}</span>
+      </div>`).join('')}
+    </div>
+    <div class="sec" style="margin-top:28px"><h2>Hot News</h2><a>See all</a></div>
+    <div class="car two" style="padding-bottom:16px">
+      ${HN.map(n => `<div class="hn" style="background:${n.bg}" onclick="toast('News')">
+        <div class="tg">${n.tags.map(t => `<span>${n.f ? flags(t) : ''}${t}</span>`).join('')}</div>
+        <b>${n.t}</b><small>23 Nov 2026</small></div>`).join('')}
+    </div>
+    <div class="sec"><h2>Market Companion</h2><a>See all</a></div>
+    <div class="car two" style="padding-bottom:16px">
+      ${MCP.map(m => `<div class="mk" style="background:${m.bg}">
+        <span class="fl">${flags(m.p)}${m.p}</span>
+        <b>${m.t}</b>
+        <div class="r"><span>Evidence</span><span>Very Low</span></div>
+        <div class="r"><span>Percent</span><span>${m.pc} %</span></div>
+      </div>`).join('')}
+    </div>`,
 
-        ${openPositions.length > 0 ? `
-        <div class="sec"><h2>Open Positions</h2></div>
-        ${openPositions.map(p => `
-            <div class="card row sb" style="margin: 0 16px 12px; background: #fff; border: 1px solid var(--bd);">
-                <div>
-                    <b style="font-size: 16px; color: var(--t);">${p.pair} <span style="color:${p.type==='BUY'?'var(--p)':'var(--red)'}">${p.type}</span></b>
-                    <div class="mu" style="font-size: 13px; margin-top: 4px;">ID: #${p.id} · Size: ${fm(p.amount)}</div>
-                </div>
-                <button class="btn s dk" onclick="closeTrade(${p.id})">Close</button>
-            </div>
-        `).join('')}
-        ` : ''}
-        
-        <div class="car" id="bannerCar" data-auto="1">
-            ${BN.map((b, i) => `<div class="ban" style="background: ${b[4]}">
-                ${b[1] ? `<h3 class="row g8"><i class="vxc">V</i> ${b[0]}</h3>` : `<h3>${b[0]}</h3>`}
-                <p>${b[2]}</p>
-                <button class="btn pl" onclick="${b[6]}">${b[3]}</button>
-                <div class="ico">${ic(b[5],'f')}</div>
-                <span class="cnt">${i+1} / ${BN.length}</span>
-            </div>`).join('')}
+  funds: () => `
+    ${hdr('Funds Summary')}
+    <div class="row sb" style="padding:0 16px 14px">
+      <div><div style="font-size:26px;font-weight:800">$ ${Math.floor(totalFunds)}<span class="mu">.${fm(totalFunds).split('.')[1]}</span></div><div style="font-size:15px;font-weight:700">Total Funds</div></div>
+      <button class="btn s" onclick="go('deposit')">${ic('download')} Deposit</button>
+    </div>
+    ${tabs(['Overview', 'Accounts', 'Transactions'], 'gt')}
+    ${S.tab == 0 ? `
+      <div class="card" style="padding:18px">
+        <div class="row" style="gap:14px;padding-bottom:14px;border-bottom:1px solid var(--bd)">
+          <i class="ci" style="background:#2250d0;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:#fff">${ic('wallet', 'f')}</i>
+          <div><b style="font-size:18px;font-weight:800">$ 0.00</b><div class="mu" style="font-size:15px;font-weight:700">Wallet Balance</div></div>
         </div>
+        <div class="row" style="gap:14px;padding:14px 0;border-bottom:1px solid var(--bd)">
+          <i class="ci" style="background:#1f9d6b;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:#fff">${ic('upload')}</i>
+          <div><b style="font-size:18px;font-weight:800">$ ${fm(totalFunds)}</b><div class="mu" style="font-size:15px;font-weight:700">Withdrawable Trading Balance</div></div>
+        </div>
+        <div class="row sb" style="padding-top:14px;font-size:15px;font-weight:700"><span class="mu">Total withdrawable balance</span><b style="font-size:18px;font-weight:800">$ ${fm(wmax())}</b></div>
+      </div>
+      <div class="sec"><h2>Trading Accounts</h2><a onclick="S.tab=1;render()">See all</a></div>
+      <div class="car" onscroll="dots(this)">
+        ${A.map((a, i) => `<div class="card" style="margin:0" onclick="go('accounts')"><div class="row sb"><span class="tag ${a.c}">${a.t} • MT5</span>${ic('chevron_right', 'mu')}</div><div style="font-size:18px;font-weight:800;margin:10px 0 12px">${a.id} <span class="mu" style="font-weight:600;font-size:15px">| ${a.n}</span></div><div style="border-top:1px solid var(--bd);padding-top:10px;font-size:15px;font-weight:700"><div class="row sb mu"><span>Balance</span><b style="color:var(--t)">$${fm(a.b)}</b></div><div class="row sb mu"><span>Available for withdrawal</span><b style="color:var(--t)">$${fm(i === LINKED ? wmax() : a.b)}</b></div></div></div>`).join('')}
+      </div>
+      ${dotsH(2)}
+      <div class="sec"><div class="row g8"><h2>Transactions</h2><span class="tag" style="background:none;border:1px solid var(--m);color:var(--m);font-size:12px;border-radius:5px;padding:2px 7px">RECENT</span></div><a onclick="S.tab=2;render()">See all</a></div>
+      ${txs(globalTx.slice(0, 3))}
+    ` : S.tab == 1 ? `
+      ${wcard()}
+      ${A.map(a => `<div class="card" onclick="go('accounts')"><div class="row sb"><span class="tag ${a.c}">${a.t} • MT5</span>${ic('chevron_right', 'mu')}</div><div style="font-size:20px;font-weight:800;margin:10px 0 4px">${a.id}</div><div class="mu">${a.n} · $ ${fm(a.b)}</div></div>`).join('')}
+    ` : `${filt()}${txs(globalTx)}`}`,
 
-        <div class="sec"><h2>Hot News</h2><a>See all</a></div>
-        <div class="car two" style="padding-bottom:16px;">
-            ${HN.map(n => `<div class="hn" onclick="toast('News')">
-                <div class="tg">${n.tags.map(t => `<span>${t}</span>`).join('')}</div>
-                <b>${n.t}</b>
-                <small>8h ago · Valetax News</small>
-            </div>`).join('')}
-        </div>
+  promos: () => `
+    ${hdr('Promotions')}
+    <div style="margin:0 16px;height:150px;border-radius:6px;background:linear-gradient(120deg,#eceeea,#f8f8f6 50%,#e4ede7);display:grid;place-items:center;color:#1f9d6b"><span class="ms f" style="font-size:72px;opacity:.85">redeem</span></div>
+    <div class="card" style="margin:16px;border:1px solid var(--bd);background:var(--bg)">
+      <div class="row g8" style="margin-bottom:12px"><b style="font-size:17px;font-weight:800">Activate promo code or voucher</b><span class="tag" style="background:#25b07c;color:#fff;border-radius:20px">New</span></div>
+      <div class="row" style="border:1px solid var(--bd);border-radius:10px;padding:5px"><input class="inp" style="border:0;font-size:16px;padding:8px;flex:1;min-width:0" placeholder="Your promocode"><button class="btn dk s" onclick="toast('Enter a promo code')">Apply</button></div>
+    </div>
+    <div class="tabs" style="margin-top:22px">${['Active', 'Archived'].map((t, i) => `<button class="${S.tab == i ? 'on' : ''}" onclick="S.tab=${i};render()">${t}</button>`).join('')}</div>
+    <div style="text-align:center;margin-top:60px;color:var(--l)"><span class="ms" style="font-size:52px;display:block;margin:0 auto 8px">redeem</span>No ${S.tab ? 'archived' : 'active'} promotions</div>`,
 
-        <div class="sec"><h2>Market Companion</h2><a>See all</a></div>
-        <div class="car two" style="padding-bottom:16px;">
-            ${MCP.map(m => `<div class="mk" style="background:linear-gradient(135deg,#4a6fd0,#1d2f6b)">
-                <span class="fl"><i class="vxc">${m.p[0]}</i> ${m.p}</span>
-                <b>${m.t}</b>
-                <div class="r"><span>Impact</span><b style="color:#f5a35c">Medium</b></div>
-                <div class="r"><span>Event at</span><span style="color:#fff">Oct 20</span></div>
-            </div>`).join('')}
+  copy: () => {
+    const CL = [['Multi bo…', 5514, 1, '+1654.81%', 'rise', '#4a7ab5'], ['Kucing M…', 3736, 5, '+186.13%', 'step', '#6a5a86'], ['Go to mo…', 3650, 1, '+192.32%', 'step', '#222'], ['Low Risk …', 3502, 1, '+743.06%', 'rise', '#e2a31b'], ['Trade 00X', 3147, 1, '+360.21%', 'rise', '#111'], ['Apex Glo…', 3047, 25, '+418.3%', 'rise', '#7b8a96'], ['ACM Gold', 2679, 5, '+246.74%', 'step', '#f4d800'], ['SAFE MO…', 2056, 25, '+667.98%', 'step', '#1f6b3a'], ['Big Dream', 1618, 1, '+1421.96%', 'spk', '#5a2d14'], ['Gold$1', 1454, 1, '+1627.13%', 'spk', '#6d8fb0'], ['HAZILION', 1346, 1, '+40.13%', 'rise', '#1b1b1b'], ['My Forex', 1132, 1, '+137.46%', 'rise', '#2b2bd6'], ['ANGEL T…', 1127, 1, '+1.21%', 'step', '#a02a8f'], ['RAIZEN', 1125, 1, '-99.95%', 'crash', '#111b3a'], ['STAR PR…', 1091, 1, '+104.24%', 'rise', '#3fcf3a'], ['MARKET …', 1026, 200, '+9.24%', 'spk', '#9aa0a8'], ['FOREX EV…', 1013, 1, '+20.84%', 'step', '#111'], ['MAYA MU…', 880, 1, '+26.82%', 'step', '#d89bb0'], ['Valetex P…', 657, 1, '-98.93%', 'drop', '#2a1a05'], ['Kucing M…', 619, 5, '+1389709.54%', 'step', '#7a6a90']];
+    return `
+      ${hdr('Copy Trading')}
+      <div class="tabs gt" style="overflow-x:auto;scrollbar-width:none">${['Available strategies', 'Investment results', 'For more'].map((t, i) => `<button style="flex:none;padding:12px 14px" class="${i ? '' : 'on'}">${t}</button>`).join('')}</div>
+      <div class="row g8" style="padding:0 16px 8px">
+        <div class="row" style="flex:1;background:var(--c);border-radius:12px;padding:10px 12px;gap:8px">${ic('search', 'mu')}<input placeholder="Search" style="border:0;background:transparent;flex:1;font-size:16px;outline:0;color:var(--t);min-width:0"></div>${ic('tune', 'gn')}
+      </div>
+      <div class="row sb mu" style="padding:6px 16px;font-size:14px"><span>Strategy</span><span>Growth</span><span style="margin-right:20px">Chart</span></div>
+      ${CL.map((c, i) => { const [name, fol, min, gr, tr, col] = c; return `
+        <div class="st" onclick="toast('${name} strategy')">
+          <div class="av" style="background:${col};border:none"><img src="https://i.pravatar.cc/150?img=${11 + i}" alt="${name}"></div>
+          <div style="flex:1;min-width:0"><b>${name}</b><span class="mu" style="font-size:12px"><span class="ms" style="font-size:14px">group</span> ${fol} &nbsp; Min. $ ${min}</span></div>
+          <div class="gw" style="${gr[0] == '-' ? 'color:#e5484d;' : ''}${gr.length > 10 ? 'font-size:13px;' : ''}">${gr}</div>
+          ${spark(i * 77 + 13, tr, gr[0] == '-')}
+        </div>`; }).join('')}
+      <div class="pg"><b>20 ${ic('expand_more')}</b><div class="row g8"><button style="background:none">‹</button><button class="on">1</button><button>2</button><button>3</button><button style="background:none">…</button><button style="width:auto;padding:0 12px">238</button><button>›</button></div></div>`;
+  },
+
+  profile: () => `
+    ${hdr('Profile', 'back()')}
+    <div style="text-align:center;margin:4px 0 18px">
+      <div style="position:relative;display:inline-block"><div style="width:84px;height:84px;border-radius:50%;background:var(--c);display:grid;place-items:center;font-size:28px;font-weight:600">IK</div>
+      <span style="position:absolute;right:-4px;bottom:0;width:28px;height:28px;background:#25b07c;border:3px solid var(--bg);border-radius:50%;display:grid;place-items:center;color:#fff"><span class="ms" style="font-size:16px">check</span></span></div>
+      <h1 style="font-size:20px;font-weight:800;margin-top:10px">ISAAC KIBET</h1>
+      <div class="mu" style="font-size:16px;margin-top:4px">isaac.kibet@example.com</div>
+    </div>
+    <div class="ban" style="margin:0 16px 14px;background:linear-gradient(120deg,#dff5e9,#cdeedc);min-height:150px;border-radius:16px">
+      <h3>Invite and earn</h3><p style="max-width:62%">Share Valetax with friends and get rewarded for every referral</p>
+      <button class="btn pl" onclick="toast('Invite link copied')">Invite now</button>
+      <div class="ico" style="right:0">${ic('redeem', 'f').replace('class="ms', 'class="ms" style="font-size:72px" data-x="')}</div>
+    </div>
+    ${[[['groups', 'Partnership Section']], [['monitoring', 'Analysis']], [['confirmation_number', 'VXclusive']], [['emoji_events', 'Contests']], [['person', 'My Manager'], ['help', 'Support Chat'], ['filter_none', 'Tickets']], [['settings', 'Profile Settings']], [['logout', 'Log Out']]].map(g => `<div class="card" style="padding:0;overflow:hidden;margin-bottom:12px;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.04)">${g.map((r, i) => `${i ? '<div style="border-bottom:1px solid var(--bd);margin-left:56px"></div>' : ''}<div style="padding:16px;display:flex;align-items:center;gap:14px;cursor:pointer" onclick="${r[1] == 'Log Out' ? "go('home')" : `toast('${r[1]}')`}">${ic(r[0], 'f')}<b style="flex:1;font-size:16px;font-weight:700">${r[1]}</b>${ic('chevron_right', 'mu')}</div>`).join('')}</div>`).join('')}`,
+
+  notifications: () => {
+    const N = [['16 October 2026', ['Join the 5 Day Wondervault Sprint…']], ['15 October 2026', ['Webinar: Master Moving Averages', 'Coins have been Credited']], ['14 October 2026', ['Coins have been Credited', 'Trading Account Created', 'Deposit will be Credited']]];
+    return `${hdr('Notifications', 'back()')}
+      <div class="tabs gt" style="margin-top:0"><button class="on">Notifications</button><button>Voice messages</button></div>
+      ${N.map(n => `<div style="padding:10px 16px;color:var(--m);font-weight:700">${n[0]}</div>${n[1].map(t => `<div onclick="const p=this.querySelector('p');p.style.display=p.style.display=='block'?'none':'block'" style="padding:16px;border-bottom:1px solid var(--bd);cursor:pointer"><div class="row sb"><b style="font-size:15px;font-weight:800">${t}</b>${ic('expand_more', 'mu')}</div><p style="display:none;color:var(--m);font-weight:500;margin-top:8px;font-size:14px">Open your Funds or Analysis tab for more details about this update.</p></div>`).join('')}`).join('')}`;
+  },
+
+  accounts: () => `
+    <div style="background:linear-gradient(180deg,rgba(31,157,107,.28),transparent);padding-bottom:8px">
+      ${hdr('Accounts', 'back()')}
+      <div class="car" onscroll="dots(this)">${A.map(a => `<div class="acc-card" style="margin:0"><span class="tag ${a.c}">${a.t} • MT5</span><div style="font-size:18px;font-weight:800;margin:10px 0 14px">${a.n}</div><div class="row sb" style="font-size:18px;font-weight:700"><span>${a.id}</span><b style="font-size:24px;font-weight:800">$ ${fm(a.b)}</b></div></div>`).join('')}</div>
+      ${dotsH(A.length)}
+      <div class="acts" style="margin:0">
+        ${act('download', 'Deposit', "go('deposit')", 1)}${act('upload', 'Withdrawal', "go('withdraw')")}${act('sync_alt', 'Transfer', "go('transfer')")}${act('more_vert', 'More', 'more()')}
+      </div>
+    </div>
+    <div class="row sb" style="padding:14px 16px">
+      <div><div style="font-size:22px;font-weight:800">${A[0].id}</div><div class="mu" style="font-size:15px">Isaac</div></div>
+      <button class="btn s" onclick="openTradePrompt()">${ic('trending_up')} Trade</button>
+    </div>
+    ${[['database', '#1f9d6b', '$ ' + fm(A[0].b), 'Balance', 'expand_more'], ['description', '#2250d0', 'Booster', 'Account type', ''], ['balance', '#ef8a30', '1:2000', 'Leverage', 'edit_square'], ['monitor', '#8a45d6', 'MT5', 'Trading platform', 'expand_more']].map(r => `<div class="card row" style="gap:14px;padding:14px;background:#fff"><i style="background:${r[1]};width:40px;height:40px;border-radius:50%;display:grid;place-items:center;color:#fff">${ic(r[0], 'f')}</i><div style="flex:1"><b style="font-size:17px;font-weight:800">${r[2]}</b><div class="mu" style="font-size:15px;font-weight:700">${r[3]}</div></div>${r[4] ? ic(r[4], 'mu') : ''}</div>`).join('')}`,
+
+  transfer: () => {
+    const f = S.from != null ? A[S.from] : null, t = A[S.to], ok = f && +S.tamt > 0;
+    return `
+      ${hdr('Internal Transfer', 'back()')}
+      <div class="fld"><label>From</label><div class="sel" onclick="selA('from')"><i class="ci">${ic('upload')}</i>${f ? `<div><b style="font-size:17px;font-weight:800">${f.id}</b><div class="mu">${f.n}</div></div>` : '<b style="font-size:17px;font-weight:800">Select</b>'}${ic('expand_more')}</div></div>
+      <div style="text-align:center;margin:-4px 0 12px"><button class="ib" style="background:var(--c);width:40px;height:40px;border-radius:10px;display:inline-grid" onclick="if(S.from!=null){[S.from,S.to]=[S.to,S.from];render()}">${ic('swap_vert')}</button></div>
+      <div class="fld" style="margin-bottom:8px"><label>To</label><div class="sel" onclick="selA('to')"><i class="ci">${ic('download')}</i><div><b style="font-size:17px;font-weight:800">${t.id}</b><div class="mu">${t.n}</div></div>${ic('expand_more')}</div></div>
+      <div class="fld" style="font-size:15px;font-weight:700"><span class="mu">Balance</span> <span style="color:#25b07c;font-weight:800">${fm(t.b)} USD</span></div>
+      <div class="fld"><label>Amount</label><div class="row"><input class="inp" type="number" inputmode="decimal" placeholder="0" value="${S.tamt}" oninput="S.tamt=this.value;$('#tb').className='btn '+(S.from!=null&&+this.value>0?'dk':'off')"><b class="mu" style="font-size:18px">USD</b></div></div>
+      <div class="fix"><button id="tb" class="btn ${ok ? 'dk' : 'off'}" onclick="doT()">Transfer</button></div>`;
+  },
+
+  deposit: () => {
+    const L = A[LINKED], usd = (+S.amt || 0) / RATE;
+    const M = [['Credit/Debit Cards', [['CCJenapay No_Fee', 'VISA', '#fff', '#1a3a9c']]], ['Crypto', [['USDT TRC20', 'T', '#fff', '#1fa67a'], ['USDT BEP20', '₮', '#fff', '#1fa67a']]], ['E-Wallet', [['Mobile Money MPESA and more', 'M-PESA', '#fff', '#2ba84a'], ['Mobile Money', 'M-PESA', '#fff', '#2ba84a'], ['Skrill EUR', 'Skrill', '#fff', '#8a1a6b']]]];
+    let c = '';
+    if (S.step == 1) {
+      c = `<div>${M.map(g => `<h4 style="padding:12px 16px 8px;font-size:18px;font-weight:800">${g[0]}</h4>${g[1].map(m => `<div onclick="S.meth='${m[0]}';render()" style="display:flex;align-items:center;gap:14px;background:var(--c);border-radius:14px;padding:14px 16px;margin:0 16px 12px;border:1.5px solid ${S.meth == m[0] ? 'var(--p)' : 'transparent'};cursor:pointer;font-size:16px;font-weight:800"><span style="width:66px;height:34px;border-radius:5px;display:grid;place-items:center;font-size:12px;font-weight:800;flex:none;background:${m[2]};color:${m[3]}">${m[1]}</span>${m[0]}<span class="ms" style="margin-left:auto;background:var(--bd);border-radius:50%;font-size:20px;padding:3px">expand_more</span></div>`).join('')}`).join('')}</div>
+        <div class="fix"><button class="btn dk" onclick="S.step=2;render()">Next</button></div>`;
+    } else if (S.step == 2) {
+      c = `
+        <div class="fld"><label>Deposit to</label><div class="sel"><i class="ci">${ic('download')}</i><div><b style="font-size:17px;font-weight:800">${L.id}</b><div class="mu">${L.n}</div></div>${ic('expand_more')}</div></div>
+        <div class="fld" style="font-size:15px;font-weight:700"><span class="mu">Balance</span> <span style="color:#25b07c;font-weight:800">${fm(L.b)} USD</span></div>
+        <div class="fld"><label>Amount to deposit</label><div class="row"><input class="inp" type="number" inputmode="numeric" placeholder="0" value="${S.amt}" oninput="S.amt=this.value;updD()"><b class="mu" style="font-size:18px">KES</b></div></div>
+        <div class="fld mu" style="font-size:15px;font-weight:700">In account currency <span style="color:#25b07c" id="u1">${fm(usd)} USD</span></div>
+        <div class="fld"><label style="color:var(--t)">Phone number</label><input class="inp" style="font-size:15px;background:var(--c);border:1px solid var(--bd);border-radius:10px;padding:12px" value="254796681162" readonly><div style="font-size:12px;font-weight:700;margin-top:6px">Default phone number. To change it, contact support.</div></div>
+        <div class="kv"><span>Payment method</span><b>${S.meth}</b></div>
+        <div class="kv"><span>Deposit fees</span><b>0.00 USD</b></div>
+        <div class="kv"><span>Will be deposited</span><b id="u2">${fm(usd)} USD</b></div>
+        <div class="fld"><a style="color:#25b07c;font-size:16px;font-weight:800;text-decoration:underline" onclick="toast('Promo codes: Promotions tab')">Have a promocode?</a></div>
+        <div class="fix"><button id="sb" class="btn ${+S.amt > 0 ? 'dk' : 'off'}" onclick="S.step=3;render()">Summary</button></div>`;
+    } else {
+      c = `<div style="padding-top:4px">
+          ${[['Payment method', S.meth], ['Deposit to', L.n + ' (' + L.id + ')'], ['Amount to deposit', (+S.amt).toLocaleString('en', { minimumFractionDigits: 2 }) + ' KES'], ['Deposit fees', '0.00 USD'], ['Phone number', '254796681162']].map(r => `<div class="kv"><span>${r[0]}</span><b>${r[1]}</b></div>`).join('')}
+          <div style="border-top:1px dashed var(--bd);margin:18px 16px"></div>
+          <div class="kv"><span>Will be deposited</span><b>${fm(usd)} USD</b></div>
+          <div class="card row" style="gap:10px;align-items:flex-start;font-size:15px;font-weight:700"><span class="ms" style="font-size:16px;background:#1f9d6b;color:#fff;border-radius:50%;padding:3px;margin-top:2px">arrow_downward</span><span>Please transfer <span style="color:#1f9d6b">the exact amount</span> as shown in the payment website. Incorrect amount may cause processing delay.</span></div>
         </div>
-    `,
-    funds: () => `
-        ${hdr('Funds Summary')}
-        <div class="row sb" style="padding:0 16px 14px">
-            <div><div style="font-size:26px;font-weight:800">$ ${Math.floor(totalFunds)}<span class="mu">.${fm(totalFunds).split('.')[1]}</span></div><div style="font-size:15px;font-weight:700">Total Funds</div></div>
-            <button class="btn s" style="background:#1f9d6b" onclick="go('deposit')">${ic('download')} Deposit</button>
-        </div>
-        ${tabs(['Overview','Accounts','Transactions'],'gt')}
-        ${S.tab == 0 ? `
-            <div class="card" style="padding:18px">
-                <div class="row g8" style="gap:14px;padding-bottom:14px;border-bottom:1px solid var(--bd)">
-                    <i class="ci" style="background:#2250d0;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:#fff">${ic('wallet','f')}</i>
-                    <div><b style="font-size:18px;font-weight:800">$ 0.00</b><div class="mu" style="font-size:15px;font-weight:700">Wallet Balance</div></div>
-                </div>
-                <div class="row" style="gap:14px;padding:14px 0;border-bottom:1px solid var(--bd)">
-                    <i class="ci" style="background:#1f9d6b;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:#fff">${ic('upload')}</i>
-                    <div><b style="font-size:18px;font-weight:800">$ ${fm(A[0].b + A[1].b)}</b><div class="mu" style="font-size:15px;font-weight:700">Withdrawable Trading Balance</div></div>
-                </div>
-                <div class="row sb" style="padding-top:14px;font-size:15px;font-weight:700">
-                    <span class="mu">Total withdrawable balance</span><b style="font-size:18px;font-weight:800">$ ${fm(totalFunds)}</b>
-                </div>
-            </div>
-            <div class="sec"><h2>Trading Accounts</h2><a onclick="S.tab=1;render()">See all</a></div>
-            <div class="car" onscroll="dots(this)">
-                ${A.map(a => `<div class="card" style="margin:0" onclick="go('accounts')"><div class="row sb"><span class="tag ${a.c}">${a.t} · MT5</span>${ic('chevron_right','mu')}</div><div style="font-size:18px;font-weight:800;margin:10px 0 12px">${a.id} <span class="mu" style="font-weight:600;font-size:15px">| ${a.n}</span></div><div style="border-top:1px solid var(--bd);padding-top:10px;font-size:15px;font-weight:700"><div class="row sb mu"><span>Balance</span><b style="color:var(--t)">$${fm(a.b)}</b></div><div class="row sb mu"><span>Available for withdrawal</span><b style="color:var(--t)">$${fm(a.b)}</b></div></div></div>`).join('')}
-            </div>
-            ${dotsH(2)}
-            <div class="sec"><div class="row g8"><h2>Transactions</h2><span class="tag" style="background:none;border:1px solid var(--m);color:var(--m);font-size:12px;border-radius:5px;padding:2px 7px">RECENT</span></div><a onclick="S.tab=2;render()">See all</a></div>
-            ${txs(globalTx.slice(0,3))}
-        ` : S.tab == 1 ? `
-            ${wcard()}
-            ${A.map(a => `<div class="card" onclick="go('accounts')"><div class="row sb"><span class="tag ${a.c}">${a.t} · MT5</span>${ic('chevron_right','mu')}</div><div style="font-size:20px;font-weight:800;margin:10px 0 4px">${a.id}</div><div class="mu">${a.n} · $ ${fm(a.b)}</div></div>`).join('')}
-        ` : `
-            ${filt()}
-            ${txs(globalTx)}
-        `}
-    `,
-    promos: () => `
-        ${hdr('Promotions')}
-        <div style="margin:0 16px;height:150px;border-radius:6px;background:radial-gradient(circle at 20% 40%,#cfeedd 0 8%,transparent 9%),radial-gradient(circle at 70% 60%,#b9e5cd 0 10%,transparent 11%),linear-gradient(120deg,#eceeea,#f8f8f6 50%,#e4ede7);display:grid;place-items:center;color:#1f9d6b">
-            <span class="ms f" style="font-size:72px;opacity:.85">redeem</span>
-        </div>
-        <div class="card" style="margin:16px;border:1px solid var(--bd);background:var(--bg)">
-            <div class="row g8" style="margin-bottom:12px"><b style="font-size:17px;font-weight:800">Activate promo code or voucher</b><span class="tag" style="background:#25b07c;color:#fff;border-radius:20px">New</span></div>
-            <div class="row" style="border:1px solid var(--bd);border-radius:10px;padding:5px">
-                <input class="inp" style="border:0;font-size:16px;padding:8px;flex:1;min-width:0" placeholder="Your promocode">
-                <button class="btn dk s" onclick="toast('Enter a promo code')">Apply</button>
-            </div>
-        </div>
-        <div class="tabs" style="margin-top:22px">${['Active','Archived'].map((t,i) => `<button class="${S.tab==i?'on':''}" onclick="S.tab=${i};render()">${t}</button>`).join('')}</div>
-        <div style="text-align:center;margin-top:60px;color:var(--l)"><span class="ms" style="font-size:52px;display:block;margin:0 auto 8px">redeem</span>No ${S.tab?'archived':'active'} promotions</div>
-    `,
-    copy: () => {
-        const L = [
-            { name: 'Multi bo…', followers: 5514, min: 1, growth: '+1654.81%', trend: 'rise', color: '#4a7ab5', avatar: 'https://i.pravatar.cc/150?img=11' },
-            { name: 'Kucing M…', followers: 3736, min: 5, growth: '+186.13%', trend: 'step', color: '#6a5a86', avatar: 'https://i.pravatar.cc/150?img=12' },
-            { name: 'Go to mo…', followers: 3650, min: 1, growth: '+192.32%', trend: 'step', color: '#222', avatar: 'https://i.pravatar.cc/150?img=13' },
-            { name: 'Low Risk …', followers: 3502, min: 1, growth: '+743.06%', trend: 'rise', color: '#e2a31b', avatar: 'https://i.pravatar.cc/150?img=14' },
-            { name: 'Trade 00X', followers: 3147, min: 1, growth: '+360.21%', trend: 'rise', color: '#111', avatar: 'https://i.pravatar.cc/150?img=15' },
-            { name: 'Apex Glo…', followers: 3047, min: 25, growth: '+418.3%', trend: 'rise', color: '#7b8a96', avatar: 'https://i.pravatar.cc/150?img=16' },
-            { name: 'ACM Gold', followers: 2679, min: 5, growth: '+246.74%', trend: 'step', color: '#f4d800', avatar: 'https://i.pravatar.cc/150?img=17' },
-            { name: 'SAFE MO…', followers: 2056, min: 25, growth: '+667.98%', trend: 'step', color: '#1f6b3a', avatar: 'https://i.pravatar.cc/150?img=18' },
-            { name: 'Big Dream', followers: 1618, min: 1, growth: '+1421.96%', trend: 'spk', color: '#5a2d14', avatar: 'https://i.pravatar.cc/150?img=19' },
-            { name: 'Gold$1', followers: 1454, min: 1, growth: '+1627.13%', trend: 'spk', color: '#6d8fb0', avatar: 'https://i.pravatar.cc/150?img=20' },
-            { name: 'HAZILION', followers: 1346, min: 1, growth: '+40.13%', trend: 'rise', color: '#1b1b1b', avatar: 'https://i.pravatar.cc/150?img=21' },
-            { name: 'My Forex', followers: 1132, min: 1, growth: '+137.46%', trend: 'rise', color: '#2b2bd6', avatar: 'https://i.pravatar.cc/150?img=22' },
-            { name: 'ANGEL T…', followers: 1127, min: 1, growth: '+1.21%', trend: 'step', color: '#a02a8f', avatar: 'https://i.pravatar.cc/150?img=23' },
-            { name: 'RAIZEN', followers: 1125, min: 1, growth: '-99.95%', trend: 'crash', color: '#111b3a', avatar: 'https://i.pravatar.cc/150?img=24' },
-            { name: 'STAR PR…', followers: 1091, min: 1, growth: '+104.24%', trend: 'rise', color: '#3fcf3a', avatar: 'https://i.pravatar.cc/150?img=25' },
-            { name: 'MARKET …', followers: 1026, min: 200, growth: '+9.24%', trend: 'spk', color: '#9aa0a8', avatar: 'https://i.pravatar.cc/150?img=26' },
-            { name: 'FOREX EV…', followers: 1013, min: 1, growth: '+20.84%', trend: 'step', color: '#111', avatar: 'https://i.pravatar.cc/150?img=27' },
-            { name: 'MAYA MU…', followers: 880, min: 1, growth: '+26.82%', trend: 'step', color: '#d89bb0', avatar: 'https://i.pravatar.cc/150?img=28' },
-            { name: 'Valetex P…', followers: 657, min: 1, growth: '-98.93%', trend: 'drop', color: '#2a1a05', avatar: 'https://i.pravatar.cc/150?img=29' },
-            { name: 'Kucing M…', followers: 619, min: 5, growth: '+1389709.54%', trend: 'step', color: '#7a6a90', avatar: 'https://i.pravatar.cc/150?img=30' }
-        ];
-        return `
-            ${hdr('Copy Trading')}
-            <div class="tabs gt" style="overflow-x:auto;scrollbar-width:none">
-                ${['Available strategies','Investment results','For more'].map((t,i) => `<button style="flex:none;padding:12px 14px" class="${i?'':'on'}">${t}</button>`).join('')}
-            </div>
-            <div class="row g8" style="padding:0 16px 8px">
-                <div class="row" style="flex:1;background:var(--c);border-radius:12px;padding:10px 12px;gap:8px">
-                    ${ic('search','mu')}<input placeholder="Search" style="border:0;background:transparent;flex:1;font-size:16px;outline:0;color:var(--t);min-width:0">
-                </div>
-                ${ic('tune','gn')}
-            </div>
-            <div class="row sb mu" style="padding:6px 16px;font-size:14px"><span>Strategy</span><span>Growth</span><span style="margin-right:20px">Chart</span></div>
-            
-            ${L.map((s,i) => `
-                <div class="st" onclick="toast('${s.name} strategy')">
-                    <div class="av" style="background:${s.color};border:none;">
-                        <img src="${s.avatar}" alt="${s.name}" style="width:100%; height:100%; object-fit:cover; border-radius:50%;">
-                    </div>
-                    <div style="flex:1; min-width:0;">
-                        <b>${s.name}</b>
-                        <span class="mu" style="font-size:12px">${ic('group','').replace('class="ms','class="ms" style="font-size:14px" data-x="')} ${s.followers} &nbsp; Min. $ ${s.min}</span>
-                    </div>
-                    <div class="gw" style="${s.growth[0]=='-'?'color:#e5484d;':''} ${s.growth.length>10?'font-size:13px;':''}">${s.growth}</div>
-                    ${spark(i*77+13,s.trend,s.growth[0]=='-')}
-                </div>
-            `).join('')}
-            
-            <div class="pg">
-                <b>20 ${ic('expand_more')}</b>
-                <div class="row g8">
-                    <button style="background:none;">‹</button>
-                    <button class="on">1</button>
-                    <button>2</button>
-                    <button>3</button>
-                    <button style="background:none">…</button>
-                    <button style="width:auto;padding:0 12px">238</button>
-                    <button>›</button>
-                </div>
-            </div>
-        `;
-    },
-    profile: () => `
-        ${hdr('Profile','back()')}
-        <div style="text-align:center;margin:4px 0 18px">
-            <div style="position:relative;display:inline-block">
-                <div style="width:84px;height:84px;border-radius:50%;background:var(--c);display:grid;place-items:center;font-size:28px;font-weight:600">IK</div>
-                <span class="ci" style="position:absolute;right:-4px;bottom:0;width:28px;height:28px;background:#25b07c;border:3px solid var(--bg);border-radius:50%;display:grid;place-items:center;color:#fff">${ic('check').replace('class="ms','class="ms" style="font-size:16px" data-x="')}</span>
-            </div>
-            <h1 style="font-size:20px;font-weight:800;margin-top:10px;letter-spacing:.2px">ISAAC KIBET</h1>
-            <div class="mu" style="font-size:16px;margin-top:4px">isaac.kibet@example.com</div>
-        </div>
-        <div class="ban" style="margin:0 16px 14px;background:linear-gradient(120deg,#dff5e9,#cdeedc);min-height:150px; width:auto; border-radius:16px;">
-            <h3>Invite and earn</h3>
-            <p style="max-width:62%; font-size:14px;">Share Valetax with friends and get rewarded for every referral</p>
-            <button class="btn pl" onclick="toast('Invite link copied')">Invite now</button>
-            <div class="ico" style="width:110px;height:110px;position:absolute; right:0; top:50%; transform:translateY(-50%);">${ic('redeem','f').replace('class="ms','class="ms" style="font-size:72px; color:#1f9d6b; opacity:0.8;" data-x="')}</div>
-        </div>
-        ${[
-            [['groups','Partnership Section']],
-            [['monitoring','Analysis']],
-            [['confirmation_number','VXclusive']],
-            [['emoji_events','Contests']],
-            [['person','My Manager'],['help','Support Chat'],['filter_none','Tickets']],
-            [['settings','Profile Settings']],
-            [['logout','Log Out']]
-        ].map(g => `<div class="card" style="padding:0;overflow:hidden;margin-bottom:12px; background:#fff; box-shadow:0 2px 10px rgba(0,0,0,0.04);">${g.map((r,i) => `${i?'<div style="border-bottom:1px solid var(--bd);margin-left:56px"></div>':''}<div class="li" style="padding:16px; display:flex; align-items:center; gap:14px; cursor:pointer;" onclick="${r[1]=='Log Out'?"go('home')":`toast('${r[1]}')`}">${ic(r[0],'f')}<b style="flex:1;font-size:16px;font-weight:700">${r[1]}</b>${ic('chevron_right','mu')}</div>`).join('')}</div>`).join('')}
-    `,
-    notifications: () => {
-        const N = [
-            ['16 October 2026',['Join the 5 Day Wondervault Sprint…']],
-            ['15 October 2026',['Webinar: Master Moving Averages','Coins have been Credited']],
-            ['14 October 2026',['Coins have been Credited','Trading Account Created','Deposit will be Credited*']]
-        ];
-        return `
-            ${hdr('Notifications','back()')}
-            <div class="tabs gt" style="margin-top:0">
-                <button class="on">Notifications</button><button>Voice messages</button>
-            </div>
-            ${N.map(n => `<div class="dh">${n[0]}</div>${n[1].map(t => `<div class="nr" onclick="this.classList.toggle('o')" style="padding:16px;border-bottom:1px solid var(--bd);cursor:pointer;"><div class="row sb"><b style="font-size:15px;font-weight:800;">${t.replace('*','')}${t.endsWith('*')?'<i class="dt"></i>':''}</b>${ic('expand_more','mu')}</div><p style="display:none; color:var(--m); font-weight:500; margin-top:8px; font-size:14px;">Open your Funds or Analysis tab for more details about this update.</p></div>`).join('')}`).join('')}
-        `;
-    },
-    accounts: () => `
-        <div style="background:linear-gradient(180deg,rgba(31,157,107,.28),transparent);padding-bottom:8px">
-            ${hdr('Accounts','back()')}
-            <div class="car" onscroll="dots(this)">
-                ${A.map(a => `<div class="acc-card" style="margin:0"><span class="tag ${a.c}">${a.t} · MT5</span><div style="font-size:18px;font-weight:800;margin:10px 0 14px">${a.n}</div><div class="row sb" style="font-size:18px;font-weight:700"><span>${a.id}</span><b style="font-size:24px;font-weight:800">$ ${fm(a.b)}</b></div></div>`).join('')}
-            </div>
-            ${dotsH(A.length)}
-            <div class="acts" style="margin:0">
-                ${act('download','Deposit',"go('deposit')",1)}
-                ${act('upload','Withdrawal',"go('withdraw')")}
-                ${act('sync_alt','Transfer',"go('transfer')")}
-                ${act('more_vert','More','more()')}
-            </div>
-        </div>
-        <div class="row sb" style="padding:14px 16px">
-            <div><div style="font-size:22px;font-weight:800">${A[0].id}</div><div class="mu" style="font-size:15px">Isaac</div></div>
-            <button class="btn s" onclick="openTradePrompt()">${ic('trending_up')} Trade</button>
-        </div>
-        ${[
-            ['database','#1f9d6b','$ '+fm(A[0].b),'Balance','expand_more'],
-            ['description','#2250d0','Booster','Account type',''],
-            ['balance','#ef8a30','1:2000','Leverage','edit_square'],
-            ['monitor','#8a45d6','MT5','Trading platform','expand_more']
-        ].map(r => `<div class="card row" style="gap:14px;padding:14px; background:#fff;"><i class="ci" style="background:${r[1]};width:40px;height:40px;border-radius:50%;display:grid;place-items:center;color:#fff">${ic(r[0],'f')}</i><div style="flex:1"><b style="font-size:17px;font-weight:800">${r[2]}</b><div class="mu" style="font-size:15px;font-weight:700">${r[3]}</div></div>${r[4]?ic(r[4],'mu'):''}</div>`).join('')}
-    `,
-    transfer: () => {
-        const f = S.from != null ? A[S.from] : null, t = A[S.to], ok = f && +S.tamt > 0;
-        return `
-            ${hdr('Internal Transfer','back()')}
-            <div class="fld">
-                <label>From</label>
-                <div class="sel" onclick="selA('from')">
-                    <i class="ci">${ic('upload')}</i>
-                    ${f ? `<div><b style="font-size:17px;font-weight:800">${f.id}</b><div class="mu">${f.n}</div></div>` : '<b style="font-size:17px;font-weight:800">Select</b>'}
-                    ${ic('expand_more')}
-                </div>
-            </div>
-            <div style="text-align:center;margin:-4px 0 12px">
-                <button class="ib" style="background:var(--c);width:40px;height:40px;border-radius:10px;display:inline-grid" onclick="if(S.from!=null){[S.from,S.to]=[S.to,S.from];render()}">${ic('swap_vert')}</button>
-            </div>
-            <div class="fld" style="margin-bottom:8px">
-                <label>To</label>
-                <div class="sel" onclick="selA('to')">
-                    <i class="ci">${ic('download')}</i>
-                    <div><b style="font-size:17px;font-weight:800">${t.id}</b><div class="mu">${t.n}</div></div>
-                    ${ic('expand_more')}
-                </div>
-            </div>
-            <div class="fld" style="font-size:15px;font-weight:700"><span class="mu">Balance</span> <span style="color:#25b07c;font-weight:800">${fm(t.b)} USD</span></div>
-            <div class="fld">
-                <label>Amount</label>
-                <div class="row">
-                    <input class="inp" type="number" inputmode="decimal" placeholder="0" value="${S.tamt}" oninput="S.tamt=this.value;$('#tb').className='btn '+(S.from!=null&&+this.value>0?'dk':'off')">
-                    <b class="mu" style="font-size:18px">USD</b>
-                </div>
-            </div>
-            <div class="fix"><button id="tb" class="btn ${ok?'dk':'off'}" onclick="doT()">Transfer</button></div>
-        `;
-    },
-    deposit: () => {
-        const usd = (+S.amt || 0) / RATE;
-        const M = [
-            ['Credit/Debit Cards', [['CCJenapay No_Fee','VISA','#fff','#1a3a9c']]],
-            ['Crypto', [['USDT TRC20','T','#fff','#1fa67a'], ['USDT BEP20','₮','#fff','#1fa67a'], ['Binance Pay','BINANCE','#f5c518','#232b38']]],
-            ['E-Wallet', [['Mobile Money MPESA and more','M-PESA','#fff','#2ba84a'], ['Mobile Money','M-PESA','#fff','#2ba84a'], ['Skrill EUR','Skrill','#fff','#8a1a6b']]]
-        ];
-        let c = '';
-        if (S.step == 1) {
-            c = `
-                <div class="meth">
-                    ${M.map(g => `<h4 style="padding:12px 16px 8px;font-size:18px;font-weight:800;">${g[0]}</h4>${g[1].map(m => `<div class="mi ${S.meth==m[0]?'on':''}" onclick="S.meth='${m[0]}';render()" style="display:flex; align-items:center; gap:14px; background:var(--c); border-radius:14px; padding:14px 16px; margin:0 16px 12px; border:1.5px solid transparent; cursor:pointer; font-size:16px; font-weight:800; ${S.meth==m[0]?'border-color:var(--p);':''}"><span class="lg" style="width:66px;height:34px;border-radius:5px;display:grid;place-items:center;font-size:12px;font-weight:800;flex:none;background:${m[2]};color:${m[3]}">${m[1]}</span>${m[0]} ${ic('expand_more').replace('class="ms','class="ms" style="margin-left:auto;background:var(--bd);border-radius:50%;font-size:20px;padding:3px;" data-x="')}</div>`).join('')}`).join('')}
-                </div>
-                <div class="fix"><button class="btn dk" onclick="S.step=2;render()">Next</button></div>
-            `;
-        } else if (S.step == 2) {
-            c = `
-                <div class="fld">
-                    <label>Deposit to</label>
-                    <div class="sel"><i class="ci">${ic('download')}</i><div><b style="font-size:17px;font-weight:800">${A[1].id}</b><div class="mu">${A[1].n}</div></div>${ic('expand_more')}</div>
-                </div>
-                <div class="fld" style="font-size:15px;font-weight:700"><span class="mu">Balance</span> <span style="color:#25b07c;font-weight:800">$ ${fm(A[1].b)}</span></div>
-                <div class="fld">
-                    <label>Amount to deposit</label>
-                    <div class="row">
-                        <input class="inp" type="number" inputmode="numeric" placeholder="0" value="${S.amt}" oninput="S.amt=this.value;updD()">
-                        <b class="mu" style="font-size:18px">KES</b>
-                    </div>
-                </div>
-                <div class="fld mu" style="font-size:15px;font-weight:700">In account currency <span style="color:#25b07c" id="u1">${fm(usd)} USD</span></div>
-                <div class="fld">
-                    <label style="color:var(--t)">Phone number</label>
-                    <input class="inp" style="font-size:15px;background:var(--c);border:1px solid var(--bd);border-radius:10px;padding:12px" value="254796681162" readonly>
-                    <div style="font-size:12px;font-weight:700;margin-top:6px">Default phone number. To change it, contact support.</div>
-                </div>
-                <div class="kv"><span>Payment method</span><b>${S.meth}</b></div>
-                <div class="kv"><span>Deposit fees</span><b>0.00 USD</b></div>
-                <div class="kv"><span>Will be deposited</span><b id="u2">${fm(usd)} USD</b></div>
-                <div class="fld"><a style="color:#25b07c;font-size:16px;font-weight:800;text-decoration:underline" onclick="toast('Promo codes: Promotions tab')">Have a promocode?</a></div>
-                <div class="fix"><button id="sb" class="btn ${+S.amt>0?'dk':'off'}" onclick="S.step=3;render()">Summary</button></div>
-            `;
-        } else {
-            c = `
-                <div style="padding-top:4px">
-                    ${[['Payment method',S.meth],['Deposit to','My Real Account ('+A[1].id+')'],['Amount to deposit',(+S.amt).toLocaleString('en',{minimumFractionDigits:2})+' KES'],['Deposit fees','0.00 USD'],['Phone number','254796681162']].map(r => `<div class="kv"><span>${r[0]}</span><b>${r[1]}</b></div>`).join('')}
-                    <div style="border-top:1px dashed var(--bd);margin:18px 16px"></div>
-                    <div class="kv"><span>Will be deposited</span><b>${fm(usd)} USD</b></div>
-                    <div class="card row" style="gap:10px;align-items:flex-start;font-size:15px;font-weight:700">
-                        <i class="ci" style="width:22px;height:22px;background:#1f9d6b;margin-top:3px">${ic('arrow_downward').replace('class="ms','class="ms" style="font-size:14px" data-x="')}</i>
-                        <span>Please transfer <span style="color:#1f9d6b">the exact amount</span> as shown in the payment website. Incorrect amount may cause processing delay.</span>
-                    </div>
-                </div>
-                <div class="fix"><button class="btn dk" onclick="startSTK()">Complete</button></div>
-            `;
-        }
-        const sp = ['Deposit method','Specify the amount','Payment Summary'];
-        return `
-            ${hdr('Deposit',"S.step>1?(S.step--,render()):back()")}
-            <div class="step" style="display:flex; justify-content:space-between; padding:6px 20px 16px; text-align:center;">
-                ${sp.map((t,i) => `<div class="${S.step==i+1?'on':''}" style="flex:1;font-size:14px;font-weight:700;color:var(--m);${S.step==i+1?'color:var(--t);':''}"><i class="ms" style="display:block;margin:0 auto 6px;width:30px;height:30px;border-radius:50%;background:var(--l);color:#fff;font-style:normal;font-size:16px;line-height:30px;${S.step==i+1?'background:var(--p);':''}">${i<S.step-1?'check':['account_balance_wallet','attach_money','check'][i]}</i>${t}</div>`).join('')}
-            </div>
-            ${c}
-        `;
-    },
-    withdraw: () => `
-        ${hdr('Withdraw', 'back()')}
-        <div class="fld">
-            <label>Withdraw from</label>
-            <div class="sel" onclick="toast('Only main account available')">
-                <i class="ci">${ic('upload')}</i>
-                <div><b style="font-size:17px;font-weight:800">${A[0].id}</b><div class="mu">${A[0].n}</div></div>
-                ${ic('expand_more')}
-            </div>
-        </div>
-        <div class="fld" style="font-size:15px;font-weight:700">
-            <span class="mu">Available Balance</span> 
-            <span style="color:#25b07c;font-weight:800">$ ${fm(A[0].b)}</span>
-        </div>
-        <div class="fld">
-            <label>Amount to withdraw (USD)</label>
-            <div class="row">
-                <input class="inp" id="wamt" type="number" inputmode="decimal" placeholder="0" value="${S.wamt}" oninput="S.wamt=this.value;$('#wb').className='btn '+(+this.value>0?'dk':'off')">
-                <b class="mu" style="font-size:18px">USD</b>
-            </div>
-        </div>
-        <div class="fld" style="margin-top:24px">
-            <label>Destination</label>
-            <div class="sel">
-                <i class="ci">${ic('phone_android')}</i>
-                <div><b style="font-size:17px;font-weight:800">M-PESA (Mobile Money)</b><div class="mu">254796681162</div></div>
-            </div>
-        </div>
-        <div class="fix"><button id="wb" class="btn ${+S.wamt > 0 ? 'dk' : 'off'}" onclick="doWithdraw()">Withdraw</button></div>
-    `,
-    addacc: () => {
-        const L = [
-            ['Standard','#1f9d6b','#fff','Best Choice','Trade on the most popular account type',8,'1:2000','From 1.2 pips'],
-            ['ECN','#e59a0a','#fff','Lowest Spreads','Take advantage of trading with 0 spread',50,'1:2000','From 0 pips']
-        ];
-        return `
-            ${hdr('Add account','back()')}
-            <div class="row g8" style="padding:0 16px 14px"><span class="chip">MT5 ${ic('expand_more')}</span><span class="chip">Real Account ${ic('expand_more')}</span></div>
-            ${L.map(a => `<div class="card" style="background:#fff;"><span class="tag" style="background:${a[1]};color:${a[2]};font-size:15px;padding:4px 12px;border-radius:14px">${a[3]}</span><div style="font-size:18px;font-weight:800;margin:8px 0 4px">${a[0]}</div><div class="mu" style="font-size:15px;padding-bottom:10px;border-bottom:1px solid var(--bd);margin-bottom:6px">${a[4]}</div>${[['download','Minimum Deposit','$'+a[5].toFixed(2)],['scatter_plot','Leverage up to',a[6]],['swap_vert','Spread',a[7]],['candlestick_chart','Trading Platform','MT5']].map(r => `<div class="kv"><span class="row g8">${ic(r[0])} ${r[1]}</span><b>${r[2]}</b></div>`).join('')}<button class="btn dk" style="margin-top:14px;padding:14px" onclick="toast('Account added')">Add Account</button></div>`).join('')}
-        `;
+        <div class="fix"><button class="btn dk" onclick="startSTK()">Complete</button></div>`;
     }
+    const sp = ['Deposit method', 'Specify the amount', 'Payment Summary'];
+    const stepIc = i => i == 0
+      ? `<span class="ms f" style="font-size:30px;color:${S.step == 1 ? 'var(--p)' : 'var(--l)'}">layers</span>`
+      : `<span style="width:30px;height:30px;border-radius:50%;display:inline-grid;place-items:center;background:${S.step == i + 1 ? 'var(--p)' : 'var(--l)'};color:#fff;font-size:15px;font-weight:800">${i == 1 ? '$' : '✓'}</span>`;
+    return `
+      ${hdr('Deposit', "S.step>1?(S.step--,render()):back()")}
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);padding:6px 4px 16px;text-align:center">
+        ${sp.map((t, i) => `<div style="position:relative;font-size:14px;font-weight:700;color:${S.step == i + 1 ? 'var(--t)' : 'var(--m)'}">${i < 2 ? '<i style="position:absolute;top:15px;left:calc(50% + 24px);width:calc(100% - 48px);border-top:2px dashed var(--bd)"></i>' : ''}<div style="height:30px;margin-bottom:8px">${stepIc(i)}</div>${t}</div>`).join('')}
+      </div>
+      ${c}`;
+  },
+
+  withdraw: () => {
+    const L = A[LINKED];
+    return `
+      ${hdr('Withdraw', 'back()')}
+      <div class="fld"><label>Withdraw from</label><div class="sel" onclick="toast('Only main account available')"><i class="ci">${ic('upload')}</i><div><b style="font-size:17px;font-weight:800">${L.id}</b><div class="mu">${L.n}</div></div>${ic('expand_more')}</div></div>
+      <div class="fld" style="font-size:15px;font-weight:700"><span class="mu">Available Balance</span> <span style="color:#25b07c;font-weight:800">$ ${fm(wmax())}</span></div>
+      <div class="fld"><label>Amount to withdraw (USD)</label><div class="row"><input class="inp" id="wamt" type="number" inputmode="decimal" placeholder="0" value="${S.wamt}" oninput="S.wamt=this.value;$('#wb').className='btn '+(+this.value>0?'dk':'off')"><b class="mu" style="font-size:18px">USD</b></div></div>
+      <div class="fld" style="margin-top:24px"><label>Destination</label><div class="sel"><i class="ci">${ic('phone_android')}</i><div><b style="font-size:17px;font-weight:800">M-PESA (Mobile Money)</b><div class="mu">254796681162</div></div></div></div>
+      <div class="fix"><button id="wb" class="btn ${+S.wamt > 0 ? 'dk' : 'off'}" onclick="doWithdraw()">Withdraw</button></div>`;
+  },
+
+  addacc: () => {
+    const L = [['Standard', '#1f9d6b', 'Best Choice', 'Trade on the most popular account type', 8, '1:2000', 'From 1.2 pips'], ['ECN', '#e59a0a', 'Lowest Spreads', 'Take advantage of trading with 0 spread', 50, '1:2000', 'From 0 pips']];
+    return `
+      ${hdr('Add account', 'back()')}
+      <div class="row g8" style="padding:0 16px 14px"><span class="chip">MT5 ${ic('expand_more')}</span><span class="chip">Real Account ${ic('expand_more')}</span></div>
+      ${L.map(a => `<div class="card" style="background:#fff"><span class="tag" style="background:${a[1]};color:#fff;font-size:15px;padding:4px 12px;border-radius:14px">${a[2]}</span><div style="font-size:18px;font-weight:800;margin:8px 0 4px">${a[0]}</div><div class="mu" style="font-size:15px;padding-bottom:10px;border-bottom:1px solid var(--bd);margin-bottom:6px">${a[3]}</div>${[['download', 'Minimum Deposit', '$' + a[4].toFixed(2)], ['scatter_plot', 'Leverage up to', a[5]], ['swap_vert', 'Spread', a[6]], ['candlestick_chart', 'Trading Platform', 'MT5']].map(r => `<div class="kv"><span class="row g8">${ic(r[0])} ${r[1]}</span><b>${r[2]}</b></div>`).join('')}<button class="btn dk" style="margin-top:14px;padding:14px" onclick="toast('Account added')">Add Account</button></div>`).join('')}`;
+  }
 };
 
 function txs(l) {
-    let d = '';
-    if(!l || l.length === 0) return '<div style="text-align:center;padding:30px;color:var(--l);font-weight:700">No transactions yet</div>';
-    
-    return l.map(t => {
-        const h = t.d != d ? `<div class="dh">${t.d}</div>` : '';
-        d = t.d;
-        return h + `
-            <div class="tx" style="margin: 0 16px 10px; background: var(--c); border-radius: 16px; padding: 14px 16px; display: flex; align-items: center; gap: 12px;">
-                <i class="ci" style="width: 40px; height: 40px; border-radius: 50%; background: var(--bg); color: var(--m); display: grid; place-items: center;">${ic(t.ty=='D'?'download':t.ty=='W'?'upload':'sync_alt')}</i>
-                <div class="d" style="flex:1;">
-                    <div class="row g8">
-                        <b style="font-size:17px;font-weight:800;">${t.ty=='D'?'Deposit':t.ty=='W'?'Withdrawal':'Transfer'}</b>
-                        ${t.s=='x'?ic('cancel','f').replace('class="ms','class="ms" style="color:#e03131;font-size:18px" data-x="'):t.s=='p'?ic('schedule','f').replace('class="ms','class="ms" style="color:#ef8a30;font-size:18px" data-x="'):ic('check_circle','f').replace('class="ms','class="ms" style="color:#1f9d6b;font-size:18px" data-x="')}
-                    </div>
-                    <div class="mu" style="font-weight:700;font-size:13px">ID: ${t.id}</div>
-                </div>
-                <div style="text-align:right">
-                    <b style="color:${t.ty=='D'?'#1f9d6b':'var(--t)'};font-size:17px;font-weight:800">${t.ty=='D'?'+ ':''}$${fm(t.a)}</b>
-                    <div class="mu" style="font-weight:700;font-size:13px">${t.t}</div>
-                </div>
-            </div>
-        `;
-    }).join('');
+  let d = '';
+  if (!l || !l.length) return '<div style="text-align:center;padding:30px;color:var(--l);font-weight:700">No transactions yet</div>';
+  return l.map(t => {
+    const h = t.d != d ? `<div style="padding:8px 16px;color:var(--m);font-weight:700">${t.d}</div>` : ''; d = t.d;
+    const st = t.s == 'x' ? ['cancel', '#e03131'] : t.s == 'p' ? ['schedule', '#ef8a30'] : ['check_circle', '#1f9d6b'];
+    return h + `
+      <div style="margin:0 16px 10px;background:var(--c);border-radius:16px;padding:14px 16px;display:flex;align-items:center;gap:12px">
+        <i style="width:40px;height:40px;border-radius:50%;background:var(--bg);color:var(--m);display:grid;place-items:center">${ic(t.ty == 'D' ? 'download' : 'upload')}</i>
+        <div style="flex:1"><div class="row g8"><b style="font-size:17px;font-weight:800">${t.ty == 'D' ? 'Deposit' : 'Withdrawal'}</b><span class="ms f" style="color:${st[1]};font-size:18px">${st[0]}</span></div><div class="mu" style="font-weight:700;font-size:13px">ID: ${t.id}</div></div>
+        <div style="text-align:right"><b style="color:${t.ty == 'D' ? '#1f9d6b' : 'var(--t)'};font-size:17px;font-weight:800">${t.ty == 'D' ? '+ ' : ''}$${fm(t.a)}</b><div class="mu" style="font-weight:700;font-size:13px">${t.t}</div></div>
+      </div>`;
+  }).join('');
 }
 
 function updD() {
-    const u = (+S.amt || 0) / RATE;
-    const el1 = $('#u1'), el2 = $('#u2'), sb = $('#sb');
-    if (el1) el1.textContent = fm(u) + ' USD';
-    if (el2) el2.textContent = fm(u) + ' USD';
-    if (sb) sb.className = 'btn ' + (+S.amt > 0 ? 'dk' : 'off');
+  const u = (+S.amt || 0) / RATE, a = $('#u1'), b = $('#u2'), s = $('#sb');
+  if (a) a.textContent = fm(u) + ' USD'; if (b) b.textContent = fm(u) + ' USD';
+  if (s) s.className = 'btn ' + (+S.amt > 0 ? 'dk' : 'off');
 }
 
 function doWithdraw() {
-    const amt = parseFloat(S.wamt);
-    if(!amt || amt <= 0) return toast('Enter a valid amount');
-    if(amt > A[0].b) return toast('Insufficient balance');
-    
-    openStk(Math.round(amt * RATE), () => {
-        sendWithdrawToMT5(amt);
-        S.wamt = '';
-    });
+  const amt = parseFloat(S.wamt);
+  if (!amt || amt <= 0) return toast('Enter a valid amount');
+  if (amt > wmax() + 0.001) return toast('Insufficient balance');
+  const run = () => { sendWithdrawToMT5(amt); S.wamt = ''; };
+  STK_ON_WITHDRAW ? openStk(amt * RATE, run) : run();
 }
 
-const filt = () => `<div class="row g8" style="padding:0 16px 4px"><span class="chip">All Peri… ${ic('expand_more').replace('class="ms','class="ms" style="font-size:16px" data-x="')}</span><span class="chip">All ${ic('expand_more').replace('class="ms','class="ms" style="font-size:16px" data-x="')}</span></div>`;
+const filt = () => `<div class="row g8" style="padding:0 16px 4px"><span class="chip">All Peri… ${ic('expand_more')}</span><span class="chip">All ${ic('expand_more')}</span></div>`;
 const wcard = () => `<div class="card" onclick="S.ai=0;S.keep=1;go('accounts')"><span class="tag g">VALETAX WALLET</span><div style="font-size:20px;font-weight:800;margin:10px 0 4px">Wallet</div><div class="mu">$ 0.00</div></div>`;
 
 function dots(el) {
-    if(!el.nextElementSibling) return;
-    const w = el.firstElementChild.offsetWidth + 12;
-    const i = Math.round(el.scrollLeft / w);
-    [...el.nextElementSibling.children].forEach((d, k) => d.classList.toggle('on', k == i));
+  if (!el.nextElementSibling) return;
+  const w = el.firstElementChild.offsetWidth + 12, i = Math.round(el.scrollLeft / w);
+  [...el.nextElementSibling.children].forEach((d, k) => d.classList.toggle('on', k == i));
 }
 
 function more() {
-    sheet(`
-        <h2>Your Account</h2>
-        <button class="x" onclick="cs()">${ic('close')}</button>
-        ${[
-            ['edit_square','Edit',''],
-            ['upload','Withdraw',"go('withdraw')"],
-            ['history','Payment History',''],
-            ['monitoring','Trades History',''],
-            ['lock','Change password',''],
-            ['delete','Delete account','r']
-        ].map(r => `<div class="sr" ${r[2]=='r'?'style="color:#e03131"':''} onclick="cs();${r[2]!='r'?r[2]:`toast('${r[1]}')`}"><i class="ci" ${r[2]=='r'?'style="background:#fde1e1;color:#e03131"':''}>${ic(r[0])}</i>${r[1]}</div>`).join('')}
-    `);
+  sheet(`
+    <h2>Your Account</h2><button class="x" onclick="cs()">${ic('close')}</button>
+    ${[['edit_square', 'Edit', ''], ['upload', 'Withdraw', "go('withdraw')"], ['history', 'Payment History', ''], ['monitoring', 'Trades History', ''], ['lock', 'Change password', ''], ['delete', 'Delete account', 'r']].map(r => `<div class="sr" ${r[2] == 'r' ? 'style="color:#e03131"' : ''} onclick="cs();${r[2] != 'r' ? r[2] : `toast('${r[1]}')`}"><i class="ci" ${r[2] == 'r' ? 'style="background:#fde1e1;color:#e03131"' : ''}>${ic(r[0])}</i>${r[1]}</div>`).join('')}`);
 }
 
-/* ===== STK Flow ===== */
+/* ==================== DEPOSIT / STK FLOW ==================== */
 function startSTK() {
-    const kes = +S.amt || 0;
-    if (kes <= 0) return toast('Enter amount first');
-
-    sheet(`
-        <div class="stk-sent">
-            <div style="width:40px;height:4px;background:#ddd;border-radius:2px;margin:0 auto 16px"></div>
-            <h3>STK Prompt Sent</h3>
-            <p>We've sent an STK prompt to your mobile money wallet. Check your phone and enter your wallet PIN when prompted.</p>
-            <button class="resend" onclick="toast('STK prompt resent')">Resend STK prompt</button>
-            <div class="note">${ic('info')} Do not close this screen until the payment status is updated</div>
-            <button class="done" onclick="cs(); openStk(${kes}, onStkSuccess)">I have already entered my PIN</button>
-            <button class="cancel" onclick="cs()">Cancel Payment</button>
-        </div>
-    `);
+  const kes = +S.amt || 0;
+  if (kes <= 0) return toast('Enter amount first');
+  sheet(`
+    <div class="stk-sent">
+      <h3>STK Prompt Sent</h3>
+      <p>We've sent an STK prompt to your mobile money wallet. Check your phone and enter your wallet PIN when prompted.</p>
+      <button class="resend" onclick="toast('STK prompt resent')">Resend STK prompt</button>
+      <div class="note">${ic('info')} Do not close this screen until the payment status is updated</div>
+      <button class="done" onclick="cs();openStk(${kes},onStkSuccess)">I have already entered my PIN</button>
+      <button class="cancel" onclick="cs()">Cancel Payment</button>
+    </div>`);
 }
-
 function onStkSuccess() {
-    const usdAmount = (+S.amt || 0) / RATE;
-    if (usdAmount > 0) {
-        sendDepositToMT5(usdAmount);
-    }
-    S.amt = '';
+  const usd = (+S.amt || 0) / RATE;
+  if (usd > 0) sendDepositToMT5(usd);
+  S.amt = '';
 }
 
 function acctType() {
-    sheet(`
-        <button class="x" onclick="cs()">${ic('close')}</button>
-        <h2>Account Type</h2>
-        ${[
-            ['Real Accounts','Accounts trading real assets','#1f9d6b','trending_up'],
-            ['Demo Accounts','Valetax accounts with virtual balance','#232b38','candlestick_chart']
-        ].map(r => `<div class="pick" onclick="cs();toast('${r[0]}')" style="display:flex;gap:12px;align-items:center"><i class="ci" style="background:${r[2]};width:40px;height:40px;border-radius:50%;display:grid;place-items:center;color:#fff">${ic(r[3])}</i><div><b>${r[0]}</b><div>${r[1]}</div></div></div>`).join('')}
-    `);
+  sheet(`
+    <button class="x" onclick="cs()">${ic('close')}</button><h2>Account Type</h2>
+    ${[['Real Accounts', 'Accounts trading real assets', '#1f9d6b', 'trending_up'], ['Demo Accounts', 'Valetax accounts with virtual balance', '#232b38', 'candlestick_chart']].map(r => `<div class="pick" onclick="cs();toast('${r[0]}')" style="display:flex;gap:12px;align-items:center"><i style="background:${r[2]};width:40px;height:40px;border-radius:50%;display:grid;place-items:center;color:#fff">${ic(r[3])}</i><div><b>${r[0]}</b><div>${r[1]}</div></div></div>`).join('')}`);
 }
 
-// 🔥 TRADE LOGIC UPDATED FOR PERSISTENCE
+/* ==================== TRADES (balance stays constant until closed) ==================== */
 function openTradePrompt() {
-    const amt = prompt("Enter trade size in USD (Balance will only change when you close the trade):");
-    if (!amt || isNaN(amt) || amt <= 0) return;
-    if (+amt > totalFunds) return toast('Insufficient balance to open this trade.');
-    
-    const type = Math.random() > 0.5 ? 'BUY' : 'SELL';
-    const id = Date.now().toString().slice(-4);
-    openPositions.push({ id, amount: +amt, pair: 'EUR/USD', type });
-    saveState(); // 🔥 Save new trade
-    toast('Trade Opened! Balance locked until closed.');
-    render();
+  const free = Math.max(0, r2(totalFunds - reserved()));
+  const amt = parseFloat(prompt(`Enter trade size in USD (available $${fm(free)}). Balance stays constant until you close the trade:`));
+  if (!amt || isNaN(amt) || amt <= 0) return;
+  if (amt > free) return toast('Insufficient balance to open this trade.');
+  openPositions.push({ id: Date.now().toString().slice(-6), amount: amt, pair: 'EUR/USD', type: Math.random() > 0.5 ? 'BUY' : 'SELL' });
+  saveState();
+  toast('Trade opened! Balance locked until closed.');
+  render();
 }
 
 function closeTrade(id) {
-    const idx = openPositions.findIndex(p => p.id == id);
-    if (idx === -1) return;
-    const pos = openPositions[idx];
-    
-    const win = Math.random() > 0.5;
-    const pnl = win ? (pos.amount * 0.5) : -(pos.amount * 0.2);
-    
-    A[1].b = Math.max(0, A[1].b + pnl);
-    totalFunds = A[0].b + A[1].b;
-    
-    openPositions.splice(idx, 1);
-    saveState(); // 🔥 Save closed trade
-    
-    toast(`Trade Closed! PnL: ${pnl > 0 ? '+' : ''}${fm(pnl)} USD`);
-    render();
+  const idx = openPositions.findIndex(p => String(p.id) === String(id));
+  if (idx === -1) return;
+  const pos = openPositions[idx];
+  const pnl = r2(Math.random() > 0.5 ? pos.amount * 0.5 : -(pos.amount * 0.2));
+  openPositions.splice(idx, 1);
+  adj = r2(adj + pnl); recalc(); saveState();
+  toast(`Trade Closed! PnL: ${pnl > 0 ? '+' : ''}${fm(pnl)} USD`);
+  render();
+  if (!openPositions.length) syncData();
 }
 
+/* ==================== TRANSFER ==================== */
 function selA(w, i) {
-    S.sel = w;
-    if (i != null) S.st = i;
-    const ac = S.st == 1, t = ['MT4','MT5','Investor'];
-    sheet(`
-        <button class="x" onclick="cs()">${ic('close')}</button>
-        <h2>Select</h2>
-        <div class="tabs gt" style="margin:0 0 16px;border:0">
-            ${t.map((x,k) => `<button class="${S.st==k?'on':''}" onclick="selA('${w}', ${k})">${x}</button>`).join('')}
-        </div>
-        ${S.st<2?`<div class="pick" ${S.st==0?'':`onclick="pk('${w}',-1)"`}><b>${ic('wallet','f').replace('class="ms','class="ms" style="color:#1f9d6b;font-size:22px" data-x="')} Wallet</b><div>Balance <b style="color:#25b07c;font-size:inherit">0.00 USD</b></div>${S.st==0?'<div style="color:#ef8a30;font-weight:800;margin-top:4px">'+ic('error','f').replace('class="ms','class="ms" style="font-size:18px" data-x="')+' Not enough funds</div>':''}</div>`:''}
-        ${ac?A.map((a,i) => `<div class="pick ${(w=='from'?S.from:S.to)==i?'on':''}" onclick="pk('${w}',${i})"><b>${a.id}</b> <span class="tag ${a.c}">${a.t[0]+a.t.slice(1).toLowerCase()}</span><div>Balance <b style="color:#25b07c;font-size:inherit">${fm(a.b)} USD</b> · ${a.n}</div>${(w=='from'?S.from:S.to)==i?ic('check_circle','f ck'):''}</div>`).join(''):''}
-        ${S.st==2?'<div class="mu" style="text-align:center;padding:30px">No investor accounts</div>':''}
-    `);
+  S.sel = w; if (i != null) S.st = i;
+  const t = ['MT4', 'MT5', 'Investor'];
+  sheet(`
+    <button class="x" onclick="cs()">${ic('close')}</button><h2>Select</h2>
+    <div class="tabs gt" style="margin:0 0 16px;border:0">${t.map((x, k) => `<button class="${S.st == k ? 'on' : ''}" onclick="selA('${w}',${k})">${x}</button>`).join('')}</div>
+    ${S.st < 2 ? `<div class="pick" ${S.st == 0 ? '' : `onclick="pk('${w}',-1)"`}><b>${ic('wallet', 'f')} Wallet</b><div>Balance <b style="color:#25b07c;font-size:inherit">0.00 USD</b></div>${S.st == 0 ? '<div style="color:#ef8a30;font-weight:800;margin-top:4px">Not enough funds</div>' : ''}</div>` : ''}
+    ${S.st == 1 ? A.map((a, i) => `<div class="pick" onclick="pk('${w}',${i})"><b>${a.id}</b> <span class="tag ${a.c}">${a.t[0] + a.t.slice(1).toLowerCase()}</span><div>Balance <b style="color:#25b07c;font-size:inherit">${fm(avail(i))} USD</b> · ${a.n}</div>${(w == 'from' ? S.from : S.to) == i ? ic('check_circle', 'f ck') : ''}</div>`).join('') : ''}
+    ${S.st == 2 ? '<div class="mu" style="text-align:center;padding:30px">No investor accounts</div>' : ''}`);
 }
-
 function pk(w, i) {
-    if (i < 0) return toast('Wallet has no funds');
-    if (w == 'from' && i == S.to || w == 'to' && i == S.from) return toast('Choose different accounts');
-    if (w == 'from') S.from = i; else S.to = i;
-    cs(); render();
+  if (i < 0) return toast('Wallet has no funds');
+  if (w == 'from' && i == S.to || w == 'to' && i == S.from) return toast('Choose different accounts');
+  if (w == 'from') S.from = i; else S.to = i;
+  cs(); render();
 }
-
 function doT() {
-    const f = A[S.from];
-    if (!f || !(+S.tamt > 0)) return;
-    if (+S.tamt > f.b) return toast('Not enough funds');
-    f.b -= +S.tamt;
-    A[S.to].b += +S.tamt;
-    totalFunds = A[0].b + A[1].b;
-    S.tamt = ''; S.from = null;
-    saveState(); // 🔥 Save transfer
-    toast('Transfer complete');
-    go('home');
+  const amt = +S.tamt;
+  if (S.from == null || !(amt > 0)) return;
+  if (amt > avail(S.from) + 0.001) return toast('Not enough funds');
+  S.from === LINKED ? adj = r2(adj - amt) : A[S.from].b = r2(A[S.from].b - amt);
+  S.to === LINKED ? adj = r2(adj + amt) : A[S.to].b = r2(A[S.to].b + amt);
+  recalc(); saveState();
+  S.tamt = ''; S.from = null;
+  toast('Transfer complete'); go('home');
 }
 
+/* ==================== RENDER ==================== */
 function render() {
-    const v = S.v;
-    const NV = { home: ['home','Home'], funds: ['work','Funds'], promos: ['percent','Promotions'], copy: ['content_copy','CopyTrade'] };
-    
-    $('#app').className = v == 'home' ? 'gr' : '';
-    $('#app').innerHTML = V[v] ? V[v]() : V.home();
-    
-    const show = NV[v] || ['profile','notifications'].includes(v);
-    $('#nav').style.display = show ? 'flex' : 'none';
-    
-    $('#nav').innerHTML = Object.entries(NV).map(([k, n]) => `
-        <button class="${v == k || (!NV[v] && k == 'home') ? 'on' : ''}" onclick="go('${k}')">
-            ${k == 'home' ? '<svg width="24" height="24" viewBox="0 0 24 24"><path d="M3 5l6.5 14L12 13.5M21 5l-6.5 14L12 13.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>' : ic(n[0])}
-            ${n[1]}
-        </button>
-    `).join('');
-
-    setTimeout(setupAutoScroll, 100);
+  const v = S.v;
+  const NV = { home: ['home', 'Home'], funds: ['work', 'Funds'], promos: ['percent', 'Promotions'], copy: ['content_copy', 'CopyTrade'] };
+  $('#app').className = v == 'home' ? 'gr' : '';
+  $('#app').innerHTML = V[v] ? V[v]() : V.home();
+  $('#nav').style.display = NV[v] ? 'flex' : 'none';
+  $('#nav').innerHTML = Object.entries(NV).map(([k, n]) => `
+    <button class="${v == k ? 'on' : ''}" onclick="go('${k}')">
+      ${k == 'home' ? '<svg width="24" height="24" viewBox="0 0 24 24"><path d="M3 5l6.5 14L12 13.5M21 5l-6.5 14L12 13.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>' : ic(n[0])}
+      ${n[1]}
+    </button>`).join('');
+  setTimeout(setupAutoScroll, 100);
 }
 
 let bannerTimer;
 function setupAutoScroll() {
-    clearInterval(bannerTimer);
-    const car = document.getElementById('bannerCar');
-    if (!car) return;
-    let paused = false;
-    ['touchstart', 'mousedown'].forEach(e => car.addEventListener(e, () => paused = true, {passive: true}));
-    ['touchend', 'mouseup'].forEach(e => car.addEventListener(e, () => paused = false, {passive: true}));
-    bannerTimer = setInterval(() => {
-        if (paused || !car.isConnected) return;
-        const step = car.firstElementChild.offsetWidth + 12;
-        car.scrollLeft >= car.scrollWidth - car.clientWidth - 10
-            ? car.scrollTo({left: 0, behavior: 'smooth'})
-            : car.scrollTo({left: car.scrollLeft + step, behavior: 'smooth'});
-    }, 3500); 
+  clearInterval(bannerTimer);
+  const car = document.getElementById('bannerCar');
+  if (!car) return;
+  let paused = false;
+  ['touchstart', 'mousedown'].forEach(e => car.addEventListener(e, () => paused = true, { passive: true }));
+  ['touchend', 'mouseup'].forEach(e => car.addEventListener(e, () => paused = false, { passive: true }));
+  bannerTimer = setInterval(() => {
+    if (paused || !car.isConnected) return;
+    const step = car.firstElementChild.offsetWidth + 12;
+    car.scrollLeft >= car.scrollWidth - car.clientWidth - 10 ? car.scrollTo({ left: 0, behavior: 'smooth' }) : car.scrollTo({ left: car.scrollLeft + step, behavior: 'smooth' });
+  }, 3500);
 }
 
 render();
